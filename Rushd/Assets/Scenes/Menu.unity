@@ -321,12 +321,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1693241853728054, guid: da245bcadab4efe4aa05e7abfa07a0e3, type: 2}
       propertyPath: m_Name
-      value: TextEvan
+      value: TextIvan
       objectReference: {fileID: 0}
     - target: {fileID: 114875741281982758, guid: da245bcadab4efe4aa05e7abfa07a0e3,
         type: 2}
       propertyPath: m_Text
-      value: Evan Bondarev
+      value: Ivan Bondarev
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: da245bcadab4efe4aa05e7abfa07a0e3, type: 2}
