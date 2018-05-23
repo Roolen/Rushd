@@ -19,8 +19,8 @@ namespace Assets.Scripts.LevelGenerator
     /// </summary>
     public enum TypesPlatform
     {
-        EvacuationPlatform,
         LandingPlatform,
+        EvacuationPlatform,
         PlatformOpenSpace,
         PlatformWall
     }
@@ -37,14 +37,13 @@ namespace Assets.Scripts.LevelGenerator
 
     public class LevelData : MonoBehaviour
     {
-        private string nameLevel;
-        private Difficult difficultLevel;
+        public string nameLevel;
+        public Difficult difficultLevel;
 
-        private int heightLevel;
-        private int weightLevel;
+        public int heightLevel;
+        public int weightLevel;
 
-        private uint lightIntensity;
-        private Color lightColor;
+        public string lightColor;
 
         private List<Platform> platforms = new List<Platform>();
 
@@ -141,6 +140,22 @@ namespace Assets.Scripts.LevelGenerator
         }
 
         /// <summary>
+        /// Цвет солнца на уровне.
+        /// </summary>
+        public string LightColor
+        {
+            get
+            {
+                return lightColor;
+            }
+
+            set
+            {
+                lightColor = value;
+            }
+        }
+
+        /// <summary>
         /// Создает экземпляр класса LevelData.
         /// </summary>
         /// <param name="levelName">Название уровня</param>
@@ -151,16 +166,6 @@ namespace Assets.Scripts.LevelGenerator
             NameLevel = levelName;
             Height = heightLevel;
             Weight = weightLevel;
-        }
-
-        // Use this for initialization
-        void Start () {
-		
-        }
-	
-        // Update is called once per frame
-        void Update () {
-		
         }
     }
 
@@ -239,6 +244,14 @@ namespace Assets.Scripts.LevelGenerator
             TypePlatform = typePlatform;
             ItemOnPlatform = itemPlatform;
         }
+
+        public Platform()
+        {
+            NamePlatform = null;
+            TypePlatform = TypesPlatform.PlatformOpenSpace;
+            ItemOnPlatform = null;
+
+        }
     }
 
     public class Item
@@ -291,5 +304,7 @@ namespace Assets.Scripts.LevelGenerator
             NameItem = nameItem;
             TypeItem = typeItem;
         }
+
+        public  Item() { }
     }
 }
