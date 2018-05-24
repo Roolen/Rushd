@@ -11,14 +11,21 @@ namespace Assets.Scripts.LevelGenerator
         {
             if (data.Platforms.Count > 0)
             {
-                for (int i = 0; i < data.Platforms.Count; i++)
-                {
-                    Platform platform = data.Platforms[i];
+                int i = 0;
+                int b = 0;
 
-                    GameObject platformInstance = new GameObject();
+                foreach (var platform in data.Platforms)
+                {
+
+                    GameObject platformInstance = Instantiate(data.typesPlatforms[ (int)platform.TypePlatform] );
+
                     platformInstance.name = platform.NamePlatform;
 
-                    //Instantiate(platform);
+                    platformInstance.transform.position = new Vector3(i * 15, 0, b * 15);
+
+                    i++;
+
+                    if (i == data.Height) {b++; i = 0;}
                 }
             }
         }

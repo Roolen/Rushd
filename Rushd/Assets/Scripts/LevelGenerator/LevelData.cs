@@ -37,13 +37,18 @@ namespace Assets.Scripts.LevelGenerator
 
     public class LevelData : MonoBehaviour
     {
-        public string nameLevel;
-        public Difficult difficultLevel;
+        [Header("Платформы")]
+        public GameObject platformOpenSpace;
 
-        public int heightLevel;
-        public int weightLevel;
+        public GameObject[] typesPlatforms;
 
-        public string lightColor;
+        private string nameLevel;
+        private Difficult difficultLevel;
+
+        private int heightLevel;
+        private int weightLevel;
+
+        private string lightColor;
 
         private List<Platform> platforms = new List<Platform>();
 
