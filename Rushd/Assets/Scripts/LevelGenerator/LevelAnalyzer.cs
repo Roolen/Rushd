@@ -23,7 +23,7 @@ namespace Assets.Scripts.LevelGenerator
             }
             else
             {
-                Debug.LogError("EL_0001: Ошибка загрузки файла уровня");
+                Debug.LogError("EL_001: Ошибка загрузки файла уровня");
                 SceneManager.LoadScene(0);
             }
         }
@@ -39,7 +39,7 @@ namespace Assets.Scripts.LevelGenerator
 
             List<Platform> platforms = new List<Platform>();
 
-            foreach (XmlNode xmlNode in xmlRoot)
+            foreach (XmlNode xmlNode in xmlRoot)  //Get childs root.
             {
                 Platform platform = new Platform();
 
@@ -53,6 +53,10 @@ namespace Assets.Scripts.LevelGenerator
                         {
                             platform.NamePlatform = attributeName.Value;
                         }
+                        else
+                        {
+                            Debug.LogError("EL_003: некорректные атрибуты платформы");
+                        }
 
                         XmlNode attributeType = xmlNode.Attributes.GetNamedItem("Type");
 
@@ -61,12 +65,20 @@ namespace Assets.Scripts.LevelGenerator
                             int indexType = Convert.ToInt32(attributeType.Value);
                             platform.TypePlatform = (TypesPlatform)indexType;
                         }
+                        else
+                        {
+                            Debug.LogError("EL_003: некорректные атрибуты платформы");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("EL_003: некорректные атрибуты платформы");
                     }
 
                     if (xmlNode.HasChildNodes)
                     {
                         Item item = new Item();
-                        XmlNode xmlItem = xmlNode.FirstChild;
+                        XmlNode xmlItem = xmlNode.FirstChild;  // Get childs xmlNode.
 
                         if (xmlItem.Attributes.Count > 0)
                         {
@@ -76,6 +88,10 @@ namespace Assets.Scripts.LevelGenerator
                             {
                                 item.NameItem = attributeName.Value;
                             }
+                            else
+                            {
+                                Debug.LogError("EL_004: некорректные атрибуты предмета");
+                            }
 
                             XmlNode attributeType = xmlItem.Attributes.GetNamedItem("Type");
 
@@ -84,8 +100,16 @@ namespace Assets.Scripts.LevelGenerator
                                 int indexType = Convert.ToInt32(attributeType.Value);
                                 item.TypeItem = (TypesItem)indexType;
                             }
+                            else
+                            {
+                                Debug.LogError("EL_004: некорректные атрибуты предмета");
+                            }
 
                             platform.ItemOnPlatform = item;
+                        }
+                        else
+                        {
+                            Debug.LogError("EL_004: некорректные атрибуты предмета");
                         }
                     }
 
@@ -110,7 +134,7 @@ namespace Assets.Scripts.LevelGenerator
                 }
                 else
                 {
-                    Debug.LogError("EL_002: Отсутствуют необходимые данные уровня");
+                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
                 }
 
                 XmlNode attributeDifficult = xmlRoot.Attributes.GetNamedItem("Difficult");
@@ -122,7 +146,7 @@ namespace Assets.Scripts.LevelGenerator
                 }
                 else
                 {
-                    Debug.LogError("EL_002: Отсутствуют необходимые данные уровня");
+                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
                 }
 
                 XmlNode attributeHeight = xmlRoot.Attributes.GetNamedItem("Height");
@@ -133,7 +157,7 @@ namespace Assets.Scripts.LevelGenerator
                 }
                 else
                 {
-                    Debug.LogError("EL_002: Отсутствуют необходимые данные уровня");
+                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
                 }
 
                 XmlNode attributeWeight = xmlRoot.Attributes.GetNamedItem("Weight");
@@ -144,7 +168,7 @@ namespace Assets.Scripts.LevelGenerator
                 }
                 else
                 {
-                    Debug.LogError("EL_002: Отсутствуют необходимые данные уровня");
+                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
                 }
 
                 XmlNode attributeLightColor = xmlRoot.Attributes.GetNamedItem("LightColor");
@@ -155,8 +179,14 @@ namespace Assets.Scripts.LevelGenerator
                 }
                 else
                 {
-                    Debug.LogError("EL_002: Отсутствуют необходимые данные уровня");
+                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
                 }
+            }
+            else
+            {
+                Debug.LogError("EL_002: Некорректные атрибуты уровня");
+
+                
             }
         }
     }
