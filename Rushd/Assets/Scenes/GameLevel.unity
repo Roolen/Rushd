@@ -187,13 +187,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2234456}
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 15, z: -25}
+  m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
+  m_LocalPosition: {x: 20, y: 65, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
 --- !u!1 &312372150
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,11 +223,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformOpenSpace: {fileID: 1416422462362556, guid: f45a35004a6871c44b813fe609b7dd17,
     type: 2}
+  tankPlayer: {fileID: 1123825578185068, guid: 1d577e252ff81954f9733f68f8604577, type: 2}
   typesPlatforms:
   - {fileID: 1239691506632306, guid: 5350c35b7b9820b4b8d01dfd9e21bfda, type: 2}
   - {fileID: 1048528767482326, guid: ff025eafaf940a94584a4ec98b496f53, type: 2}
   - {fileID: 1416422462362556, guid: f45a35004a6871c44b813fe609b7dd17, type: 2}
   - {fileID: 1765781454239000, guid: 883189547858b684c89ac7b39dbcc24b, type: 2}
+  typesItems:
+  - {fileID: 1007854155796372, guid: de58d0ab8d72eca4990f5b4e32364b1d, type: 2}
+  - {fileID: 1074789607551236, guid: 9490774b1ae0e294a94a705a9fca3d35, type: 2}
+  - {fileID: 1105998760861164, guid: 093d939b1fe1a7b4cb92c0348ccb4e8f, type: 2}
 --- !u!4 &312372152
 Transform:
   m_ObjectHideFlags: 0

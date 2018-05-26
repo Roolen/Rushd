@@ -39,84 +39,82 @@ namespace Assets.Scripts.LevelGenerator
 
             List<Platform> platforms = new List<Platform>();
 
-            foreach (XmlNode xmlNode in xmlRoot)  //Get childs root.
-            {
-                Platform platform = new Platform();
-
-                if (xmlNode.Name == "platform")
+            if (xmlRoot != null)
+                foreach (XmlNode xmlChild in xmlRoot) //Get childs root.
                 {
-                    if (xmlNode.Attributes.Count > 0)
+                    Platform platform = new Platform();
+
+                    if (xmlChild.Name == "platform")
                     {
-                        XmlNode attributeName = xmlNode.Attributes.GetNamedItem("Name");
-
-                        if (attributeName != null)
+                        if (xmlChild.Attributes.Count > 0)
                         {
-                            platform.NamePlatform = attributeName.Value;
-                        }
-                        else
-                        {
-                            Debug.LogError("EL_003: некорректные атрибуты платформы");
-                        }
-
-                        XmlNode attributeType = xmlNode.Attributes.GetNamedItem("Type");
-
-                        if (attributeType != null)
-                        {
-                            int indexType = Convert.ToInt32(attributeType.Value);
-                            platform.TypePlatform = (TypesPlatform)indexType;
-                        }
-                        else
-                        {
-                            Debug.LogError("EL_003: некорректные атрибуты платформы");
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError("EL_003: некорректные атрибуты платформы");
-                    }
-
-                    if (xmlNode.HasChildNodes)
-                    {
-                        Item item = new Item();
-                        XmlNode xmlItem = xmlNode.FirstChild;  // Get childs xmlNode.
-
-                        if (xmlItem.Attributes.Count > 0)
-                        {
-                            XmlNode attributeName = xmlItem.Attributes.GetNamedItem("Name");
+                            XmlNode attributeName = xmlChild.Attributes.GetNamedItem("Name");
 
                             if (attributeName != null)
                             {
-                                item.NameItem = attributeName.Value;
+                                platform.NamePlatform = attributeName.Value;
                             }
                             else
                             {
-                                Debug.LogError("EL_004: некорректные атрибуты предмета");
+                                Debug.LogError("EL_003: некорректные атрибуты платформы");
                             }
 
-                            XmlNode attributeType = xmlItem.Attributes.GetNamedItem("Type");
+                            XmlNode attributeType = xmlChild.Attributes.GetNamedItem("Type");
 
                             if (attributeType != null)
                             {
                                 int indexType = Convert.ToInt32(attributeType.Value);
-                                item.TypeItem = (TypesItem)indexType;
+                                platform.TypePlatform = (TypesPlatform) indexType;
+                            }
+                            else
+                            {
+                                Debug.LogError("EL_003: некорректные атрибуты платформы");
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError("EL_003: некорректные атрибуты платформы");
+                        }
+
+                        if (xmlChild.HasChildNodes)
+                        {
+                            Item item = new Item();
+                            XmlNode xmlItem = xmlChild.FirstChild; // Get childs xmlChild.
+
+                            if (xmlItem.Attributes != null && xmlItem.Attributes.Count > 0)
+                            {
+                                XmlNode attributeName = xmlItem.Attributes.GetNamedItem("Name");
+                                if (attributeName != null)
+                                {
+                                    item.NameItem = attributeName.Value;
+                                }
+                                else
+                                {
+                                    Debug.LogError("EL_004: некорректные атрибуты предмета");
+                                }
+
+                                XmlNode attributeType = xmlItem.Attributes.GetNamedItem("Type");
+                                if (attributeType != null)
+                                {
+                                    int indexType = Convert.ToInt32(attributeType.Value);
+                                    item.TypeItem = (TypesItem) indexType;
+                                }
+                                else
+                                {
+                                    Debug.LogError("EL_004: некорректные атрибуты предмета");
+                                }
+
+                                platform.ItemOnPlatform = item;
                             }
                             else
                             {
                                 Debug.LogError("EL_004: некорректные атрибуты предмета");
                             }
-
-                            platform.ItemOnPlatform = item;
-                        }
-                        else
-                        {
-                            Debug.LogError("EL_004: некорректные атрибуты предмета");
                         }
                     }
 
+                    platforms.Add(platform);
                 }
-
-                platforms.Add(platform);
-            }
 
             dates.Platforms = platforms;
 

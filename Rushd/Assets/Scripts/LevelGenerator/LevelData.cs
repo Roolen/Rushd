@@ -40,7 +40,11 @@ namespace Assets.Scripts.LevelGenerator
         [Header("Платформы")]
         public GameObject platformOpenSpace;
 
+        public GameObject tankPlayer;
+
         public GameObject[] typesPlatforms;
+
+        public GameObject[] typesItems;
 
         private string nameLevel;
         private Difficult difficultLevel;
