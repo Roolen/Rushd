@@ -140,6 +140,13 @@ namespace Assets.Scripts.LevelGenerator
                                             Debug.LogError("EL_004: некорректные атрибуты предмета");
                                         }
 
+                                        XmlNode attributeRotate = xmlTank.Attributes.GetNamedItem("Rotate");
+                                        if (attributeRotate != null)
+                                        {
+                                            tank.RotateTank = Convert.ToInt32(attributeRotate.Value);
+                                            Debug.Log(Convert.ToInt32(attributeRotate.Value));
+                                        }
+
                                         platform.TankOnPlatform = tank;
                                     }
                                 }

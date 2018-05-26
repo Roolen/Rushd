@@ -342,6 +342,7 @@ namespace Assets.Scripts.LevelGenerator
     {
         private string nameTank;
         private TypesTank typeTank;
+        private int rotateTank;
 
         public string NameTank
         {
@@ -366,6 +367,19 @@ namespace Assets.Scripts.LevelGenerator
             set
             {
                 typeTank = value;
+            }
+        }
+
+        public int RotateTank
+        {
+            get
+            {
+                return rotateTank;
+            }
+
+            set
+            {
+                rotateTank = value;
             }
         }
 

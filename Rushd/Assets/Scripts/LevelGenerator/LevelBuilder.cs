@@ -58,6 +58,7 @@ namespace Assets.Scripts.LevelGenerator
                         tankInstance.name = platform.TankOnPlatform.NameTank;
 
                         tankInstance.transform.position = new Vector3(i * 15, 5, b * 15);
+                        tankInstance.transform.Rotate(0, platform.TankOnPlatform.RotateTank, 0);
                     }
 
                     i++;
