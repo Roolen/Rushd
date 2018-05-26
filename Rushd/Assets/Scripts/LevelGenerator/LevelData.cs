@@ -35,12 +35,19 @@ namespace Assets.Scripts.LevelGenerator
         WeaponCharges
     }
 
+    public enum TypesTank
+    {
+        LightTank,
+        MediumTank,
+        HeavyTank
+    }
+
     public class LevelData : MonoBehaviour
     {
         [Header("Платформы")]
         public GameObject platformOpenSpace;
 
-        public GameObject tankPlayer;
+        public GameObject[] tanksTypes;
 
         public GameObject[] typesPlatforms;
 
@@ -186,6 +193,7 @@ namespace Assets.Scripts.LevelGenerator
         private string namePlatform;
         private TypesPlatform typePlatform;
         private Item itemOnPlatform;
+        private Tank tankOnPlatform;
 
         /// <summary>
         /// Предмет находящийся на игровой платформе.
@@ -238,6 +246,19 @@ namespace Assets.Scripts.LevelGenerator
             set
             {
                 typePlatform = value;
+            }
+        }
+
+        public Tank TankOnPlatform
+        {
+            get
+            {
+                return tankOnPlatform;
+            }
+
+            set
+            {
+                tankOnPlatform = value;
             }
         }
 
@@ -315,5 +336,39 @@ namespace Assets.Scripts.LevelGenerator
         }
 
         public  Item() { }
+    }
+
+    public class Tank
+    {
+        private string nameTank;
+        private TypesTank typeTank;
+
+        public string NameTank
+        {
+            get
+            {
+                return nameTank;
+            }
+
+            set
+            {
+                nameTank = value;
+            }
+        }
+
+        public TypesTank TypeTank
+        {
+            get
+            {
+                return typeTank;
+            }
+
+            set
+            {
+                typeTank = value;
+            }
+        }
+
+        public Tank() { }
     }
 }

@@ -223,7 +223,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformOpenSpace: {fileID: 1416422462362556, guid: f45a35004a6871c44b813fe609b7dd17,
     type: 2}
-  tankPlayer: {fileID: 1123825578185068, guid: 1d577e252ff81954f9733f68f8604577, type: 2}
+  tanksTypes:
+  - {fileID: 1215973449887966, guid: e2659a4d01c81194b91f88052757fefe, type: 2}
+  - {fileID: 1123825578185068, guid: 1d577e252ff81954f9733f68f8604577, type: 2}
+  - {fileID: 1594655934600256, guid: cd9c25c0ef229234ea82e64281f16c89, type: 2}
   typesPlatforms:
   - {fileID: 1239691506632306, guid: 5350c35b7b9820b4b8d01dfd9e21bfda, type: 2}
   - {fileID: 1048528767482326, guid: ff025eafaf940a94584a4ec98b496f53, type: 2}

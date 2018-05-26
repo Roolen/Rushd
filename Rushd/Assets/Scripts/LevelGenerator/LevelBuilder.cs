@@ -18,7 +18,7 @@ namespace Assets.Scripts.LevelGenerator
         {
             GameObject landingPlatform = GameObject.FindWithTag("LandingPlatform");
 
-            GameObject tankInstance = Instantiate(data.tankPlayer);
+            GameObject tankInstance = Instantiate(data.tanksTypes[1]);
 
             tankInstance.transform.position = new Vector3(landingPlatform.transform.position.x, 5, landingPlatform.transform.position.z);
         }
@@ -49,6 +49,15 @@ namespace Assets.Scripts.LevelGenerator
                         itemInstance.name = platform.ItemOnPlatform.NameItem;
 
                         itemInstance.transform.position = new Vector3(i * 15, 5, b * 15);
+                    }
+
+                    if (platform.TankOnPlatform != null)
+                    {
+                        GameObject tankInstance = Instantiate(data.tanksTypes[(int) platform.TankOnPlatform.TypeTank]);
+
+                        tankInstance.name = platform.TankOnPlatform.NameTank;
+
+                        tankInstance.transform.position = new Vector3(i * 15, 5, b * 15);
                     }
 
                     i++;
