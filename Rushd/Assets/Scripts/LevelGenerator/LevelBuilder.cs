@@ -20,6 +20,13 @@ namespace Assets.Scripts.LevelGenerator
 
             GameObject tankInstance = Instantiate(data.tanksTypes[1]);
 
+            tankInstance.name = "PlayerTank";
+
+            {
+                tankInstance.AddComponent<TankController>();
+                tankInstance.AddComponent<PlayerController>();
+            }
+
             tankInstance.transform.position = new Vector3(landingPlatform.transform.position.x, 5, landingPlatform.transform.position.z);
         }
 
@@ -56,6 +63,12 @@ namespace Assets.Scripts.LevelGenerator
                         GameObject tankInstance = Instantiate(data.tanksTypes[(int) platform.TankOnPlatform.TypeTank]);
 
                         tankInstance.name = platform.TankOnPlatform.NameTank;
+
+                        {
+                            tankInstance.AddComponent<TankController>();
+                            tankInstance.AddComponent<TankBot>();
+                            tankInstance.GetComponent<TankBot>().targetPoint = GameObject.Find(platform.TankOnPlatform.TargetPoint);
+                        }
 
                         tankInstance.transform.position = new Vector3(i * 15, 5, b * 15);
                         tankInstance.transform.Rotate(0, platform.TankOnPlatform.RotateTank, 0);

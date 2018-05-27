@@ -137,14 +137,19 @@ namespace Assets.Scripts.LevelGenerator
                                         }
                                         else
                                         {
-                                            Debug.LogError("EL_004: некорректные атрибуты предмета");
+                                            Debug.LogError("EL_005: некорректные атрибуты танка");
                                         }
 
                                         XmlNode attributeRotate = xmlTank.Attributes.GetNamedItem("Rotate");
                                         if (attributeRotate != null)
                                         {
                                             tank.RotateTank = Convert.ToInt32(attributeRotate.Value);
-                                            Debug.Log(Convert.ToInt32(attributeRotate.Value));
+                                        }
+
+                                        XmlNode attributeTargetPoint = xmlTank.Attributes.GetNamedItem("TargetPoint");
+                                        if (attributeTargetPoint != null)
+                                        {
+                                            tank.TargetPoint = attributeTargetPoint.Value;
                                         }
 
                                         platform.TankOnPlatform = tank;
