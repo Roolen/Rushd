@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,7 +14,8 @@ namespace Assets.Scripts.LevelGenerator
         private void Start ()
         {
             FileInfo fileLevel = null;
-            fileLevel = new FileInfo("D:\\Level_1.lvl");
+            //fileLevel = new FileInfo("D:\\Level_1.lvl");  // Debug version.
+            fileLevel = new FileInfo("Maps\\Level_1.lvl");  //Realese version.
 
             if (fileLevel.Exists)
             {
