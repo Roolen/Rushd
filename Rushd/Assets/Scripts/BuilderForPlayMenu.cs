@@ -11,12 +11,17 @@ namespace Assets.Scripts
 {
     public class BuilderForPlayMenu : MonoBehaviour
     {
-        public GameObject contentArea;
+        public RectTransform contentArea;
         public Button buttonLevel;
+
+        public Text textLevelName;
+        public Text textLevelDescription;
+        public Text textLevelDifficult;
 
         void Start ()
         {
-		    BuildPlayMenu();
+
+            BuildPlayMenu();
         }
 
         private bool BuildPlayMenu()
@@ -29,6 +34,9 @@ namespace Assets.Scripts
                 Debug.LogError("EL_001: Проблема с загрузкой файла игрового уровня");
                 return false;
             }
+
+            int y = 500;
+            int h = 500;
 
             foreach (FileInfo levelFile in dir.GetFiles())
             {
@@ -44,9 +52,16 @@ namespace Assets.Scripts
                 XmlElement xmlRoot = xmlDoc.DocumentElement;
 
                 Button instanceButton = Instantiate(buttonLevel);
-                instanceButton.transform.parent = contentArea.transform;
+                instanceButton.transform.SetParent(contentArea.transform);
+                
+                instanceButton.transform.position = new Vector3(0, y, 0);
+                y -= 40;
+                h += 40;
 
                 LevelInfo level = instanceButton.GetComponent<LevelInfo>();
+
+                instanceButton.onClick.AddListener(delegate { ButtonLevel_Click(level); });
+
 
                 if (xmlRoot.Attributes.Count > 0)
                 {
@@ -118,7 +133,16 @@ namespace Assets.Scripts
                 }
             }
 
+            contentArea.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, 0, h);
+
             return true;
+        }
+
+        private void ButtonLevel_Click(LevelInfo level)
+        {
+            textLevelName.text = level.NameLevel;
+            textLevelDescription.text = level.DescriptionLevel;
+            textLevelDifficult.text = level.DifficultLevel.ToString();
         }
     }
 }
