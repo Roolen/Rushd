@@ -14,8 +14,7 @@ namespace Assets.Scripts.LevelGenerator
         private void Start ()
         {
             FileInfo fileLevel = null;
-            //fileLevel = new FileInfo("D:\\Level_1.lvl");  // Debug version.
-            fileLevel = new FileInfo("Maps\\Level_1.lvl");  //Realese version.
+            fileLevel = StateController.currentLevel.FileLevel;
 
             if (fileLevel.Exists)
             {
@@ -48,28 +47,14 @@ namespace Assets.Scripts.LevelGenerator
                     {
                         if (xmlPlatform.Attributes.Count > 0)
                         {
-                            XmlNode attributeName = xmlPlatform.Attributes.GetNamedItem("Name");
+                            platform.NamePlatform = GetValueOfAttribute(xmlPlatform, "Name").Value;
 
-                            if (attributeName != null)
                             {
-                                platform.NamePlatform = attributeName.Value;
-                            }
-                            else
-                            {
-                                Debug.LogError("EL_003: некорректные атрибуты платформы");
-                            }
-
-                            XmlNode attributeType = xmlPlatform.Attributes.GetNamedItem("Type");
-
-                            if (attributeType != null)
-                            {
-                                int indexType = Convert.ToInt32(attributeType.Value);
+                                int indexType = Convert.ToInt32(GetValueOfAttribute(xmlPlatform, "Type").Value);
                                 platform.TypePlatform = (TypesPlatform) indexType;
                             }
-                            else
-                            {
-                                Debug.LogError("EL_003: некорректные атрибуты платформы");
-                            }
+
+                            
                         }
                         else
                         {
@@ -87,25 +72,11 @@ namespace Assets.Scripts.LevelGenerator
 
                                     if (xmlItem.Attributes != null && xmlItem.Attributes.Count > 0)
                                     {
-                                        XmlNode attributeName = xmlItem.Attributes.GetNamedItem("Name");
-                                        if (attributeName != null)
-                                        {
-                                            item.NameItem = attributeName.Value;
-                                        }
-                                        else
-                                        {
-                                            Debug.LogError("EL_004: некорректные атрибуты предмета");
-                                        }
+                                        item.NameItem = GetValueOfAttribute(xmlItem, "Name").Value;
 
-                                        XmlNode attributeType = xmlItem.Attributes.GetNamedItem("Type");
-                                        if (attributeType != null)
                                         {
-                                            int indexType = Convert.ToInt32(attributeType.Value);
+                                            int indexType = Convert.ToInt32(GetValueOfAttribute(xmlItem, "Type").Value);
                                             item.TypeItem = (TypesItem) indexType;
-                                        }
-                                        else
-                                        {
-                                            Debug.LogError("EL_004: некорректные атрибуты предмета");
                                         }
 
                                         platform.ItemOnPlatform = item;
@@ -119,38 +90,18 @@ namespace Assets.Scripts.LevelGenerator
 
                                     if (xmlTank.Attributes != null && xmlTank.Attributes.Count > 0)
                                     {
-                                        XmlNode attributeName = xmlTank.Attributes.GetNamedItem("Name");
-                                        if (attributeName != null)
+                                        tank.NameTank = GetValueOfAttribute(xmlTank, "Name").Value;
+
                                         {
-                                            tank.NameTank = attributeName.Value;
-                                        }
-                                        else
-                                        {
-                                            Debug.LogError("EL_005: некорректные атрибуты танка");
+                                            int indexType = Convert.ToInt32(GetValueOfAttribute(xmlTank, "Type").Value);
+                                            tank.TypeTank = (TypesTank)indexType;
                                         }
 
-                                        XmlNode attributeType = xmlTank.Attributes.GetNamedItem("Type");
-                                        if (attributeType != null)
-                                        {
-                                            int indexType = Convert.ToInt32(attributeType.Value);
-                                            tank.TypeTank = (TypesTank) indexType;
-                                        }
-                                        else
-                                        {
-                                            Debug.LogError("EL_005: некорректные атрибуты танка");
-                                        }
+                                        if (GetValueOfAttribute(xmlTank, "Rotate") != null)
+                                            tank.RotateTank = Convert.ToInt32(GetValueOfAttribute(xmlTank, "Rotate").Value);
 
-                                        XmlNode attributeRotate = xmlTank.Attributes.GetNamedItem("Rotate");
-                                        if (attributeRotate != null)
-                                        {
-                                            tank.RotateTank = Convert.ToInt32(attributeRotate.Value);
-                                        }
-
-                                        XmlNode attributeTargetPoint = xmlTank.Attributes.GetNamedItem("TargetPoint");
-                                        if (attributeTargetPoint != null)
-                                        {
-                                            tank.TargetPoint = attributeTargetPoint.Value;
-                                        }
+                                        if (GetValueOfAttribute(xmlTank, "TargetPoint") != null)
+                                            tank.TargetPoint = GetValueOfAttribute(xmlTank, "TargetPoint").Value;
 
                                         platform.TankOnPlatform = tank;
                                     }
@@ -170,67 +121,55 @@ namespace Assets.Scripts.LevelGenerator
         {
             if (xmlRoot.Attributes.Count > 0)
             {
-                XmlNode attributeName = xmlRoot.Attributes.GetNamedItem("Name");
+                dates.NameLevel = GetValueOfAttribute(xmlRoot, "Name").Value;
 
-                if (attributeName != null)
                 {
-                    dates.NameLevel = attributeName.Value;
-                }
-                else
-                {
-                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
+                    int indexDifficult = Convert.ToInt32(GetValueOfAttribute(xmlRoot, "Difficult").Value);
+                    dates.DifficultLevel = (Difficult) indexDifficult;
                 }
 
-                XmlNode attributeDifficult = xmlRoot.Attributes.GetNamedItem("Difficult");
+                dates.Height = Convert.ToInt32(GetValueOfAttribute(xmlRoot, "Height").Value);
 
-                if (attributeDifficult != null)
-                {
-                    int indexDifficult = Convert.ToInt32(attributeDifficult.Value);
-                    dates.DifficultLevel = (Difficult)indexDifficult;
-                }
-                else
-                {
-                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
-                }
+                dates.Weight = Convert.ToInt32(GetValueOfAttribute(xmlRoot, "Weight").Value);
 
-                XmlNode attributeHeight = xmlRoot.Attributes.GetNamedItem("Height");
+                dates.LightColor = GetValueOfAttribute(xmlRoot, "LightColor").Value;
 
-                if (attributeHeight != null)
-                {
-                    dates.Height = Convert.ToInt32(attributeHeight.Value);
-                }
-                else
-                {
-                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
-                }
-
-                XmlNode attributeWeight = xmlRoot.Attributes.GetNamedItem("Weight");
-
-                if (attributeWeight != null)
-                {
-                    dates.Weight = Convert.ToInt32(attributeWeight.Value);
-                }
-                else
-                {
-                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
-                }
-
-                XmlNode attributeLightColor = xmlRoot.Attributes.GetNamedItem("LightColor");
-
-                if (attributeLightColor != null)
-                {
-                    dates.LightColor = attributeLightColor.Value;
-                }
-                else
-                {
-                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
-                }
             }
             else
             {
                 Debug.LogError("EL_002: Некорректные атрибуты уровня");
 
                 
+            }
+        }
+
+        private XmlNode GetValueOfAttribute(XmlElement xmlRoot, string nameAttribute)
+        {
+            XmlNode attribute = xmlRoot.Attributes.GetNamedItem(nameAttribute);
+
+            if (attribute != null)
+            {
+                return attribute;
+            }
+            else
+            {
+                Debug.LogError("EL_002: Некорректные атрибуты уровня");
+                return null;
+            }
+        }
+
+        private XmlNode GetValueOfAttribute(XmlNode xmlNode, string nameAttribute)
+        {
+            XmlNode attribute = xmlNode.Attributes.GetNamedItem(nameAttribute);
+
+            if (attribute != null)
+            {
+                return attribute;
+            }
+            else
+            {
+                Debug.LogError("EL_002: Некорректные атрибуты уровня");
+                return null;
             }
         }
     }
