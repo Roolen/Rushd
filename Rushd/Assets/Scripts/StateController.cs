@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
-    public class StateController : MonoBehaviour {
+    public class StateController : MonoBehaviour
+    {
+
+        public LevelInfo nextLevel;
+        public static LevelInfo currentLevel;
 
         public enum States
         {
@@ -27,6 +32,13 @@ namespace Assets.Scripts
             else if (stateNew == States.Stop) Stop();
 
             else if (stateNew == States.Exit) Exit();
+        }
+
+        public void PlayLevel()
+        {
+            currentLevel = nextLevel;
+
+            SceneManager.LoadScene("GameLevel");
         }
 
         public void ChangeState(int i)

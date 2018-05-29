@@ -15,7 +15,8 @@ namespace Assets.Scripts.LevelGenerator
         {
             FileInfo fileLevel = null;
             //fileLevel = new FileInfo("D:\\Level_1.lvl");  // Debug version.
-            fileLevel = new FileInfo("Maps\\Level_1.lvl");  //Realese version.
+            //fileLevel = new FileInfo("Maps\\Level_1.lvl");  //Realese version.
+            fileLevel = StateController.currentLevel.FileLevel;
 
             if (fileLevel.Exists)
             {

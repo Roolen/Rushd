@@ -3,7 +3,7 @@
   <Class Name="Assets.Scripts.BuilderForPlayMenu" Collapsed="true">
     <Position X="1" Y="1.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAAACAAAAAgAEAAAAEAAAAAAACAAAAAAQAAAAA=</HashCode>
+      <HashCode>AIAAAAAAACAAAAAgAEAAAAUAAgEAAACAAAAAAQAAAAA=</HashCode>
       <FileName>Assets\Scripts\BuilderForPlayMenu.cs</FileName>
     </TypeIdentifier>
   </Class>

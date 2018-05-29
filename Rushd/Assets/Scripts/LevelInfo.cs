@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.LevelGenerator;
+﻿using System.IO;
+using Assets.Scripts.LevelGenerator;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ namespace Assets.Scripts
         private Difficult difficultLevel;
         private int heightLevel;
         private int weightLevel;
+        private FileInfo fileLevel;
 
         public string NameLevel
         {
@@ -76,6 +78,19 @@ namespace Assets.Scripts
             set
             {
                 weightLevel = value;
+            }
+        }
+
+        public FileInfo FileLevel
+        {
+            get
+            {
+                return fileLevel;
+            }
+
+            set
+            {
+                fileLevel = value;
             }
         }
     }

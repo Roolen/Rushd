@@ -71,6 +71,8 @@ namespace Assets.Scripts
 
                     level.WeightLevel = Convert.ToInt32(GetValueOfAttribute(xmlRoot, "Weight").Value);
 
+                    level.FileLevel = levelFile;
+
 
                     levels.Add(level);
                 }
@@ -124,6 +126,8 @@ namespace Assets.Scripts
             textLevelName.text = level.NameLevel;
             textLevelDescription.text = level.DescriptionLevel;
             textLevelDifficult.text = level.DifficultLevel.ToString();
+
+            GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>().nextLevel = level;
         }
     }
 }
