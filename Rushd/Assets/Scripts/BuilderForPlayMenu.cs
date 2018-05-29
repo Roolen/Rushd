@@ -13,6 +13,9 @@ namespace Assets.Scripts
     {
         private List<LevelInfo> levels = new List<LevelInfo>();
 
+        [Header("Путь к папке с картами")]
+        public string pathByMap;
+
         [Header("Родительский объект в котором будут создаваться кнопки уровней")]
         public RectTransform contentArea;
         [Header("Префаб содержащий кнопку уровня")]
@@ -38,7 +41,7 @@ namespace Assets.Scripts
         private bool BuildPlayMenu()
         {
             //DirectoryInfo dir = new DirectoryInfo("Map\\");
-            DirectoryInfo dir = new DirectoryInfo("С:\\Map");
+            DirectoryInfo dir = new DirectoryInfo(pathByMap);
 
             if (!dir.Exists)
             {
