@@ -11,6 +11,8 @@ namespace Assets.Scripts
 {
     public class BuilderForPlayMenu : MonoBehaviour
     {
+        private List<LevelInfo> levels = new List<LevelInfo>();
+
         public RectTransform contentArea;
         public Button buttonLevel;
 
@@ -22,6 +24,8 @@ namespace Assets.Scripts
         {
 
             BuildPlayMenu();
+
+            MakeLevelButtons();
         }
 
         private bool BuildPlayMenu()
@@ -34,9 +38,6 @@ namespace Assets.Scripts
                 Debug.LogError("EL_001: Проблема с загрузкой файла игрового уровня");
                 return false;
             }
-
-            int y = 500;
-            int h = 500;
 
             foreach (FileInfo levelFile in dir.GetFiles())
             {
@@ -51,16 +52,7 @@ namespace Assets.Scripts
 
                 XmlElement xmlRoot = xmlDoc.DocumentElement;
 
-                Button instanceButton = Instantiate(buttonLevel);
-                instanceButton.transform.SetParent(contentArea.transform);
-                
-                instanceButton.transform.position = new Vector3(0, y, 0);
-                y -= 40;
-                h += 40;
-
-                LevelInfo level = instanceButton.GetComponent<LevelInfo>();
-
-                instanceButton.onClick.AddListener(delegate { ButtonLevel_Click(level); });
+                LevelInfo level = new LevelInfo();
 
 
                 if (xmlRoot.Attributes.Count > 0)
@@ -121,21 +113,37 @@ namespace Assets.Scripts
                     {
                         Debug.LogError("EL_002: Некорректные атрибуты уровня");
                     }
+
+                    levels.Add(level);
                 }
                 else
                 {
                     Debug.LogError("EL_002: Некорректные атрибуты уровня");
                 }
 
-
-                {
-                    level.textButtonLevel.text = level.nameLevel;
-                }
             }
 
-            contentArea.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, 0, h);
-
             return true;
+        }
+
+        private void MakeLevelButtons()
+        {
+            int y = 250;
+
+            foreach (LevelInfo level in levels)
+            {
+                Button instanceButton = Instantiate(buttonLevel);
+                level.textButtonLevel = instanceButton.GetComponent<LevelInfo>().textButtonLevel;
+                instanceButton.transform.SetParent(contentArea.transform);
+                instanceButton.transform.position = new Vector3(0, y, 0);
+
+                instanceButton.onClick.AddListener(delegate { ButtonLevel_Click(level); });
+
+                level.textButtonLevel.text = level.nameLevel;
+
+                y -= 40;
+            }
+
         }
 
         private void ButtonLevel_Click(LevelInfo level)
