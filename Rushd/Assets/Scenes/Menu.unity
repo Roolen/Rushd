@@ -1647,6 +1647,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &688954850 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114106494948119032, guid: 483c2488d22263345a0a518c80d8e46f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1505695050}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &702881415
 Prefab:
   m_ObjectHideFlags: 0
@@ -3943,6 +3949,15 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1781335214659280, guid: 483c2488d22263345a0a518c80d8e46f, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114106494948119032, guid: 483c2488d22263345a0a518c80d8e46f,
+        type: 2}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 483c2488d22263345a0a518c80d8e46f, type: 2}
   m_IsPrefabParent: 0
@@ -5310,6 +5325,7 @@ MonoBehaviour:
   contentArea: {fileID: 840833535}
   buttonLevel: {fileID: 114255481252498580, guid: 78cd231c425a6414d91b7a347105eab4,
     type: 2}
+  playButton: {fileID: 688954850}
   textLevelName: {fileID: 265482931}
   textLevelDescription: {fileID: 1082203254}
   textLevelDifficult: {fileID: 857831483}

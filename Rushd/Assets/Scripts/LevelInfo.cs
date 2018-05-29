@@ -7,9 +7,12 @@ namespace Assets.Scripts
 {
     public class LevelInfo : MonoBehaviour
     {
+        [Tooltip("Текст кнопки в который будет записываться название уровня")]
+        [Header("Текст с названием")]
         public Text textButtonLevel;
 
-        public string nameLevel;
+        [SerializeField]
+        private string nameLevel;
         private string descriptionLevel;
         private Difficult difficultLevel;
         private int heightLevel;

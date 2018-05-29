@@ -13,11 +13,18 @@ namespace Assets.Scripts
     {
         private List<LevelInfo> levels = new List<LevelInfo>();
 
+        [Header("Родительский объект в котором будут создаваться кнопки уровней")]
         public RectTransform contentArea;
+        [Header("Префаб содержащий кнопку уровня")]
         public Button buttonLevel;
+        [Header("Кнопка запуска уровня")]
+        public Button playButton;
 
+        [Header("Текст в который будет записываться название уровня")]
         public Text textLevelName;
+        [Header("Текст в который будет записываться описание уровня")]
         public Text textLevelDescription;
+        [Header("Текст в который будет записываться сложность уровня")]
         public Text textLevelDifficult;
 
         void Start ()
@@ -58,7 +65,7 @@ namespace Assets.Scripts
                 if (xmlRoot.Attributes.Count > 0)
                 {
 
-                    level.nameLevel = GetValueOfAttribute(xmlRoot, "Name").Value;
+                    level.NameLevel = GetValueOfAttribute(xmlRoot, "Name").Value;
 
                     level.DescriptionLevel = GetValueOfAttribute(xmlRoot, "Description").Value;
 
@@ -99,7 +106,7 @@ namespace Assets.Scripts
 
                 instanceButton.onClick.AddListener(delegate { ButtonLevel_Click(level); });
 
-                level.textButtonLevel.text = level.nameLevel;
+                level.textButtonLevel.text = level.NameLevel;
 
                 y -= 40;
             }
@@ -128,6 +135,8 @@ namespace Assets.Scripts
             textLevelDifficult.text = level.DifficultLevel.ToString();
 
             GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>().nextLevel = level;
+
+            playButton.interactable = true;
         }
     }
 }
