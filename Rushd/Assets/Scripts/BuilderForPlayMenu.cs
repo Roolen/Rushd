@@ -58,61 +58,19 @@ namespace Assets.Scripts
                 if (xmlRoot.Attributes.Count > 0)
                 {
 
-                    XmlNode attributeName = xmlRoot.Attributes.GetNamedItem("Name");
+                    level.nameLevel = GetValueOfAttribute(xmlRoot, "Name").Value;
 
-                    if (attributeName != null)
-                    {
-                        level.NameLevel = attributeName.Value;
-                    }
-                    else
-                    {
-                        Debug.LogError("EL_002: Некорректные атрибуты уровня");
-                    }
+                    level.DescriptionLevel = GetValueOfAttribute(xmlRoot, "Description").Value;
 
-                    XmlNode attributeDescriprion = xmlRoot.Attributes.GetNamedItem("Description");
-
-                    if (attributeDescriprion != null)
                     {
-                        level.DescriptionLevel = attributeDescriprion.Value;
-                    }
-                    else
-                    {
-                        Debug.LogError("EL_002: Некорректные атрибуты уровня");
-                    }
-
-                    XmlNode attributeDifficult = xmlRoot.Attributes.GetNamedItem("Difficult");
-
-                    if (attributeDifficult != null)
-                    {
-                        int indexDifficult = Convert.ToInt32(attributeDifficult.Value);
+                        int indexDifficult = Convert.ToInt32(GetValueOfAttribute(xmlRoot, "Difficult").Value);
                         level.DifficultLevel = (Difficult)indexDifficult;
                     }
-                    else
-                    {
-                        Debug.LogError("EL_002: Некорректные атрибуты уровня");
-                    }
 
-                    XmlNode attributeHeight = xmlRoot.Attributes.GetNamedItem("Height");
+                    level.HeightLevel = Convert.ToInt32(GetValueOfAttribute(xmlRoot, "Height").Value);
 
-                    if (attributeHeight != null)
-                    {
-                        level.HeightLevel = Convert.ToInt32(attributeHeight.Value);
-                    }
-                    else
-                    {
-                        Debug.LogError("EL_002: Некорректные атрибуты уровня");
-                    }
+                    level.WeightLevel = Convert.ToInt32(GetValueOfAttribute(xmlRoot, "Weight").Value);
 
-                    XmlNode attributeWeight = xmlRoot.Attributes.GetNamedItem("Weight");
-
-                    if (attributeWeight != null)
-                    {
-                        level.WeightLevel = Convert.ToInt32(attributeWeight.Value);
-                    }
-                    else
-                    {
-                        Debug.LogError("EL_002: Некорректные атрибуты уровня");
-                    }
 
                     levels.Add(level);
                 }
@@ -144,6 +102,21 @@ namespace Assets.Scripts
                 y -= 40;
             }
 
+        }
+
+        private XmlNode GetValueOfAttribute(XmlElement xmlRoot, string nameAttribute)
+        {
+            XmlNode attribute = xmlRoot.Attributes.GetNamedItem(nameAttribute);
+
+            if (attribute != null)
+            {
+                return attribute;
+            }
+            else
+            {
+                Debug.LogError("EL_002: Некорректные атрибуты уровня");
+                return null;
+            }
         }
 
         private void ButtonLevel_Click(LevelInfo level)
