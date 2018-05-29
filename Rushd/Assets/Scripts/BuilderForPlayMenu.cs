@@ -38,7 +38,7 @@ namespace Assets.Scripts
         private bool BuildPlayMenu()
         {
             //DirectoryInfo dir = new DirectoryInfo("Map\\");
-            DirectoryInfo dir = new DirectoryInfo("D:\\Map");
+            DirectoryInfo dir = new DirectoryInfo("С:\\Map");
 
             if (!dir.Exists)
             {
