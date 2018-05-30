@@ -2,15 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankController : MonoBehaviour {
+public class TankController : MonoBehaviour
+{
+    public float HoverZ;
+    public Rigidbody rb;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private void MoveForvardTank()
+    {
+
+    }
+
+    private void TurnLeftTank()
+    {
+
+    }
+
+    private void TurnRightTank()
+    {
+
+    }
+
+    private void MoveBackTank()
+    {
+
+    }
+
+    private void HoverTank()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.AddForce(transform.up * HoverZ);
+        if (HoverZ == 30)
+            HoverZ = 0;
+        else if (HoverZ == -30)
+            HoverZ = 0;
+    }
+
+    private void StabilizationTank()
+    {
+
+     
+    
+    }
+
+
+    void FixedUpdate()
+    {
+        HoverTank();
+    }
+
+    
+
+
+
+
+
 }
