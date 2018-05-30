@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using System.IO;
 using System.Xml;
 using Assets.Scripts.LevelGenerator;
-using UnityEditor.IMGUI.Controls;
 
 namespace Assets.Scripts
 {
@@ -98,20 +97,19 @@ namespace Assets.Scripts
 
         private void MakeLevelButtons()
         {
-            int y = 250;
+            int y = -20;
 
             foreach (LevelInfo level in levels)
             {
-                Button instanceButton = Instantiate(buttonLevel);
+                Button instanceButton = Instantiate(buttonLevel,contentArea.transform);
                 level.textButtonLevel = instanceButton.GetComponent<LevelInfo>().textButtonLevel;
-                instanceButton.transform.SetParent(contentArea.transform);
-                instanceButton.transform.position = new Vector3(0, y, 0);
+                instanceButton.transform.Translate(0, y, 0);
 
                 instanceButton.onClick.AddListener(delegate { ButtonLevel_Click(level); });
 
                 level.textButtonLevel.text = level.NameLevel;
 
-                y -= 40;
+                y -= 35;
             }
 
         }
