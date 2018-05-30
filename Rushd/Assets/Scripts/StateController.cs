@@ -9,11 +9,14 @@ namespace Assets.Scripts
         public LevelInfo nextLevel;
         public static LevelInfo currentLevel;
 
+        public bool stopGame;
+
         public enum States
         {
             Play = 0,
             Stop = 1,
-            Exit = 2
+            Pause = 2,
+            Exit = 3
         }
 
         void Start ()
@@ -31,8 +34,11 @@ namespace Assets.Scripts
 
             else if (stateNew == States.Stop) Stop();
 
+            else if (stateNew == States.Pause) Pause();
+
             else if (stateNew == States.Exit) Exit();
         }
+
 
         public void PlayLevel()
         {
@@ -67,6 +73,7 @@ namespace Assets.Scripts
             try
             {
                 Time.timeScale = 1.0f;
+                stopGame = false;
                 Debug.Log("Time play");
 
                 return true;
@@ -82,8 +89,25 @@ namespace Assets.Scripts
         {
             try
             {
-                Time.timeScale = 0.0f;
+                Time.timeScale = 1.0f;
+                stopGame = true;
                 Debug.Log("Time stop");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e.Message);
+                return false;
+            }
+        }
+
+        private bool Pause()
+        {
+            try
+            {
+                Time.timeScale = 0.0f;
+                Debug.Log("Time pause");
 
                 return true;
             }
