@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Xml;
 using System.IO;
 using Assets.Scripts.LevelGenerator;
@@ -11,15 +12,80 @@ public class EditorManager : MonoBehaviour
 {
     public StateController stateController;
     public LevelData dates;
+    public Button buttonEditor;
+    public Transform panelPlatforms;
+    public Transform panelItems;
+    public Transform panelTanks;
+
+    public Collider myCollider;
+    private int typeSelectElement;
+    private GameObject selectElement;
 
     private void Start()
     {
         stateController.ChangeState(StateController.States.Stop);
+
+        ShowElementsPanels();
+
+        myCollider = GameObject.FindGameObjectWithTag("LandingPlatform").GetComponent<Collider>();
     }
 
     public void SaveFile()
     {
         SaveChangesInFile();
+    }
+
+    public void ShowElementsPanels()
+    {
+        int i = -30;
+
+        foreach (GameObject platform in dates.typesPlatforms)
+        {
+            Button buttonInstance = Instantiate(buttonEditor, panelPlatforms.transform);
+            buttonInstance.GetComponentInChildren<Text>().text = platform.name;
+            buttonInstance.transform.Translate(65, i, 0);
+
+            buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(0, platform.gameObject); });
+
+            i -= 30;
+        }
+
+        int j = -30;
+
+        foreach (GameObject item in dates.typesItems)
+        {
+            Button buttonInstance = Instantiate(buttonEditor, panelItems.transform);
+            buttonInstance.GetComponentInChildren<Text>().text = item.name;
+            buttonInstance.transform.Translate(65, j, 0);
+
+            buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(1, item.gameObject); });
+
+            j -= 30;
+        }
+
+        int c = -30;
+
+        foreach (GameObject tank in dates.tanksTypes)
+        {
+            Button buttonInstance = Instantiate(buttonEditor, panelTanks.transform);
+            buttonInstance.GetComponentInChildren<Text>().text = tank.name;
+            buttonInstance.transform.Translate(65, c, 0);
+
+            buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(2, tank.gameObject); });
+
+            c -= 30;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (myCollider.Raycast(ray, out hit, 100.0f))
+                myCollider.transform.position = ray.GetPoint(100.0f);
+        }
     }
 
     private bool SaveChangesInFile()
@@ -99,6 +165,13 @@ public class EditorManager : MonoBehaviour
     {
         XmlAttribute attributeName = xmlNode.Attributes.Append(xmlDoc.CreateAttribute(nameOfAttribute));
         attributeName.AppendChild(xmlDoc.CreateTextNode(valueOfAttribute));
+    }
+
+
+    private void ButtonEditor_Click(int typeElement, GameObject objectOnButton)
+    {
+        selectElement = objectOnButton;
+        typeSelectElement = typeElement;
     }
 
 }
