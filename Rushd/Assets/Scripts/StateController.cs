@@ -45,7 +45,14 @@ namespace Assets.Scripts
         {
             currentLevel = nextLevel;
 
-            SceneManager.LoadScene(SceneManager.sceneCount);
+            SceneManager.LoadScene(SceneManager.sceneCount - 1);
+        }
+
+        public void EditorNextLevel()
+        {
+            currentLevel = nextLevel;
+
+            SceneManager.LoadScene("EditorForLevels");
         }
 
         public void ChangeState(int i)

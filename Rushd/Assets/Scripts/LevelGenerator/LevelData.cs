@@ -53,6 +53,7 @@ namespace Assets.Scripts.LevelGenerator
 
         private string nameLevel;
         private Difficult difficultLevel;
+        private string description;
 
         private int heightLevel;
         private int weightLevel;
@@ -166,6 +167,22 @@ namespace Assets.Scripts.LevelGenerator
             set
             {
                 lightColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Описание уровня.
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
+
+            set
+            {
+                description = value;
             }
         }
 

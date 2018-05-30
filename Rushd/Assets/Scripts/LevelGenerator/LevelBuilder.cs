@@ -9,9 +9,13 @@ namespace Assets.Scripts.LevelGenerator
 
         void Start ()
         {
-            MakePlatforms();
+            if (data.Platforms != null)
+            {
+                MakePlatforms();
 
-            MakeTank();
+                MakeTank();
+            }
+
         }
 
         private void MakeTank()
