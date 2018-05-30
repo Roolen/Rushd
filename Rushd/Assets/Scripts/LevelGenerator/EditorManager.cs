@@ -88,6 +88,11 @@ public class EditorManager : MonoBehaviour
         }
     }
 
+    private void OnMouseEnter()
+    {
+        
+    }
+
     private bool SaveChangesInFile()
     {
         FileInfo fileLevel = StateController.currentLevel.FileLevel;

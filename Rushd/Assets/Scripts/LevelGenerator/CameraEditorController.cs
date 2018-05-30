@@ -19,7 +19,7 @@ public class CameraEditorController : MonoBehaviour
         date = FindObjectOfType<LevelData>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         xLimit = date.Height * 2;
         zLimit = date.Weight * 2;

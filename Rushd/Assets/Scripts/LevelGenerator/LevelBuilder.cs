@@ -7,13 +7,16 @@ namespace Assets.Scripts.LevelGenerator
     {
         public LevelData data;
 
+        public bool editorMode;
+
         void Start ()
         {
             if (data.Platforms != null)
             {
                 MakePlatforms();
 
-                MakeTank();
+
+                if (!editorMode) MakeTank();
             }
 
         }
@@ -46,6 +49,8 @@ namespace Assets.Scripts.LevelGenerator
 
                     GameObject platformInstance = Instantiate(data.typesPlatforms[(int)platform.TypePlatform]);
 
+                    if (editorMode) platformInstance.AddComponent<EditorElement>();
+
                     platformInstance.name = platform.NamePlatform;
 
                     platformInstance.tag = platform.TypePlatform.ToString();
@@ -57,6 +62,8 @@ namespace Assets.Scripts.LevelGenerator
                     {
                         GameObject itemInstance = Instantiate(data.typesItems[(int) platform.ItemOnPlatform.TypeItem]);
 
+                        if (editorMode) itemInstance.AddComponent<EditorElement>();
+
                         itemInstance.name = platform.ItemOnPlatform.NameItem;
 
                         itemInstance.transform.position = new Vector3(i * 15, 5, b * 15);
@@ -65,6 +72,8 @@ namespace Assets.Scripts.LevelGenerator
                     if (platform.TankOnPlatform != null)
                     {
                         GameObject tankInstance = Instantiate(data.tanksTypes[(int) platform.TankOnPlatform.TypeTank]);
+
+                        if (editorMode) tankInstance.AddComponent<EditorElement>();
 
                         tankInstance.name = platform.TankOnPlatform.NameTank;
 
