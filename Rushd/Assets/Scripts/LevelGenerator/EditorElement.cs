@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class EditorElement : MonoBehaviour
 {
+    public int typeElement;
+
+    private EditorManager editor;
+
     private Color stableColor;
 
     private void Start()
     {
         stableColor = GetComponent<Renderer>().material.color;
+
+        editor = GameObject.FindObjectOfType<EditorManager>();
     }
 
     private void OnMouseEnter()
@@ -32,6 +38,18 @@ public class EditorElement : MonoBehaviour
         for (int i = 0; i < rends.Length; i++)
         {
             rends[i].material.color = stableColor;
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        if (editor.TypeSelectElement == typeElement)
+        {
+            Transform nowPosition = gameObject.transform;
+
+            GameObject instNewElement = Instantiate(editor.SelectElement, nowPosition.position, Quaternion.identity);
+
+            Destroy(gameObject);
         }
     }
 

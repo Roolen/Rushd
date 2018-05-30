@@ -49,7 +49,11 @@ namespace Assets.Scripts.LevelGenerator
 
                     GameObject platformInstance = Instantiate(data.typesPlatforms[(int)platform.TypePlatform]);
 
-                    if (editorMode) platformInstance.AddComponent<EditorElement>();
+                    if (editorMode)
+                    {
+                        EditorElement edE = platformInstance.AddComponent<EditorElement>();
+                        edE.typeElement = 0;
+                    }
 
                     platformInstance.name = platform.NamePlatform;
 
@@ -62,7 +66,11 @@ namespace Assets.Scripts.LevelGenerator
                     {
                         GameObject itemInstance = Instantiate(data.typesItems[(int) platform.ItemOnPlatform.TypeItem]);
 
-                        if (editorMode) itemInstance.AddComponent<EditorElement>();
+                        if (editorMode)
+                        {
+                            EditorElement edE = itemInstance.AddComponent<EditorElement>();
+                            edE.typeElement = 1;
+                        }
 
                         itemInstance.name = platform.ItemOnPlatform.NameItem;
 
@@ -73,7 +81,11 @@ namespace Assets.Scripts.LevelGenerator
                     {
                         GameObject tankInstance = Instantiate(data.tanksTypes[(int) platform.TankOnPlatform.TypeTank]);
 
-                        if (editorMode) tankInstance.AddComponent<EditorElement>();
+                        if (editorMode)
+                        {
+                            EditorElement edE = tankInstance.AddComponent<EditorElement>();
+                            edE.typeElement = 2;
+                        }
 
                         tankInstance.name = platform.TankOnPlatform.NameTank;
 

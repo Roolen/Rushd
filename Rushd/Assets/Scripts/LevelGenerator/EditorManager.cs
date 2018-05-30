@@ -21,6 +21,32 @@ public class EditorManager : MonoBehaviour
     private int typeSelectElement;
     private GameObject selectElement;
 
+    public int TypeSelectElement
+    {
+        get
+        {
+            return typeSelectElement;
+        }
+
+        set
+        {
+            typeSelectElement = value;
+        }
+    }
+
+    public GameObject SelectElement
+    {
+        get
+        {
+            return selectElement;
+        }
+
+        set
+        {
+            selectElement = value;
+        }
+    }
+
     private void Start()
     {
         stateController.ChangeState(StateController.States.Stop);
@@ -175,8 +201,8 @@ public class EditorManager : MonoBehaviour
 
     private void ButtonEditor_Click(int typeElement, GameObject objectOnButton)
     {
-        selectElement = objectOnButton;
-        typeSelectElement = typeElement;
+        SelectElement = objectOnButton;
+        TypeSelectElement = typeElement;
     }
 
 }
