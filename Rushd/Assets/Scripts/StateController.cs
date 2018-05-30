@@ -41,6 +41,13 @@ namespace Assets.Scripts
             SceneManager.LoadScene("GameLevel");
         }
 
+        public void NextLevel()
+        {
+            currentLevel = nextLevel;
+
+            SceneManager.LoadScene(SceneManager.sceneCount);
+        }
+
         public void ChangeState(int i)
         {
             States newState = (States)i; 

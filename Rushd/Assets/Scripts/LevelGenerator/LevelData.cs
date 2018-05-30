@@ -44,8 +44,6 @@ namespace Assets.Scripts.LevelGenerator
 
     public class LevelData : MonoBehaviour
     {
-        [Header("Платформы")]
-        public GameObject platformOpenSpace;
 
         public GameObject[] tanksTypes;
 
