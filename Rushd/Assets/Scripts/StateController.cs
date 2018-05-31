@@ -10,18 +10,19 @@ namespace Assets.Scripts
         public static LevelInfo currentLevel;
 
         public bool stopGame;
+        public static bool menuMode;
 
         public enum States
         {
-            Play = 0,
-            Stop = 1,
-            Pause = 2,
-            Exit = 3
+            Playing = 0,
+            Stoping = 1,
+            Pausing = 2,
+            Exiting = 3
         }
 
         void Start ()
         {
-		
+            StateController.menuMode = true;
         }
 
         /// <summary>
@@ -30,19 +31,20 @@ namespace Assets.Scripts
         /// <param name="stateNew">Новое состояние</param>
         public void ChangeState(States stateNew)
         {
-            if (stateNew == States.Play) Play();
+            if (stateNew == States.Playing) Play();
 
-            else if (stateNew == States.Stop) Stop();
+            else if (stateNew == States.Stoping) Stop();
 
-            else if (stateNew == States.Pause) Pause();
+            else if (stateNew == States.Pausing) Pause();
 
-            else if (stateNew == States.Exit) Exit();
+            else if (stateNew == States.Exiting) Exit();
         }
 
 
         public void PlayLevel()
         {
             currentLevel = nextLevel;
+            menuMode = false;
 
             SceneManager.LoadScene("GameLevel");
         }
@@ -50,6 +52,7 @@ namespace Assets.Scripts
         public void NextLevel()
         {
             currentLevel = nextLevel;
+            menuMode = false;
 
             SceneManager.LoadScene(SceneManager.sceneCount - 1);
         }
@@ -57,6 +60,7 @@ namespace Assets.Scripts
         public void EditorNextLevel()
         {
             currentLevel = nextLevel;
+            menuMode = false;
 
             SceneManager.LoadScene("EditorForLevels");
         }
@@ -74,6 +78,7 @@ namespace Assets.Scripts
             {
                 Time.timeScale = 1.0f;
                 stopGame = false;
+
                 Debug.Log("Time play");
 
                 return true;
@@ -91,6 +96,7 @@ namespace Assets.Scripts
             {
                 Time.timeScale = 1.0f;
                 stopGame = true;
+
                 Debug.Log("Time stop");
 
                 return true;

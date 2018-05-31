@@ -13,17 +13,19 @@ namespace Assets.Scripts.LevelGenerator
 
         private void Start ()
         {
-            FileInfo fileLevel = null;
-            if (StateController.currentLevel.FileLevel != null)
+            if (StateController.menuMode)
+            {
+                FileInfo fileLevel = null;
                 fileLevel = StateController.currentLevel.FileLevel;
 
-            if (fileLevel != null && fileLevel.Exists)
-            {
-                AnalysisOfFileLevel(fileLevel);
-            }
-            else
-            {
-                Debug.LogError("EL_001: Ошибка загрузки файла уровня");
+                if (fileLevel != null && fileLevel.Exists)
+                {
+                    AnalysisOfFileLevel(fileLevel);
+                }
+                else
+                {
+                    Debug.LogError("EL_001: Ошибка загрузки файла уровня");
+                }
             }
         }
 

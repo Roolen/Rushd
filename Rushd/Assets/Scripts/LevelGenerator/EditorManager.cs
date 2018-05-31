@@ -49,11 +49,10 @@ public class EditorManager : MonoBehaviour
 
     private void Start()
     {
-        stateController.ChangeState(StateController.States.Stop);
+        stateController.ChangeState(StateController.States.Stoping);
+        StateController.menuMode = true;
 
         ShowElementsPanels();
-
-        myCollider = GameObject.FindGameObjectWithTag("LandingPlatform").GetComponent<Collider>();
     }
 
     public void SaveFile()
@@ -105,18 +104,13 @@ public class EditorManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (myCollider.Raycast(ray, out hit, 100.0f))
-                myCollider.transform.position = ray.GetPoint(100.0f);
-        }
-    }
-
-    private void OnMouseEnter()
-    {
-        
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    RaycastHit hit;
+        //    if (myCollider.Raycast(ray, out hit, 100.0f))
+        //        myCollider.transform.position = ray.GetPoint(100.0f);
+        //}
     }
 
     private bool SaveChangesInFile()

@@ -61,7 +61,7 @@ namespace Assets.Scripts
 
                 XmlElement xmlRoot = xmlDoc.DocumentElement;
 
-                LevelInfo level = new LevelInfo();
+                LevelInfo level = gameObject.AddComponent<LevelInfo>();
 
 
                 if (xmlRoot.Attributes.Count > 0)
