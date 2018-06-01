@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.LevelGenerator;
 using UnityEngine;
 
 public class EditorElement : MonoBehaviour
@@ -48,6 +49,8 @@ public class EditorElement : MonoBehaviour
             Transform nowPosition = gameObject.transform;
 
             GameObject instNewElement = Instantiate(editor.SelectElement, nowPosition.position, Quaternion.identity);
+
+            instNewElement.AddComponent<EditorElement>();
 
             Destroy(gameObject);
         }

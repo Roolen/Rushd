@@ -22,7 +22,7 @@ namespace Assets.Scripts
 
         void Start ()
         {
-            StateController.menuMode = true;
+
         }
 
         /// <summary>

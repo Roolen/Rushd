@@ -13,7 +13,7 @@ namespace Assets.Scripts.LevelGenerator
 
         private void Start ()
         {
-            if (StateController.menuMode)
+            if (!StateController.menuMode)
             {
                 FileInfo fileLevel = null;
                 fileLevel = StateController.currentLevel.FileLevel;
