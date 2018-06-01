@@ -16,10 +16,10 @@ namespace Assets.Scripts.LevelGenerator
         public Transform panelTanks;
 
         public Collider myCollider;
-        private int typeSelectElement;
+        private TypeElement typeSelectElement;
         private GameObject selectElement;
 
-        public int TypeSelectElement
+        public TypeElement TypeSelectElement
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Assets.Scripts.LevelGenerator
                 buttonInstance.GetComponentInChildren<Text>().text = platform.name;
                 buttonInstance.transform.Translate(65, i, 0);
 
-                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(0, platform.gameObject); });
+                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(platform.GetComponent<TypeElement>(), platform.gameObject); });
 
                 i -= 30;
             }
@@ -80,7 +80,7 @@ namespace Assets.Scripts.LevelGenerator
                 buttonInstance.GetComponentInChildren<Text>().text = item.name;
                 buttonInstance.transform.Translate(65, j, 0);
 
-                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(1, item.gameObject); });
+                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(item.GetComponent<TypeElement>(), item.gameObject); });
 
                 j -= 30;
             }
@@ -93,7 +93,7 @@ namespace Assets.Scripts.LevelGenerator
                 buttonInstance.GetComponentInChildren<Text>().text = tank.name;
                 buttonInstance.transform.Translate(65, c, 0);
 
-                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(2, tank.gameObject); });
+                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(tank.GetComponent<TypeElement>(), tank.gameObject); });
 
                 c -= 30;
             }
@@ -190,10 +190,11 @@ namespace Assets.Scripts.LevelGenerator
         }
 
 
-        private void ButtonEditor_Click(int typeElement, GameObject objectOnButton)
+        private void ButtonEditor_Click(TypeElement type, GameObject objectOnButton)
         {
             SelectElement = objectOnButton;
-            TypeSelectElement = typeElement;
+            TypeSelectElement = type;
+
         }
 
     }

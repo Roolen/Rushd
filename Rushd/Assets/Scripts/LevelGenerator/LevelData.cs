@@ -206,6 +206,7 @@ namespace Assets.Scripts.LevelGenerator
     public class Platform
     {
         private string namePlatform;
+        private int idPlatform;
         private TypesPlatform typePlatform;
         private Item itemOnPlatform;
         private Tank tankOnPlatform;
@@ -274,6 +275,19 @@ namespace Assets.Scripts.LevelGenerator
             set
             {
                 tankOnPlatform = value;
+            }
+        }
+
+        public int IdPlatform
+        {
+            get
+            {
+                return idPlatform;
+            }
+
+            set
+            {
+                idPlatform = value;
             }
         }
 

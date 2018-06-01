@@ -6,7 +6,12 @@ using UnityEngine;
 
 public class EditorElement : MonoBehaviour
 {
+    public string nameElement;
     public int typeElement;
+    public int universalType;
+    public int idForElement;
+    public GameObject elementOn;
+    public bool thisLandingPlatform;
 
     private EditorManager editor;
 
@@ -44,14 +49,43 @@ public class EditorElement : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (editor.TypeSelectElement == typeElement)
+        if (typeElement == 0 && editor.TypeSelectElement.typeGameObject != 0 && !thisLandingPlatform)
+        {
+            Transform nowPosition = gameObject.transform;
+
+            GameObject instanceNewElement = Instantiate(editor.SelectElement, nowPosition.position + new Vector3(0,5,0), Quaternion.identity);
+
+            if (elementOn != null) { Destroy(elementOn); }
+            elementOn = instanceNewElement;
+
+            EditorElement edElement = instanceNewElement.AddComponent<EditorElement>();
+            edElement.typeElement = editor.TypeSelectElement.typeGameObject;
+
+            
+        }
+
+        if (editor.TypeSelectElement.typeGameObject == typeElement)
         {
             Transform nowPosition = gameObject.transform;
 
             GameObject instNewElement = Instantiate(editor.SelectElement, nowPosition.position, Quaternion.identity);
 
-            instNewElement.AddComponent<EditorElement>();
+            EditorElement edElement = instNewElement.AddComponent<EditorElement>();
+            edElement.typeElement = typeElement;
+            edElement.elementOn = elementOn;
 
+            //Platform mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
+            //mirrorPlatform.TypePlatform = (TypesPlatform)editor.TypeSelectElement.universalType;
+            //Debug.Log(mirrorPlatform.NamePlatform + " " + (TypesPlatform)universalType);
+
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1) && typeElement != 0)
+        {
             Destroy(gameObject);
         }
     }

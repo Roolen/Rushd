@@ -41,8 +41,8 @@ namespace Assets.Scripts.LevelGenerator
         {
             if (data.Platforms.Count > 0)
             {
-                int i = 0;
-                int b = 0;
+                int x = 0;
+                int z = 0;
 
                 foreach (var platform in data.Platforms)
                 {
@@ -51,15 +51,19 @@ namespace Assets.Scripts.LevelGenerator
 
                     if (editorMode)
                     {
-                        EditorElement edE = platformInstance.AddComponent<EditorElement>();
-                        edE.typeElement = 0;
+                        EditorElement edElement = platformInstance.AddComponent<EditorElement>();
+                        edElement.typeElement = 0;
+                        edElement.nameElement = platform.NamePlatform;
+                        edElement.universalType = (int)platform.TypePlatform;
+
+                        if (platform.TypePlatform == TypesPlatform.LandingPlatform) { edElement.thisLandingPlatform = true; }
                     }
 
                     platformInstance.name = platform.NamePlatform;
 
                     platformInstance.tag = platform.TypePlatform.ToString();
 
-                    platformInstance.transform.position = new Vector3(i * 15, 0, b * 15);
+                    platformInstance.transform.position = new Vector3(x * 15, 0, z * 15);
 
 
                     if (platform.ItemOnPlatform != null)
@@ -68,13 +72,14 @@ namespace Assets.Scripts.LevelGenerator
 
                         if (editorMode)
                         {
-                            EditorElement edE = itemInstance.AddComponent<EditorElement>();
-                            edE.typeElement = 1;
+                            EditorElement edElement = itemInstance.AddComponent<EditorElement>();
+                            edElement.typeElement = 1;
+                            platformInstance.GetComponent<EditorElement>().elementOn = itemInstance;
                         }
 
                         itemInstance.name = platform.ItemOnPlatform.NameItem;
 
-                        itemInstance.transform.position = new Vector3(i * 15, 5, b * 15);
+                        itemInstance.transform.position = new Vector3(x * 15, 5, z * 15);
                     }
 
                     if (platform.TankOnPlatform != null)
@@ -83,8 +88,9 @@ namespace Assets.Scripts.LevelGenerator
 
                         if (editorMode)
                         {
-                            EditorElement edE = tankInstance.AddComponent<EditorElement>();
-                            edE.typeElement = 2;
+                            EditorElement edElement = tankInstance.AddComponent<EditorElement>();
+                            edElement.typeElement = 2;
+                            platformInstance.GetComponent<EditorElement>().elementOn = tankInstance;
                         }
 
                         tankInstance.name = platform.TankOnPlatform.NameTank;
@@ -95,13 +101,13 @@ namespace Assets.Scripts.LevelGenerator
                             tankInstance.GetComponent<TankBot>().targetPoint = GameObject.Find(platform.TankOnPlatform.TargetPoint);
                         }
 
-                        tankInstance.transform.position = new Vector3(i * 15, 5, b * 15);
+                        tankInstance.transform.position = new Vector3(x * 15, 5, z * 15);
                         tankInstance.transform.Rotate(0, platform.TankOnPlatform.RotateTank, 0);
                     }
 
-                    i++;
+                    x++;
 
-                    if (i == data.Height) { b++; i = 0; }
+                    if (x == data.Height) { z++; x = 0; }
                 }
             }
             else

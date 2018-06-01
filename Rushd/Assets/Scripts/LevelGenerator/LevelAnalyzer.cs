@@ -40,10 +40,12 @@ namespace Assets.Scripts.LevelGenerator
 
             List<Platform> platforms = new List<Platform>();
 
+            int id = 0;
             if (xmlRoot != null)
                 foreach (XmlNode xmlPlatform in xmlRoot) //Get childs root.
                 {
                     Platform platform = new Platform();
+                    platform.IdPlatform = id++;
 
                     if (xmlPlatform.Name == "platform")
                     {
@@ -70,6 +72,7 @@ namespace Assets.Scripts.LevelGenerator
                                 if (xmlChild.Name == "item")
                                 {
                                     Item item = new Item();
+
                                     XmlNode xmlItem = xmlChild; // Get child xmlPlatform.
 
                                     if (xmlItem.Attributes != null && xmlItem.Attributes.Count > 0)
