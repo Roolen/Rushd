@@ -84,7 +84,7 @@ namespace Assets.Scripts.LevelGenerator
 
                     if (platform.TankOnPlatform != null)
                     {
-                        GameObject tankInstance = Instantiate(data.tanksTypes[(int) platform.TankOnPlatform.TypeTank]);
+                        GameObject tankInstance = Instantiate(data.tanksTypes[(int) platform.TankOnPlatform.TypeTank], new Vector3(x*15, 5, z*15), new Quaternion());
 
                         if (editorMode)
                         {
@@ -94,15 +94,13 @@ namespace Assets.Scripts.LevelGenerator
                         }
 
                         tankInstance.name = platform.TankOnPlatform.NameTank;
+                        tankInstance.transform.Rotate(0, platform.TankOnPlatform.RotateTank, 0);
 
                         {
                             tankInstance.AddComponent<TankController>();
                             tankInstance.AddComponent<TankBot>();
                             tankInstance.GetComponent<TankBot>().targetPoint = GameObject.Find(platform.TankOnPlatform.TargetPoint);
                         }
-
-                        tankInstance.transform.position = new Vector3(x * 15, 5, z * 15);
-                        tankInstance.transform.Rotate(0, platform.TankOnPlatform.RotateTank, 0);
                     }
 
                     x++;

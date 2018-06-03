@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.LevelGenerator;
@@ -26,24 +27,30 @@ public class EditorElement : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        GetComponent<Renderer>().material.color = Color.cyan;
-        Renderer[] rends = GetComponentsInChildren<Renderer>().ToArray();
-
-        for (int i = 0; i < rends.Length; i++)
+        if (typeElement == 0)
         {
-            rends[i].material.color = Color.cyan;
+            GetComponent<Renderer>().material.color = Color.cyan;
+            Renderer[] rends = GetComponentsInChildren<Renderer>().ToArray();
+
+            for (int i = 0; i < rends.Length; i++)
+            {
+                rends[i].material.color = Color.cyan;
+            }
         }
     }
 
     private void OnMouseExit()
     {
-        GetComponent<Renderer>().material.color = stableColor;
-
-        Renderer[] rends = GetComponentsInChildren<Renderer>().ToArray();
-
-        for (int i = 0; i < rends.Length; i++)
+        if (typeElement == 0)
         {
-            rends[i].material.color = stableColor;
+            GetComponent<Renderer>().material.color = stableColor;
+
+            Renderer[] rends = GetComponentsInChildren<Renderer>().ToArray();
+
+            for (int i = 0; i < rends.Length; i++)
+            {
+                rends[i].material.color = stableColor;
+            }
         }
     }
 
@@ -55,13 +62,28 @@ public class EditorElement : MonoBehaviour
 
             GameObject instanceNewElement = Instantiate(editor.SelectElement, nowPosition.position + new Vector3(0,5,0), Quaternion.identity);
 
-            if (elementOn != null) { Destroy(elementOn); }
-            elementOn = instanceNewElement;
-
             EditorElement edElement = instanceNewElement.AddComponent<EditorElement>();
             edElement.typeElement = editor.TypeSelectElement.typeGameObject;
 
-            
+            if (elementOn != null)
+            {
+                instanceNewElement.GetComponent<EditorElement>().nameElement = elementOn.name;
+                Destroy(elementOn);
+            }
+
+            elementOn = instanceNewElement;
+
+            Platform mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
+
+            if (elementOn.GetComponent<EditorElement>().typeElement == 1)
+            {
+                mirrorPlatform.ItemOnPlatform.TypeItem = (TypesItem) editor.TypeSelectElement.universalType;
+            }
+            else if (elementOn.GetComponent<EditorElement>().typeElement == 2)
+            {
+                mirrorPlatform.TankOnPlatform.TypeTank = (TypesTank) editor.TypeSelectElement.universalType;
+                mirrorPlatform.TankOnPlatform.RotateTank = (int)elementOn.transform.rotation.y;
+            }
         }
 
         if (editor.TypeSelectElement.typeGameObject == typeElement)
@@ -73,10 +95,12 @@ public class EditorElement : MonoBehaviour
             EditorElement edElement = instNewElement.AddComponent<EditorElement>();
             edElement.typeElement = typeElement;
             edElement.elementOn = elementOn;
+            edElement.nameElement = nameElement;
 
-            //Platform mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
-            //mirrorPlatform.TypePlatform = (TypesPlatform)editor.TypeSelectElement.universalType;
-            //Debug.Log(mirrorPlatform.NamePlatform + " " + (TypesPlatform)universalType);
+            Platform mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
+            mirrorPlatform.TypePlatform = (TypesPlatform)editor.TypeSelectElement.universalType;
+
+            Debug.Log(mirrorPlatform.NamePlatform + " " + (TypesPlatform)editor.TypeSelectElement.universalType);
 
             Destroy(gameObject);
         }
@@ -84,9 +108,35 @@ public class EditorElement : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1) && typeElement != 0)
+        if (typeElement == 0 && !thisLandingPlatform)
         {
-            Destroy(gameObject);
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                Destroy(elementOn);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                RotateTank(90);
+            }
+            else if (Input.GetKeyDown(KeyCode.Q))
+            {
+                RotateTank(-90);
+            }
+        }
+    }
+
+    private void RotateTank(int rotateOnY)
+    {
+        elementOn.gameObject.transform.Rotate(0, rotateOnY, 0);
+
+        Platform mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
+
+        if (elementOn.GetComponent<EditorElement>().typeElement == 2)
+        {
+            mirrorPlatform.TankOnPlatform.RotateTank = Convert.ToInt32(elementOn.transform.localRotation.eulerAngles.y);
+            Debug.Log(mirrorPlatform.TankOnPlatform.RotateTank);
         }
     }
 

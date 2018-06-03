@@ -160,6 +160,7 @@ namespace Assets.Scripts.LevelGenerator
                     SaveAttribute(xmlTank, xmlDoc, "Name", platform.TankOnPlatform.NameTank);
                     SaveAttribute(xmlTank, xmlDoc, "Type", Convert.ToString((int)platform.TankOnPlatform.TypeTank));
                     SaveAttribute(xmlTank, xmlDoc, "Rotate", platform.TankOnPlatform.RotateTank.ToString());
+                    Debug.Log(platform.TankOnPlatform.RotateTank);
                     SaveAttribute(xmlTank, xmlDoc, "TargetPoint", platform.TankOnPlatform.TargetPoint);
                 }
             }
