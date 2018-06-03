@@ -304,12 +304,25 @@ namespace Assets.Scripts.LevelGenerator
             ItemOnPlatform = itemPlatform;
         }
 
+        /// <summary>
+        /// Создает экземпляр игровой платформы.
+        /// </summary>
         public Platform()
         {
             NamePlatform = null;
             TypePlatform = TypesPlatform.PlatformOpenSpace;
             ItemOnPlatform = null;
 
+        }
+
+        public void RemoveItemOnPlatform()
+        {
+            itemOnPlatform = null;
+        }
+
+        public void RemoveTankOnPlatform()
+        {
+            tankOnPlatform = null;
         }
     }
 
@@ -365,6 +378,7 @@ namespace Assets.Scripts.LevelGenerator
         }
 
         public  Item() { }
+
     }
 
     public class Tank

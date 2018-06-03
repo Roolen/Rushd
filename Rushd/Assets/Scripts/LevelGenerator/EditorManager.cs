@@ -15,7 +15,6 @@ namespace Assets.Scripts.LevelGenerator
         public Transform panelItems;
         public Transform panelTanks;
 
-        public Collider myCollider;
         private TypeElement typeSelectElement;
         private GameObject selectElement;
 
@@ -54,7 +53,11 @@ namespace Assets.Scripts.LevelGenerator
 
         public void SaveFile()
         {
-            SaveChangesInFile();
+            if (SaveChangesInFile()) { }
+            else
+            {
+                Debug.Log("EL_006: Не удалось сохранить файл уровня.");
+            }
         }
 
         public void ShowElementsPanels()
@@ -65,7 +68,7 @@ namespace Assets.Scripts.LevelGenerator
             {
                 Button buttonInstance = Instantiate(buttonEditor, panelPlatforms.transform);
                 buttonInstance.GetComponentInChildren<Text>().text = platform.name;
-                buttonInstance.transform.Translate(65, i, 0);
+                buttonInstance.transform.Translate(75, i, 0);
 
                 buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(platform.GetComponent<TypeElement>(), platform.gameObject); });
 
@@ -78,7 +81,7 @@ namespace Assets.Scripts.LevelGenerator
             {
                 Button buttonInstance = Instantiate(buttonEditor, panelItems.transform);
                 buttonInstance.GetComponentInChildren<Text>().text = item.name;
-                buttonInstance.transform.Translate(65, j, 0);
+                buttonInstance.transform.Translate(75, j, 0);
 
                 buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(item.GetComponent<TypeElement>(), item.gameObject); });
 
@@ -91,7 +94,7 @@ namespace Assets.Scripts.LevelGenerator
             {
                 Button buttonInstance = Instantiate(buttonEditor, panelTanks.transform);
                 buttonInstance.GetComponentInChildren<Text>().text = tank.name;
-                buttonInstance.transform.Translate(65, c, 0);
+                buttonInstance.transform.Translate(75, c, 0);
 
                 buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(tank.GetComponent<TypeElement>(), tank.gameObject); });
 
@@ -101,13 +104,7 @@ namespace Assets.Scripts.LevelGenerator
 
         private void Update()
         {
-            //if (Input.GetMouseButtonDown(0))
-            //{
-            //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //    RaycastHit hit;
-            //    if (myCollider.Raycast(ray, out hit, 100.0f))
-            //        myCollider.transform.position = ray.GetPoint(100.0f);
-            //}
+            
         }
 
         private bool SaveChangesInFile()
@@ -160,7 +157,6 @@ namespace Assets.Scripts.LevelGenerator
                     SaveAttribute(xmlTank, xmlDoc, "Name", platform.TankOnPlatform.NameTank);
                     SaveAttribute(xmlTank, xmlDoc, "Type", Convert.ToString((int)platform.TankOnPlatform.TypeTank));
                     SaveAttribute(xmlTank, xmlDoc, "Rotate", platform.TankOnPlatform.RotateTank.ToString());
-                    Debug.Log(platform.TankOnPlatform.RotateTank);
                     SaveAttribute(xmlTank, xmlDoc, "TargetPoint", platform.TankOnPlatform.TargetPoint);
                 }
             }

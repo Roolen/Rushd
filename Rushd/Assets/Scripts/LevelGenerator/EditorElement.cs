@@ -77,12 +77,18 @@ public class EditorElement : MonoBehaviour
 
             if (elementOn.GetComponent<EditorElement>().typeElement == 1)
             {
-                mirrorPlatform.ItemOnPlatform.TypeItem = (TypesItem) editor.TypeSelectElement.universalType;
+                mirrorPlatform.ItemOnPlatform = new Item
+                {
+                    TypeItem = (TypesItem)editor.TypeSelectElement.universalType
+                };
             }
             else if (elementOn.GetComponent<EditorElement>().typeElement == 2)
             {
-                mirrorPlatform.TankOnPlatform.TypeTank = (TypesTank) editor.TypeSelectElement.universalType;
-                mirrorPlatform.TankOnPlatform.RotateTank = (int)elementOn.transform.rotation.y;
+                mirrorPlatform.TankOnPlatform = new Tank
+                {
+                    TypeTank = (TypesTank)editor.TypeSelectElement.universalType,
+                    RotateTank = (int)elementOn.transform.rotation.y
+                };
             }
         }
 
@@ -113,6 +119,19 @@ public class EditorElement : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))
             {
+                Platform mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
+
+                if (elementOn.GetComponent<EditorElement>().typeElement == 1)
+                {
+                    Debug.Log("Delete item " + mirrorPlatform.ItemOnPlatform.NameItem);
+                    mirrorPlatform.RemoveItemOnPlatform();
+                }
+                else if (elementOn.GetComponent<EditorElement>().typeElement == 2)
+                {
+                    Debug.Log("Delete tank " + mirrorPlatform.TankOnPlatform.NameTank);
+                    mirrorPlatform.RemoveTankOnPlatform();
+                }
+
                 Destroy(elementOn);
             }
 
