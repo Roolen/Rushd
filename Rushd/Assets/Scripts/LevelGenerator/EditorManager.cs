@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using UnityEngine;
@@ -53,11 +54,36 @@ namespace Assets.Scripts.LevelGenerator
 
         public void SaveFile()
         {
-            if (SaveChangesInFile()) { }
+            if (SaveChangesInFile(dates, StateController.currentLevel.FileLevel.FullName)) { }
             else
             {
                 Debug.Log("EL_006: Не удалось сохранить файл уровня.");
             }
+        }
+
+        public void CreateNewLevel()
+        {
+            LevelInfo newLevel = gameObject.AddComponent<LevelInfo>();
+
+            newLevel.NameLevel = GameObject.Find("TextNameNewLevel").GetComponent<Text>().text;
+            newLevel.HeightLevel = Convert.ToInt32(GameObject.Find("TextSizeX").GetComponent<Text>().text);
+            newLevel.WeightLevel = Convert.ToInt32(GameObject.Find("TextSizeY").GetComponent<Text>().text);
+            newLevel.DifficultLevel = (Difficult)GameObject.Find("DropdownDifficult").GetComponent<Dropdown>().value;
+            newLevel.DescriptionLevel = GameObject.Find("TextDescriptionNewLevel").GetComponent<Text>().text;
+
+            string pathByNewLevel = Path.Combine("C:\\Map\\", newLevel.NameLevel + ".lvl");
+            using (File.CreateText(pathByNewLevel))
+            {
+                
+            }
+
+            newLevel.FileLevel = new FileInfo(pathByNewLevel);
+
+            SaveNewLevel(pathByNewLevel, newLevel);
+
+            stateController.nextLevel = newLevel;
+            stateController.EditorNextLevel();
+
         }
 
         public void ShowElementsPanels()
@@ -107,9 +133,31 @@ namespace Assets.Scripts.LevelGenerator
             
         }
 
-        private bool SaveChangesInFile()
+        private bool SaveNewLevel(string pathNewLevel, LevelInfo level)
         {
-            FileInfo fileLevel = StateController.currentLevel.FileLevel;
+            List<Platform> platforms = new List<Platform>();
+            for (int i = 0; i < level.HeightLevel * level.WeightLevel - 1; i++)
+            {
+                platforms.Add(new Platform("Platform" + i, TypesPlatform.PlatformOpenSpace, null));
+            }
+
+            LevelData dataNewLevel = new LevelData(level.NameLevel, level.HeightLevel, level.WeightLevel)
+            {
+                DifficultLevel = level.DifficultLevel,
+                Description = level.DescriptionLevel,
+                Platforms = platforms
+            };
+
+            SaveChangesInFile(dataNewLevel, pathNewLevel);
+
+            return true;
+        }
+
+        private bool SaveChangesInFile(LevelData data, string pathByFileLevel)
+        {
+            FileInfo fileLevel = null;
+            fileLevel = new FileInfo(pathByFileLevel);
+            
 
             if (!fileLevel.Exists)
             {
@@ -124,18 +172,18 @@ namespace Assets.Scripts.LevelGenerator
             xmlDoc.AppendChild(xmlDoc.CreateXmlDeclaration("1.0", "utf-8", null));
             XmlNode xmlRoot = xmlDoc.AppendChild(xmlDoc.CreateElement("level"));
 
-            SaveAttributesRoot(xmlRoot, xmlDoc);
+            SaveAttributesRoot(xmlRoot, xmlDoc, data);
 
-            SavePlatforms(xmlRoot, xmlDoc);
+            SavePlatforms(xmlRoot, xmlDoc, data.Platforms);
 
             xmlDoc.Save(fileLevel.FullName);
             Debug.Log("Save file: " + fileLevel.FullName);
             return true;
         }
 
-        private void SavePlatforms(XmlNode xmlRoot, XmlDocument xmlDoc)
+        private void SavePlatforms(XmlNode xmlRoot, XmlDocument xmlDoc, List<Platform> platforms)
         {
-            foreach (Platform platform in dates.Platforms)
+            foreach (Platform platform in platforms)
             {
                 XmlNode xmlPlatform = xmlRoot.AppendChild(xmlDoc.CreateElement("platform"));
 
@@ -163,20 +211,20 @@ namespace Assets.Scripts.LevelGenerator
         }
 
 
-        private void SaveAttributesRoot(XmlNode xmlRoot, XmlDocument xmlDoc)
+        private void SaveAttributesRoot(XmlNode xmlRoot, XmlDocument xmlDoc, LevelData data)
         {
 
-            SaveAttribute(xmlRoot, xmlDoc, "Name", dates.NameLevel);
+            SaveAttribute(xmlRoot, xmlDoc, "Name", data.NameLevel);
 
-            SaveAttribute(xmlRoot, xmlDoc, "Description", dates.Description);
+            SaveAttribute(xmlRoot, xmlDoc, "Description", data.Description);
 
-            SaveAttribute(xmlRoot, xmlDoc, "Difficult", Convert.ToString((int)dates.DifficultLevel));
+            SaveAttribute(xmlRoot, xmlDoc, "Difficult", Convert.ToString((int)data.DifficultLevel));
 
-            SaveAttribute(xmlRoot, xmlDoc, "Height", dates.Height.ToString());
+            SaveAttribute(xmlRoot, xmlDoc, "Height", data.Height.ToString());
 
-            SaveAttribute(xmlRoot, xmlDoc, "Weight", dates.Weight.ToString());
+            SaveAttribute(xmlRoot, xmlDoc, "Weight", data.Weight.ToString());
 
-            SaveAttribute(xmlRoot, xmlDoc, "LightColor", dates.LightColor);
+            SaveAttribute(xmlRoot, xmlDoc, "LightColor", data.LightColor);
 
         }
 
