@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
@@ -71,11 +72,12 @@ namespace Assets.Scripts.LevelGenerator
             newLevel.DifficultLevel = (Difficult)GameObject.Find("DropdownDifficult").GetComponent<Dropdown>().value;
             newLevel.DescriptionLevel = GameObject.Find("TextDescriptionNewLevel").GetComponent<Text>().text;
 
-            string pathByNewLevel = Path.Combine("C:\\Map\\", newLevel.NameLevel + ".lvl");
-            using (File.CreateText(pathByNewLevel))
+            string pathByNewLevel = "C:\\\\Map\\" + newLevel.NameLevel + ".lvl";
+            using (StreamWriter text = File.CreateText(pathByNewLevel))
             {
-                
+                text.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             }
+
 
             newLevel.FileLevel = new FileInfo(pathByNewLevel);
 
