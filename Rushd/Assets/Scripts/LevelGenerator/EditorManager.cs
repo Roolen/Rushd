@@ -62,6 +62,41 @@ namespace Assets.Scripts.LevelGenerator
             }
         }
 
+        public void UpdateAttributeLevel()
+        {
+            GameObject.Find("PlaceholderNameLevel").GetComponent<Text>().text = dates.NameLevel;
+            GameObject.Find("PlaceholderDescriptionLevel").GetComponent<Text>().text = dates.Description;
+            GameObject.Find("DropdownDifficultAttributeLevel").GetComponent<Dropdown>().value = Convert.ToInt32(dates.DifficultLevel);
+            GameObject.Find("PlaceholderSizeXLevel").GetComponent<Text>().text = dates.Height.ToString();
+            GameObject.Find("PlaceholderSizeYLevel").GetComponent<Text>().text = dates.Weight.ToString();
+        }
+
+        public void ChangeAttributeLevel()
+        {
+            if (GameObject.Find("TextNameAttributeLevel").GetComponent<Text>().text != "")
+            {
+                dates.NameLevel = GameObject.Find("TextNameAttributeLevel").GetComponent<Text>().text;
+            }
+
+            if (GameObject.Find("TextDescriptionAttributeLevel").GetComponent<Text>().text != "")
+            {
+                dates.Description = GameObject.Find("TextDescriptionAttributeLevel").GetComponent<Text>().text;
+            }
+
+            dates.DifficultLevel = (Difficult)GameObject.Find("DropdownDifficultAttributeLevel").GetComponent<Dropdown>().value;
+            if (GameObject.Find("TextSizeXAttribute").GetComponent<Text>().text != "")
+            {
+                dates.Height = Convert.ToInt32(GameObject.Find("TextSizeXAttribute").GetComponent<Text>().text);
+            }
+
+            if (GameObject.Find("TextSizeYAttribute").GetComponent<Text>().text != "")
+            {
+                dates.Weight = Convert.ToInt32(GameObject.Find("TextSizeYAttribute").GetComponent<Text>().text);
+            }
+
+            Debug.Log("Edit attributes file: " + StateController.currentLevel.FileLevel.FullName);
+        }
+
         public void CreateNewLevel()
         {
             LevelInfo newLevel = gameObject.AddComponent<LevelInfo>();
