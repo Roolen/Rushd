@@ -21,6 +21,8 @@ namespace Assets.Scripts
         public Button buttonLevel;
         [Header("Кнопка запуска уровня")]
         public Button playButton;
+        [Header("Кнопка удаления уровня")]
+        public Button deleteButton;
 
         [Header("Текст в который будет записываться название уровня")]
         public Text textLevelName;
@@ -138,6 +140,7 @@ namespace Assets.Scripts
             GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>().nextLevel = level;
 
             playButton.interactable = true;
+            deleteButton.interactable = true;
         }
     }
 }
