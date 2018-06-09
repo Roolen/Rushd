@@ -17,6 +17,7 @@ public class EditorElement : MonoBehaviour
     private EditorManager editor;
 
     private Color stableColor;
+    public float timer;
 
     private void Start()
     {
@@ -25,21 +26,37 @@ public class EditorElement : MonoBehaviour
         editor = GameObject.FindObjectOfType<EditorManager>();
     }
 
-    private void OnMouseEnter()
+    private void FixedUpdate()
+    {
+        timer = 1 + timer;
+
+        if (timer >= 5) Deselect();  // Check for selection.
+    }
+
+    /// <summary>
+    /// Выделяет элемент выбраным цветом.
+    /// </summary>
+    /// <param name="color">Цвет выделения</param>
+    public void Select(Color color)
     {
         if (typeElement == 0)
         {
-            GetComponent<Renderer>().material.color = Color.cyan;
+            GetComponent<Renderer>().material.color = color;
             Renderer[] rends = GetComponentsInChildren<Renderer>().ToArray();
 
             for (int i = 0; i < rends.Length; i++)
             {
-                rends[i].material.color = Color.cyan;
+                rends[i].material.color = color;
             }
         }
+
+        timer = 0;
     }
 
-    private void OnMouseExit()
+    /// <summary>
+    /// Убирает выделение с элемента.
+    /// </summary>
+    public void Deselect()
     {
         if (typeElement == 0)
         {
@@ -54,7 +71,7 @@ public class EditorElement : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    public void Click()
     {
         if (typeElement == 0 && editor.TypeSelectElement.typeGameObject != 0 && !thisLandingPlatform)
         {
@@ -112,7 +129,7 @@ public class EditorElement : MonoBehaviour
         }
     }
 
-    private void OnMouseOver()
+    public void Enter()
     {
         if (typeElement == 0 && !thisLandingPlatform)
         {

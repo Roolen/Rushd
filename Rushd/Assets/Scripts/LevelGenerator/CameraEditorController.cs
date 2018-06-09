@@ -21,8 +21,8 @@ public class CameraEditorController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        xLimit = date.Height * 2;
-        zLimit = date.Weight * 2;
+        xLimit = date.Height * 10;
+        zLimit = date.Weight * 10;
 
         mainCamera.transform.Translate(Input.GetAxis("Horizontal") * speedForCamera, 0, 0);
         mainCamera.transform.Translate(0, 0, Input.GetAxis("Vertical") * speedForCamera, Space.World);

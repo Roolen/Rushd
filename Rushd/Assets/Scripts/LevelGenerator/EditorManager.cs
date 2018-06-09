@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.LevelGenerator
@@ -16,6 +18,9 @@ namespace Assets.Scripts.LevelGenerator
         public Transform panelPlatforms;
         public Transform panelItems;
         public Transform panelTanks;
+
+        [Header("Цвет выделения для элементов уровня")]
+        public Color colorForSelectElement;
 
         private TypeElement typeSelectElement;
         private GameObject selectElement;
@@ -53,6 +58,25 @@ namespace Assets.Scripts.LevelGenerator
             ShowElementsPanels();
         }
 
+        private void FixedUpdate()
+        {
+            Ray rayFromCamera = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(rayFromCamera, out hit, 100))
+            {
+                if (EventSystem.current.IsPointerOverGameObject()) return;
+
+                EditorElement element = hit.transform.gameObject.GetComponent<EditorElement>();
+
+                element.Select(colorForSelectElement);
+                element.Enter();
+
+                if (Input.GetMouseButtonDown(0)) element.Click();
+
+            }
+        }
+
         public void SaveFile()
         {
             if (SaveChangesInFile(dates, StateController.currentLevel.FileLevel.FullName)) { }
@@ -64,35 +88,30 @@ namespace Assets.Scripts.LevelGenerator
 
         public void UpdateAttributeLevel()
         {
-            GameObject.Find("PlaceholderNameLevel").GetComponent<Text>().text = dates.NameLevel;
-            GameObject.Find("PlaceholderDescriptionLevel").GetComponent<Text>().text = dates.Description;
+            GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text = dates.NameLevel;
+            GameObject.Find("InputFieldAttributeDescription").GetComponent<InputField>().text = dates.Description;
             GameObject.Find("DropdownDifficultAttributeLevel").GetComponent<Dropdown>().value = Convert.ToInt32(dates.DifficultLevel);
-            GameObject.Find("PlaceholderSizeXLevel").GetComponent<Text>().text = dates.Height.ToString();
-            GameObject.Find("PlaceholderSizeYLevel").GetComponent<Text>().text = dates.Weight.ToString();
+            GameObject.Find("InputFieldAttributeSizeX").GetComponent<InputField>().text = dates.Height.ToString();
+            GameObject.Find("InputFieldAttributeSizeY").GetComponent<InputField>().text = dates.Weight.ToString();
         }
 
         public void ChangeAttributeLevel()
         {
-            if (GameObject.Find("TextNameAttributeLevel").GetComponent<Text>().text != "")
+            int y = dates.Height;
+            int x = dates.Weight;
+            if (GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text != "")
             {
-                dates.NameLevel = GameObject.Find("TextNameAttributeLevel").GetComponent<Text>().text;
+                dates.NameLevel = GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text;
             }
 
-            if (GameObject.Find("TextDescriptionAttributeLevel").GetComponent<Text>().text != "")
+            if (GameObject.Find("InputFieldAttributeDescription").GetComponent<InputField>().text != "")
             {
-                dates.Description = GameObject.Find("TextDescriptionAttributeLevel").GetComponent<Text>().text;
+                dates.Description = GameObject.Find("InputFieldAttributeDescription").GetComponent<InputField>().text;
             }
 
             dates.DifficultLevel = (Difficult)GameObject.Find("DropdownDifficultAttributeLevel").GetComponent<Dropdown>().value;
-            if (GameObject.Find("TextSizeXAttribute").GetComponent<Text>().text != "")
-            {
-                dates.Height = Convert.ToInt32(GameObject.Find("TextSizeXAttribute").GetComponent<Text>().text);
-            }
 
-            if (GameObject.Find("TextSizeYAttribute").GetComponent<Text>().text != "")
-            {
-                dates.Weight = Convert.ToInt32(GameObject.Find("TextSizeYAttribute").GetComponent<Text>().text);
-            }
+            //todo: Need will develop changes a sizes of level.
 
             Debug.Log("Edit attributes file: " + StateController.currentLevel.FileLevel.FullName);
         }
@@ -163,11 +182,6 @@ namespace Assets.Scripts.LevelGenerator
 
                 c -= 30;
             }
-        }
-
-        private void Update()
-        {
-            
         }
 
         private bool SaveNewLevel(string pathNewLevel, LevelInfo level)

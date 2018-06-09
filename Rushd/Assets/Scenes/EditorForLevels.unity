@@ -1288,6 +1288,7 @@ MonoBehaviour:
   panelPlatforms: {fileID: 239212258}
   panelItems: {fileID: 587516610}
   panelTanks: {fileID: 1542594694}
+  colorForSelectElement: {r: 0.2558384, g: 0.12726949, b: 0.49056602, a: 0}
 --- !u!1 &198912133
 GameObject:
   m_ObjectHideFlags: 0
@@ -2360,7 +2361,7 @@ GameObject:
   - component: {fileID: 377754082}
   - component: {fileID: 377754081}
   m_Layer: 5
-  m_Name: TextNameAttributeLevel
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2736,6 +2737,7 @@ GameObject:
   - component: {fileID: 453806802}
   - component: {fileID: 453806804}
   - component: {fileID: 453806803}
+  - component: {fileID: 453806805}
   m_Layer: 5
   m_Name: PanelEditorLevels
   m_TagString: Untagged
@@ -2798,6 +2800,31 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 453806801}
+--- !u!61 &453806805
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 453806801}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 950, y: 50}
+  m_EdgeRadius: 0
 --- !u!1 &461235287
 GameObject:
   m_ObjectHideFlags: 0
@@ -4597,7 +4624,7 @@ GameObject:
   - component: {fileID: 900224409}
   - component: {fileID: 900224408}
   m_Layer: 5
-  m_Name: TextSizeXAttribute
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5587,7 +5614,7 @@ GameObject:
   - component: {fileID: 983960924}
   - component: {fileID: 983960923}
   m_Layer: 5
-  m_Name: PlaceholderSizeXLevel
+  m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5730,7 +5757,7 @@ GameObject:
   - component: {fileID: 1019324189}
   - component: {fileID: 1019324188}
   m_Layer: 5
-  m_Name: InputFieldSizeY
+  m_Name: InputFieldAttributeSizeY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5790,7 +5817,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1019324189}
   m_TextComponent: {fileID: 1474298159}
   m_Placeholder: {fileID: 1103868723}
@@ -6301,7 +6328,7 @@ GameObject:
   - component: {fileID: 1094357838}
   - component: {fileID: 1094357837}
   m_Layer: 5
-  m_Name: PlaceholderNameLevel
+  m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6534,7 +6561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1103651271}
   speedForCamera: 1
-  speedScrollWhell: 5
+  speedScrollWhell: 10
 --- !u!54 &1103651271
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6561,7 +6588,7 @@ GameObject:
   - component: {fileID: 1103868724}
   - component: {fileID: 1103868723}
   m_Layer: 5
-  m_Name: PlaceholderSizeYLevel
+  m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7651,7 +7678,7 @@ GameObject:
   - component: {fileID: 1337321927}
   - component: {fileID: 1337321926}
   m_Layer: 5
-  m_Name: InputFieldDescription
+  m_Name: InputFieldAttributeDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8797,7 +8824,7 @@ GameObject:
   - component: {fileID: 1474298160}
   - component: {fileID: 1474298159}
   m_Layer: 5
-  m_Name: TextSizeYAttribute
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9252,7 +9279,7 @@ GameObject:
   - component: {fileID: 1518373143}
   - component: {fileID: 1518373142}
   m_Layer: 5
-  m_Name: PlaceholderDescriptionLevel
+  m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9707,7 +9734,7 @@ GameObject:
   - component: {fileID: 1576333929}
   - component: {fileID: 1576333928}
   m_Layer: 5
-  m_Name: InputFieldNameLevel
+  m_Name: InputFieldAttributeNameLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10275,7 +10302,7 @@ GameObject:
   - component: {fileID: 1680927539}
   - component: {fileID: 1680927538}
   m_Layer: 5
-  m_Name: InputFieldSizeX
+  m_Name: InputFieldAttributeSizeX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10335,7 +10362,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1680927539}
   m_TextComponent: {fileID: 900224408}
   m_Placeholder: {fileID: 983960923}
@@ -10885,7 +10912,7 @@ GameObject:
   - component: {fileID: 1824286648}
   - component: {fileID: 1824286647}
   m_Layer: 5
-  m_Name: TextDescriptionAttributeLevel
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
