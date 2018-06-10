@@ -1652,7 +1652,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cad9cc6ed4c3794f972c2aaa7e90993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HoverZ: 0
+  turnRight: 0
+  turnLeft: 0
+  moveBack: 0
+  moveForvard: 0
+  hoverHigh: 2
   rb: {fileID: 1610617673}
 --- !u!114 &1610617669
 MonoBehaviour:
@@ -1665,7 +1669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af07cae9d976e0c41b004c362f3521d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 1610617674}
+  thrust: 0
+  rb: {fileID: 1610617673}
 --- !u!54 &1610617673
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1681,11 +1686,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!4 &1610617674 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4066544478196426, guid: 1d577e252ff81954f9733f68f8604577,
-    type: 2}
-  m_PrefabInternal: {fileID: 451471540}
 --- !u!1 &1685369373
 GameObject:
   m_ObjectHideFlags: 0

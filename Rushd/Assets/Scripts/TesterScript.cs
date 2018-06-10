@@ -1,38 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class TesterScript : MonoBehaviour
+// Use Transform.position to bounce a sphere.
+// The sphere and a quad are colored using materials.
+
+public class ExampleScript : MonoBehaviour
 {
-    public float thrust;
-    public Rigidbody rb;
-    // C# example.
-    void Update()
+    Vector3 velocity = new Vector3(0.0f, 1.0f, 0.0f);
+    float floorHeight = 0.0f;
+    float sleepThreshold = 0.05f;
+    float gravity = -9.8f;
+
+    void Start()
     {
-        // Bit shift the index of the layer (8) to get a bit mask
-        int layerMask = 1 << 8;
-       
+        transform.position = new Vector3(0.0f, 1.5f, 0.0f);
+    }
 
-    // This would cast rays only against colliders in layer 8.
-    // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-    layerMask = ~layerMask;
-
-        RaycastHit hit;
-        // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
+    void FixedUpdate()
+    {
+        if (velocity.magnitude > sleepThreshold || transform.position.y > floorHeight)
         {
-            GetComponent<Rigidbody>().AddForce(0, 2, 0);
-            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            //Debug.Log("Did Hit");
+            velocity += new Vector3(0.0f, gravity * Time.fixedDeltaTime, 0.0f);
         }
-        else
-        {
 
-            GetComponent<Rigidbody>().AddForce(0, -2, 0);
-            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
-            //Debug.Log("Did not Hit");
+        transform.position += velocity * Time.fixedDeltaTime;
+        if (transform.position.y <= floorHeight)
+        {
+            transform.position = new Vector3(0.0f, floorHeight, 0.0f);
+            velocity.y = -velocity.y;
         }
     }
 }
-
-
