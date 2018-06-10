@@ -18,6 +18,7 @@ namespace Assets.Scripts.LevelGenerator
         public Transform panelPlatforms;
         public Transform panelItems;
         public Transform panelTanks;
+        public GameObject panelEditAttributesElement;
 
         [Header("Цвет выделения для элементов уровня")]
         public Color colorForSelectElement;
@@ -184,6 +185,19 @@ namespace Assets.Scripts.LevelGenerator
             }
         }
 
+        public static void CallAttributeEditor(EditorElement element)
+        {
+            GameObject panel = GameObject.FindObjectOfType<EditorManager>().panelEditAttributesElement;
+
+            panel.SetActive(true);
+            GameObject.Find("InputFieldNamePlatform").GetComponent<InputField>().text = element.nameElement;
+
+            Button saveButton = GameObject.Find("ButtonEditorSaveAttributesPlatform").GetComponent<Button>();
+            saveButton.onClick.RemoveAllListeners();
+            saveButton.onClick.AddListener(delegate { ButtonAttributeSave_Click(element); });
+
+        }
+
         private bool SaveNewLevel(string pathNewLevel, LevelInfo level)
         {
             List<Platform> platforms = new List<Platform>();
@@ -291,6 +305,11 @@ namespace Assets.Scripts.LevelGenerator
             SelectElement = objectOnButton;
             TypeSelectElement = type;
 
+        }
+
+        private static void ButtonAttributeSave_Click(EditorElement element)
+        {
+            element.Rename(GameObject.Find("InputFieldNamePlatform").GetComponent<InputField>().text);
         }
 
     }

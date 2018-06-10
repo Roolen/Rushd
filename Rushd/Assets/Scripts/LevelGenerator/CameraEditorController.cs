@@ -26,7 +26,7 @@ public class CameraEditorController : MonoBehaviour
 
         mainCamera.transform.Translate(Input.GetAxis("Horizontal") * speedForCamera, 0, 0);
         mainCamera.transform.Translate(0, 0, Input.GetAxis("Vertical") * speedForCamera, Space.World);
-        mainCamera.transform.Translate(0, Input.GetAxis("Mouse ScrollWheel") * -speedScrollWhell, 0, Space.World);
+        mainCamera.transform.Translate(0, Input.GetAxis("Mouse ScrollWheel") * -speedScrollWhell * Time.deltaTime, 0, Space.World);
 
         if (mainCamera.transform.position.x > 50 + xLimit) { mainCamera.transform.Translate(-speedLimit, 0, 0, Space.World); }
         if (mainCamera.transform.position.x < 0) { mainCamera.transform.Translate(speedLimit, 0, 0, Space.World); }

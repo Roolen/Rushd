@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts;
 using Assets.Scripts.LevelGenerator;
 using UnityEngine;
 
@@ -13,17 +14,20 @@ public class EditorElement : MonoBehaviour
     public int idForElement;
     public GameObject elementOn;
     public bool thisLandingPlatform;
+    private Platform mirrorPlatform;
 
     private EditorManager editor;
 
     private Color stableColor;
-    public float timer;
+    private float timer;
 
     private void Start()
     {
         stableColor = GetComponent<Renderer>().material.color;
 
         editor = GameObject.FindObjectOfType<EditorManager>();
+
+        mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
     }
 
     private void FixedUpdate()
@@ -71,6 +75,12 @@ public class EditorElement : MonoBehaviour
         }
     }
 
+    public void Rename(string newName)
+    {
+        nameElement = newName;
+        mirrorPlatform.NamePlatform = newName;
+    }
+
     public void Click()
     {
         if (typeElement == 0 && editor.TypeSelectElement.typeGameObject != 0 && !thisLandingPlatform)
@@ -90,7 +100,7 @@ public class EditorElement : MonoBehaviour
 
             elementOn = instanceNewElement;
 
-            Platform mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
+            
 
             if (elementOn.GetComponent<EditorElement>().typeElement == 1)
             {
@@ -160,6 +170,11 @@ public class EditorElement : MonoBehaviour
             {
                 RotateTank(-90);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            EditorManager.CallAttributeEditor(this);
         }
     }
 
