@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33065055217364098}
   - component: {fileID: 23801747987936666}
   - component: {fileID: 65121955273764042}
+  - component: {fileID: 114529822804480162}
   m_Layer: 0
   m_Name: PlatformOpenSpace
   m_TagString: Untagged
@@ -57,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1cc5681d15731184bb9d9892a8fdae3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,3 +97,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114529822804480162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1416422462362556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 104b33adf87231a4c98cde286a596de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeGameObject: 0
+  universalType: 2
