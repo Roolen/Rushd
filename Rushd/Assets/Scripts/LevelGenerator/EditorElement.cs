@@ -81,7 +81,10 @@ public class EditorElement : MonoBehaviour
         mirrorPlatform.NamePlatform = newName;
     }
 
-    public void Click()
+    /// <summary>
+    /// Изменяет элемент на новый, в зависимости от того, какой элемент выбран.
+    /// </summary>
+    public void ChangeElement()
     {
         if (typeElement == 0 && editor.TypeSelectElement.typeGameObject != 0 && !thisLandingPlatform)
         {
@@ -139,6 +142,9 @@ public class EditorElement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Набор логики для редактирования свойств элемента.
+    /// </summary>
     public void Enter()
     {
         if (typeElement == 0 && !thisLandingPlatform)

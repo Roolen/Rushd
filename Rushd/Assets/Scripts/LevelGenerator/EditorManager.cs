@@ -12,16 +12,37 @@ namespace Assets.Scripts.LevelGenerator
 {
     public class EditorManager : MonoBehaviour
     {
-        public StateController stateController;
-        public LevelData dates;
-        public Button buttonEditor;
-        public Transform panelPlatforms;
-        public Transform panelItems;
-        public Transform panelTanks;
-        public GameObject panelEditAttributesElement;
+        [Header("Экземпляр StateController")]
+        [SerializeField]
+        private StateController stateController;
+
+        [Header("Экземпляр LevelData")]
+        [SerializeField]
+        private LevelData dates;
+
+        [Header("Префаб с кнопкой для редактора")]
+        [SerializeField]
+        private Button buttonEditor;
+
+        [Header("Панель с типами платформ")]
+        [SerializeField]
+        private Transform panelPlatforms;
+
+        [Header("Панель с типами предметов")]
+        [SerializeField]
+        private Transform panelItems;
+
+        [Header("Панель с типами танков")]
+        [SerializeField]
+        private Transform panelTanks;
+
+        [Header("Панель для редактирования атрибутов элемента")]
+        [SerializeField]
+        private GameObject panelEditAttributesElement;
 
         [Header("Цвет выделения для элементов уровня")]
-        public Color colorForSelectElement;
+        [SerializeField]
+        private Color colorForSelectElement;
 
         private TypeElement typeSelectElement;
         private GameObject selectElement;
@@ -52,14 +73,94 @@ namespace Assets.Scripts.LevelGenerator
             }
         }
 
+        #region Properties
+
+        public StateController StateController
+        {
+            get
+            {
+                return stateController;
+            }
+        }
+
+        public LevelData Dates
+        {
+            get
+            {
+                return dates;
+            }
+        }
+
+        public Button ButtonEditor
+        {
+            get
+            {
+                return buttonEditor;
+            }
+        }
+
+        public Transform PanelPlatforms
+        {
+            get
+            {
+                return panelPlatforms;
+            }
+        }
+
+        public Transform PanelItems
+        {
+            get
+            {
+                return panelItems;
+            }
+        }
+
+        public Transform PanelTanks
+        {
+            get
+            {
+                return panelTanks;
+            }
+        }
+
+        public GameObject PanelEditAttributesElement
+        {
+            get
+            {
+                return panelEditAttributesElement;
+            }
+        }
+
+        public Color ColorForSelectElement
+        {
+            get
+            {
+                return colorForSelectElement;
+            }
+        }
+
+        #endregion
+
+
         private void Start()
         {
-            stateController.ChangeState(StateController.States.Stoping);
+            StateController.ChangeState(StateController.States.Stoping);
 
             ShowElementsPanels();
         }
 
         private void FixedUpdate()
+        {
+            if (Time.time > 4)
+            {
+                RaycastForElement();
+            }
+        }
+
+        /// <summary>
+        /// Пускает луч для игрового элемента.
+        /// </summary>
+        private void RaycastForElement()
         {
             Ray rayFromCamera = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -68,55 +169,67 @@ namespace Assets.Scripts.LevelGenerator
             {
                 if (EventSystem.current.IsPointerOverGameObject()) return;
 
-                EditorElement element = hit.transform.gameObject.GetComponent<EditorElement>();
+                EditorElement element = hit.transform.gameObject.GetComponentInParent<EditorElement>();
 
-                element.Select(colorForSelectElement);
+                element.Select(ColorForSelectElement);
                 element.Enter();
 
-                if (Input.GetMouseButtonDown(0)) element.Click();
+                if (Input.GetMouseButtonDown(0)) element.ChangeElement();
 
             }
         }
 
+        /// <summary>
+        /// Сохраняет уровень в файл уровня.
+        /// </summary>
         public void SaveFile()
         {
-            if (SaveChangesInFile(dates, StateController.currentLevel.FileLevel.FullName)) { }
+            if (SaveChangesInFile(Dates, StateController.currentLevel.FileLevel.FullName)) { }
             else
             {
                 Debug.Log("EL_006: Не удалось сохранить файл уровня.");
             }
         }
 
+        /// <summary>
+        /// Обновляет отображение атрибутов уровня в специальном окне.
+        /// </summary>
         public void UpdateAttributeLevel()
         {
-            GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text = dates.NameLevel;
-            GameObject.Find("InputFieldAttributeDescription").GetComponent<InputField>().text = dates.Description;
-            GameObject.Find("DropdownDifficultAttributeLevel").GetComponent<Dropdown>().value = Convert.ToInt32(dates.DifficultLevel);
-            GameObject.Find("InputFieldAttributeSizeX").GetComponent<InputField>().text = dates.Height.ToString();
-            GameObject.Find("InputFieldAttributeSizeY").GetComponent<InputField>().text = dates.Weight.ToString();
+            GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text = Dates.NameLevel;
+            GameObject.Find("InputFieldAttributeDescription").GetComponent<InputField>().text = Dates.Description;
+            GameObject.Find("DropdownDifficultAttributeLevel").GetComponent<Dropdown>().value = Convert.ToInt32(Dates.DifficultLevel);
+            GameObject.Find("InputFieldAttributeSizeX").GetComponent<InputField>().text = Dates.Height.ToString();
+            GameObject.Find("InputFieldAttributeSizeY").GetComponent<InputField>().text = Dates.Weight.ToString();
         }
 
+        /// <summary>
+        /// Изменяет атрибуты уровня на новые.
+        /// </summary>
         public void ChangeAttributeLevel()
         {
-            int y = dates.Height;
-            int x = dates.Weight;
+            int y = Dates.Height;
+            int x = Dates.Weight;
             if (GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text != "")
             {
-                dates.NameLevel = GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text;
+                Dates.NameLevel = GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text;
             }
 
             if (GameObject.Find("InputFieldAttributeDescription").GetComponent<InputField>().text != "")
             {
-                dates.Description = GameObject.Find("InputFieldAttributeDescription").GetComponent<InputField>().text;
+                Dates.Description = GameObject.Find("InputFieldAttributeDescription").GetComponent<InputField>().text;
             }
 
-            dates.DifficultLevel = (Difficult)GameObject.Find("DropdownDifficultAttributeLevel").GetComponent<Dropdown>().value;
+            Dates.DifficultLevel = (Difficult)GameObject.Find("DropdownDifficultAttributeLevel").GetComponent<Dropdown>().value;
 
             //todo: Need will develop changes a sizes of level.
 
             Debug.Log("Edit attributes file: " + StateController.currentLevel.FileLevel.FullName);
         }
 
+        /// <summary>
+        /// Создает новый уровень.
+        /// </summary>
         public void CreateNewLevel()
         {
             LevelInfo newLevel = gameObject.AddComponent<LevelInfo>();
@@ -138,18 +251,21 @@ namespace Assets.Scripts.LevelGenerator
 
             SaveNewLevel(pathByNewLevel, newLevel);
 
-            stateController.nextLevel = newLevel;
-            stateController.EditorNextLevel();
+            StateController.nextLevel = newLevel;
+            StateController.EditorNextLevel();
 
         }
 
+        /// <summary>
+        /// Выводит элементы на панели типов, для разных элементов.
+        /// </summary>
         public void ShowElementsPanels()
         {
             int i = -30;
 
-            foreach (GameObject platform in dates.typesPlatforms)
+            foreach (GameObject platform in Dates.typesPlatforms)
             {
-                Button buttonInstance = Instantiate(buttonEditor, panelPlatforms.transform);
+                Button buttonInstance = Instantiate(ButtonEditor, PanelPlatforms.transform);
                 buttonInstance.GetComponentInChildren<Text>().text = platform.name;
                 buttonInstance.transform.Translate(75, i, 0);
 
@@ -160,9 +276,9 @@ namespace Assets.Scripts.LevelGenerator
 
             int j = -30;
 
-            foreach (GameObject item in dates.typesItems)
+            foreach (GameObject item in Dates.typesItems)
             {
-                Button buttonInstance = Instantiate(buttonEditor, panelItems.transform);
+                Button buttonInstance = Instantiate(ButtonEditor, PanelItems.transform);
                 buttonInstance.GetComponentInChildren<Text>().text = item.name;
                 buttonInstance.transform.Translate(75, j, 0);
 
@@ -173,9 +289,9 @@ namespace Assets.Scripts.LevelGenerator
 
             int c = -30;
 
-            foreach (GameObject tank in dates.tanksTypes)
+            foreach (GameObject tank in Dates.tanksTypes)
             {
-                Button buttonInstance = Instantiate(buttonEditor, panelTanks.transform);
+                Button buttonInstance = Instantiate(ButtonEditor, PanelTanks.transform);
                 buttonInstance.GetComponentInChildren<Text>().text = tank.name;
                 buttonInstance.transform.Translate(75, c, 0);
 
@@ -185,19 +301,33 @@ namespace Assets.Scripts.LevelGenerator
             }
         }
 
+        /// <summary>
+        /// Вызывает окно редактирования атрибутов игрового элемента.
+        /// </summary>
+        /// <param name="element">Игровой элемент</param>
         public static void CallAttributeEditor(EditorElement element)
         {
-            GameObject panel = GameObject.FindObjectOfType<EditorManager>().panelEditAttributesElement;
+            if (element.typeElement == 0)
+            {
+                GameObject panel = GameObject.FindObjectOfType<EditorManager>().PanelEditAttributesElement;
 
-            panel.SetActive(true);
-            GameObject.Find("InputFieldNamePlatform").GetComponent<InputField>().text = element.nameElement;
+                panel.SetActive(true);
+                GameObject.Find("InputFieldNamePlatform").GetComponent<InputField>().text = element.nameElement;
 
-            Button saveButton = GameObject.Find("ButtonEditorSaveAttributesPlatform").GetComponent<Button>();
-            saveButton.onClick.RemoveAllListeners();
-            saveButton.onClick.AddListener(delegate { ButtonAttributeSave_Click(element); });
+                Button saveButton = GameObject.Find("ButtonEditorSaveAttributesPlatform").GetComponent<Button>();
+                saveButton.onClick.RemoveAllListeners();
+                saveButton.onClick.AddListener(delegate { ButtonAttributeSave_Click(element); });
+            }
+            
 
         }
 
+        /// <summary>
+        /// Сохраняет созданый уровень в файл.
+        /// </summary>
+        /// <param name="pathNewLevel">Путь к файлу нового уровня</param>
+        /// <param name="level">Игровой уровень</param>
+        /// <returns>Успешность сохранения</returns>
         private bool SaveNewLevel(string pathNewLevel, LevelInfo level)
         {
             List<Platform> platforms = new List<Platform>();
@@ -218,6 +348,12 @@ namespace Assets.Scripts.LevelGenerator
             return true;
         }
 
+        /// <summary>
+        /// Сохраняет изменения сделаные в редакторе, в файл.
+        /// </summary>
+        /// <param name="data">Данные об уровне</param>
+        /// <param name="pathByFileLevel">Путь к файлу уровня</param>
+        /// <returns>Успешность сохранения</returns>
         private bool SaveChangesInFile(LevelData data, string pathByFileLevel)
         {
             FileInfo fileLevel = null;
@@ -293,6 +429,13 @@ namespace Assets.Scripts.LevelGenerator
 
         }
 
+        /// <summary>
+        /// Сохранение атрибута в файл.
+        /// </summary>
+        /// <param name="xmlNode"></param>
+        /// <param name="xmlDoc"></param>
+        /// <param name="nameOfAttribute"></param>
+        /// <param name="valueOfAttribute"></param>
         private void SaveAttribute(XmlNode xmlNode, XmlDocument xmlDoc, string nameOfAttribute, string valueOfAttribute)
         {
             XmlAttribute attributeName = xmlNode.Attributes.Append(xmlDoc.CreateAttribute(nameOfAttribute));
