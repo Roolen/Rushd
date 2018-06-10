@@ -151,7 +151,7 @@ namespace Assets.Scripts.LevelGenerator
 
         private void FixedUpdate()
         {
-            if (Time.time > 4)
+            if (Time.timeSinceLevelLoad > 1)
             {
                 RaycastForElement();
             }
@@ -165,7 +165,7 @@ namespace Assets.Scripts.LevelGenerator
             Ray rayFromCamera = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(rayFromCamera, out hit, 100))
+            if (Physics.Raycast(rayFromCamera, out hit, 300))
             {
                 if (EventSystem.current.IsPointerOverGameObject()) return;
 
