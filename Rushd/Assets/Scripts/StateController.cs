@@ -9,16 +9,20 @@ namespace Assets.Scripts
         public LevelInfo nextLevel;
         public static LevelInfo currentLevel;
 
+        public bool stopGame;
+        public static bool menuMode;
+
         public enum States
         {
-            Play = 0,
-            Stop = 1,
-            Exit = 2
+            Playing = 0,
+            Stoping = 1,
+            Pausing = 2,
+            Exiting = 3
         }
 
         void Start ()
         {
-		
+
         }
 
         /// <summary>
@@ -27,18 +31,45 @@ namespace Assets.Scripts
         /// <param name="stateNew">Новое состояние</param>
         public void ChangeState(States stateNew)
         {
-            if (stateNew == States.Play) Play();
+            if (stateNew == States.Playing) Play();
 
-            else if (stateNew == States.Stop) Stop();
+            else if (stateNew == States.Stoping) Stop();
 
-            else if (stateNew == States.Exit) Exit();
+            else if (stateNew == States.Pausing) Pause();
+
+            else if (stateNew == States.Exiting) Exit();
         }
+
 
         public void PlayLevel()
         {
             currentLevel = nextLevel;
+            menuMode = false;
 
             SceneManager.LoadScene("GameLevel");
+        }
+
+        public void NextLevel()
+        {
+            currentLevel = nextLevel;
+            menuMode = false;
+
+            SceneManager.LoadScene(SceneManager.sceneCount - 1);
+        }
+
+        public void DeleteSelectLevel()
+        {
+            Debug.Log("Delete file: " + nextLevel.FileLevel.FullName);
+
+            nextLevel.FileLevel.Delete();
+        }
+
+        public void EditorNextLevel()
+        {
+            currentLevel = nextLevel;
+            menuMode = false;
+
+            SceneManager.LoadScene("EditorForLevels");
         }
 
         public void ChangeState(int i)
@@ -53,6 +84,8 @@ namespace Assets.Scripts
             try
             {
                 Time.timeScale = 1.0f;
+                stopGame = false;
+
                 Debug.Log("Time play");
 
                 return true;
@@ -68,8 +101,26 @@ namespace Assets.Scripts
         {
             try
             {
-                Time.timeScale = 0.0f;
+                Time.timeScale = 1.0f;
+                stopGame = true;
+
                 Debug.Log("Time stop");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e.Message);
+                return false;
+            }
+        }
+
+        private bool Pause()
+        {
+            try
+            {
+                Time.timeScale = 0.0f;
+                Debug.Log("Time pause");
 
                 return true;
             }

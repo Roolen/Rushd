@@ -13,17 +13,19 @@ namespace Assets.Scripts.LevelGenerator
 
         private void Start ()
         {
-            FileInfo fileLevel = null;
-            fileLevel = StateController.currentLevel.FileLevel;
+            if (!StateController.menuMode)
+            {
+                FileInfo fileLevel = null;
+                fileLevel = StateController.currentLevel.FileLevel;
 
-            if (fileLevel.Exists)
-            {
-                AnalysisOfFileLevel(fileLevel);
-            }
-            else
-            {
-                Debug.LogError("EL_001: Ошибка загрузки файла уровня");
-                SceneManager.LoadScene(0);
+                if (fileLevel != null && fileLevel.Exists)
+                {
+                    AnalysisOfFileLevel(fileLevel);
+                }
+                else
+                {
+                    Debug.LogError("EL_001: Ошибка загрузки файла уровня");
+                }
             }
         }
 
@@ -38,19 +40,21 @@ namespace Assets.Scripts.LevelGenerator
 
             List<Platform> platforms = new List<Platform>();
 
+            int id = 0;
             if (xmlRoot != null)
                 foreach (XmlNode xmlPlatform in xmlRoot) //Get childs root.
                 {
                     Platform platform = new Platform();
+                    platform.IdPlatform = id++;
 
                     if (xmlPlatform.Name == "platform")
                     {
                         if (xmlPlatform.Attributes.Count > 0)
                         {
-                            platform.NamePlatform = GetValueOfAttribute(xmlPlatform, "Name").Value;
+                            platform.NamePlatform = GetValueOfAttribute(xmlPlatform, "Name", true).Value;
 
                             {
-                                int indexType = Convert.ToInt32(GetValueOfAttribute(xmlPlatform, "Type").Value);
+                                int indexType = Convert.ToInt32(GetValueOfAttribute(xmlPlatform, "Type", true).Value);
                                 platform.TypePlatform = (TypesPlatform) indexType;
                             }
 
@@ -68,14 +72,15 @@ namespace Assets.Scripts.LevelGenerator
                                 if (xmlChild.Name == "item")
                                 {
                                     Item item = new Item();
+
                                     XmlNode xmlItem = xmlChild; // Get child xmlPlatform.
 
                                     if (xmlItem.Attributes != null && xmlItem.Attributes.Count > 0)
                                     {
-                                        item.NameItem = GetValueOfAttribute(xmlItem, "Name").Value;
+                                        item.NameItem = GetValueOfAttribute(xmlItem, "Name", true).Value;
 
                                         {
-                                            int indexType = Convert.ToInt32(GetValueOfAttribute(xmlItem, "Type").Value);
+                                            int indexType = Convert.ToInt32(GetValueOfAttribute(xmlItem, "Type", true).Value);
                                             item.TypeItem = (TypesItem) indexType;
                                         }
 
@@ -90,18 +95,18 @@ namespace Assets.Scripts.LevelGenerator
 
                                     if (xmlTank.Attributes != null && xmlTank.Attributes.Count > 0)
                                     {
-                                        tank.NameTank = GetValueOfAttribute(xmlTank, "Name").Value;
+                                        tank.NameTank = GetValueOfAttribute(xmlTank, "Name", true).Value;
 
                                         {
-                                            int indexType = Convert.ToInt32(GetValueOfAttribute(xmlTank, "Type").Value);
+                                            int indexType = Convert.ToInt32(GetValueOfAttribute(xmlTank, "Type", true).Value);
                                             tank.TypeTank = (TypesTank)indexType;
                                         }
 
-                                        if (GetValueOfAttribute(xmlTank, "Rotate") != null)
-                                            tank.RotateTank = Convert.ToInt32(GetValueOfAttribute(xmlTank, "Rotate").Value);
+                                        if (GetValueOfAttribute(xmlTank, "Rotate", false) != null)
+                                            tank.RotateTank = Convert.ToInt32(GetValueOfAttribute(xmlTank, "Rotate", false).Value);
 
-                                        if (GetValueOfAttribute(xmlTank, "TargetPoint") != null)
-                                            tank.TargetPoint = GetValueOfAttribute(xmlTank, "TargetPoint").Value;
+                                        if (GetValueOfAttribute(xmlTank, "TargetPoint", false) != null)
+                                            tank.TargetPoint = GetValueOfAttribute(xmlTank, "TargetPoint", false).Value;
 
                                         platform.TankOnPlatform = tank;
                                     }
@@ -122,6 +127,8 @@ namespace Assets.Scripts.LevelGenerator
             if (xmlRoot.Attributes.Count > 0)
             {
                 dates.NameLevel = GetValueOfAttribute(xmlRoot, "Name").Value;
+
+                dates.Description = GetValueOfAttribute(xmlRoot, "Description").Value;
 
                 {
                     int indexDifficult = Convert.ToInt32(GetValueOfAttribute(xmlRoot, "Difficult").Value);
@@ -158,7 +165,7 @@ namespace Assets.Scripts.LevelGenerator
             }
         }
 
-        private XmlNode GetValueOfAttribute(XmlNode xmlNode, string nameAttribute)
+        private XmlNode GetValueOfAttribute(XmlNode xmlNode, string nameAttribute, bool must)
         {
             XmlNode attribute = xmlNode.Attributes.GetNamedItem(nameAttribute);
 
@@ -168,7 +175,8 @@ namespace Assets.Scripts.LevelGenerator
             }
             else
             {
-                Debug.LogError("EL_002: Некорректные атрибуты уровня");
+                if (must)
+                    Debug.LogError("EL_002: Некорректные атрибуты уровня");
                 return null;
             }
         }
