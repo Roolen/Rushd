@@ -2100,7 +2100,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1208762601}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.44125
+  m_Size: 0.44375
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8992,7 +8992,7 @@ Prefab:
     - target: {fileID: 114278701200490652, guid: 5ebfedb254f76e2469f568a9b690a88d,
         type: 2}
       propertyPath: pathByMap
-      value: C:\Map
+      value: C:\\Map\
       objectReference: {fileID: 0}
     - target: {fileID: 114278701200490652, guid: 5ebfedb254f76e2469f568a9b690a88d,
         type: 2}

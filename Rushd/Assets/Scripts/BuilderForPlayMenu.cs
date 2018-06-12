@@ -31,17 +31,42 @@ namespace Assets.Scripts
         [Header("Текст в который будет записываться сложность уровня")]
         public Text textLevelDifficult;
 
+        private bool isUpdate;
+
         void Start ()
         {
 
             BuildPlayMenu();
 
             MakeLevelButtons();
+
+            FileSystemWatcher watcher = new FileSystemWatcher {Path = pathByMap};
+            watcher.Created += UpdatePlayMenu;
+            watcher.Deleted += UpdatePlayMenu;
+
+            watcher.EnableRaisingEvents = true;
+            Debug.Log("Watching: " + pathByMap);
+        }
+
+        void Update()
+        {
+            //Checking need for update.
+            if (isUpdate)
+            {
+                BuildPlayMenu();
+                MakeLevelButtons();
+                isUpdate = false;
+            }
+        }
+
+        public void UpdatePlayMenu(object obj, FileSystemEventArgs args)
+        {
+            Debug.Log("Changed files for level");
+            isUpdate = true;
         }
 
         private bool BuildPlayMenu()
         {
-            //DirectoryInfo dir = new DirectoryInfo("Map\\");
             DirectoryInfo dir = new DirectoryInfo(pathByMap);
 
             if (!dir.Exists)
@@ -49,6 +74,13 @@ namespace Assets.Scripts
                 Debug.LogError("EL_001: Проблема с загрузкой файла игрового уровня");
                 return false;
             }
+
+            //Clean all components from past use.
+            foreach (LevelInfo component in GetComponents<LevelInfo>())
+            {
+                Destroy(component);
+            }
+            levels.Clear();
 
             foreach (FileInfo levelFile in dir.GetFiles())
             {
@@ -63,6 +95,7 @@ namespace Assets.Scripts
 
                 XmlElement xmlRoot = xmlDoc.DocumentElement;
 
+                // This simple way for adding component.
                 LevelInfo level = gameObject.AddComponent<LevelInfo>();
 
 
@@ -99,6 +132,8 @@ namespace Assets.Scripts
 
         private void MakeLevelButtons()
         {
+            contentArea.DetachChildren();
+
             int y = -20;
 
             foreach (LevelInfo level in levels)
