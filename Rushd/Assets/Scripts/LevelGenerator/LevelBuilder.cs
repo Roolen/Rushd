@@ -30,7 +30,6 @@ namespace Assets.Scripts.LevelGenerator
             tankInstance.name = "PlayerTank";
 
             {
-                tankInstance.AddComponent<TankController>();
                 tankInstance.AddComponent<PlayerController>();
             }
 
@@ -97,7 +96,6 @@ namespace Assets.Scripts.LevelGenerator
                         tankInstance.transform.Rotate(0, platform.TankOnPlatform.RotateTank, 0);
 
                         {
-                            tankInstance.AddComponent<TankController>();
                             tankInstance.AddComponent<TankBot>();
                             tankInstance.GetComponent<TankBot>().targetPoint = GameObject.Find(platform.TankOnPlatform.TargetPoint);
                         }

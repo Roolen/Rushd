@@ -1,65 +1,139 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class TankController : MonoBehaviour
+namespace Assets.Scripts
 {
-    public float turnRight;
-    public float turnLeft;
-    public float moveBack;
-    public float moveForvard;
-    public int hoverHigh;
-    public Rigidbody rb;
-
-    private void MoveForvardTank()
+    // ReSharper disable once ClassNeverInstantiated.Global
+    [RequireComponent(typeof(Rigidbody))]
+    public class TankController : MonoBehaviour
     {
-        rb.AddForce(0, 0, moveForvard); 
-    }
+        [SerializeField]
+        private float speedTurn;
 
-    private void TurnLeftTank()
-    {
-        float turn = Input.GetAxis("Horizontal");
-        rb.AddTorque(new Vector3(0, turnLeft, 0));
-    }
+        [SerializeField]
+        private float speedBack;
 
-    private void TurnRightTank()
-    {
-        float turn = Input.GetAxis("Horizontal");
-        rb.AddTorque(new Vector3(0, turnRight, 0));
-    }
+        [SerializeField]
+        private float speedForward;
 
-    private void MoveBackTank()
-    {
-        rb.AddForce(0, 0, moveBack);
-    }
+        [SerializeField]
+        private int hoverHeight;
 
-    private void HoverTank()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, hoverHigh))
+        private Rigidbody thisRigidbody;
+
+        #region Properties
+
+        public float SpeedTurn
         {
-            GetComponent<Rigidbody>().AddForce(0, 2, 0);
-        }
-      
-    }
+            get
+            {
+                return speedTurn;
+            }
 
-    private void StabilizationTank()
-    {
+            set
+            {
+                if (value < 10) speedTurn = value;
+                else Debug.LogWarning("Попытка задать некорректную скорость поворота " + value);
+            }
+        }
+
+        public float SpeedBack
+        {
+            get
+            {
+                return speedBack;
+            }
+
+            set
+            {
+                if (value < 10) speedBack = value;
+                else Debug.LogWarning("Попытка задать некорректную скорость движения назад " + value);
+            }
+        }
+
+        public float SpeedForward
+        {
+            get
+            {
+                return speedForward;
+            }
+
+            set
+            {
+                if (value < 10) speedForward = value;
+                else Debug.LogWarning("Попытка задать некорректныую скорость движения вперед " + value);
+            }
+        }
+
+        public int HoverHeight
+        {
+            get
+            {
+                return hoverHeight;
+            }
+
+            set
+            {
+                if (value < 20) hoverHeight = value;
+                else Debug.LogWarning("Попытка задать некорректную высоту парения " + value);
+            }
+        }
+
+        public Rigidbody ThisRigidbody
+        {
+            get { return thisRigidbody; }
+        }
+
+        #endregion
+
+        private void Start()
+        {
+            thisRigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void MoveForwardTank()
+        {
+            ThisRigidbody.AddRelativeForce(Vector3.right * -SpeedForward, ForceMode.Force); 
+        }
+
+        private void TurnLeftTank()
+        {
+            ThisRigidbody.AddTorque(new Vector3(0, -SpeedTurn, 0));
+        }
+
+        private void TurnRightTank()
+        {
+            ThisRigidbody.AddTorque(new Vector3(0, SpeedTurn, 0));
+        }
+
+        private void MoveBackTank()
+        {
+            ThisRigidbody.AddRelativeForce(Vector3.right * SpeedBack, ForceMode.Force);
+        }
+
+        private void HoverTank()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, HoverHeight))
+            {
+                if (thisRigidbody.GetPointVelocity(gameObject.transform.position).y < 5 )
+                thisRigidbody.AddForce(0, 2, 0);
+            }
+      
+        }
+
+        private void StabilizationTank()
+        {
 
      
     
-    }
+        }
 
+        void FixedUpdate()
+        {
+            HoverTank();
 
-    void FixedUpdate()
-    {
-        HoverTank();
-    }
-
+            Debug.Log(thisRigidbody.GetPointVelocity(gameObject.transform.position));
+        }
     
-
-
-
-
-
+    }
 }
