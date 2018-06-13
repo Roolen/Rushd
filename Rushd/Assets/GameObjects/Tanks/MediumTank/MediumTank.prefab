@@ -304,7 +304,7 @@ MonoBehaviour:
   speedBack: 10
   speedForward: 10
   maxSpeed: 20
-  hoverHeight: 5
+  hoverHeight: 3
 --- !u!114 &114812950517411922
 MonoBehaviour:
   m_ObjectHideFlags: 1

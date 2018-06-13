@@ -120,7 +120,7 @@ namespace Assets.Scripts
         /// <summary>
         /// Сдвинуть танк вперед.
         /// </summary>
-        private void MoveForwardTank()
+        public void MoveForwardTank()
         {
                 ThisRigidbody.AddRelativeForce(Vector3.right * -SpeedForward); 
         }
@@ -128,7 +128,7 @@ namespace Assets.Scripts
         /// <summary>
         /// Повернуть танк налево.
         /// </summary>
-        private void TurnLeftTank()
+        public void TurnLeftTank()
         {
             ThisRigidbody.AddTorque(new Vector3(0, -SpeedTurn, 0));
         }
@@ -136,7 +136,7 @@ namespace Assets.Scripts
         /// <summary>
         /// Повернуть танк направо.
         /// </summary>
-        private void TurnRightTank()
+        public void TurnRightTank()
         {
             ThisRigidbody.AddTorque(new Vector3(0, SpeedTurn, 0));
         }
@@ -144,7 +144,7 @@ namespace Assets.Scripts
         /// <summary>
         /// Дать задний ход.
         /// </summary>
-        private void MoveBackTank()
+        public void MoveBackTank()
         {
             ThisRigidbody.AddRelativeForce(Vector3.right * SpeedBack);
         }
