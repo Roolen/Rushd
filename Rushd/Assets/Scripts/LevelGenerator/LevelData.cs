@@ -44,8 +44,6 @@ namespace Assets.Scripts.LevelGenerator
 
     public class LevelData : MonoBehaviour
     {
-        [Header("Платформы")]
-        public GameObject platformOpenSpace;
 
         public GameObject[] tanksTypes;
 
@@ -55,6 +53,7 @@ namespace Assets.Scripts.LevelGenerator
 
         private string nameLevel;
         private Difficult difficultLevel;
+        private string description;
 
         private int heightLevel;
         private int weightLevel;
@@ -172,6 +171,22 @@ namespace Assets.Scripts.LevelGenerator
         }
 
         /// <summary>
+        /// Описание уровня.
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
+
+            set
+            {
+                description = value;
+            }
+        }
+
+        /// <summary>
         /// Создает экземпляр класса LevelData.
         /// </summary>
         /// <param name="levelName">Название уровня</param>
@@ -191,6 +206,7 @@ namespace Assets.Scripts.LevelGenerator
     public class Platform
     {
         private string namePlatform;
+        private int idPlatform;
         private TypesPlatform typePlatform;
         private Item itemOnPlatform;
         private Tank tankOnPlatform;
@@ -262,6 +278,19 @@ namespace Assets.Scripts.LevelGenerator
             }
         }
 
+        public int IdPlatform
+        {
+            get
+            {
+                return idPlatform;
+            }
+
+            set
+            {
+                idPlatform = value;
+            }
+        }
+
         /// <summary>
         /// Создает экземпляр игровой платформы.
         /// </summary>
@@ -275,12 +304,25 @@ namespace Assets.Scripts.LevelGenerator
             ItemOnPlatform = itemPlatform;
         }
 
+        /// <summary>
+        /// Создает экземпляр игровой платформы.
+        /// </summary>
         public Platform()
         {
             NamePlatform = null;
             TypePlatform = TypesPlatform.PlatformOpenSpace;
             ItemOnPlatform = null;
 
+        }
+
+        public void RemoveItemOnPlatform()
+        {
+            itemOnPlatform = null;
+        }
+
+        public void RemoveTankOnPlatform()
+        {
+            tankOnPlatform = null;
         }
     }
 
@@ -336,6 +378,7 @@ namespace Assets.Scripts.LevelGenerator
         }
 
         public  Item() { }
+
     }
 
     public class Tank
