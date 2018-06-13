@@ -242,13 +242,13 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1123825578185068}
   serializedVersion: 2
-  m_Mass: 0.1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 0.3
+  m_Drag: 1
+  m_AngularDrag: 2
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!65 &65300154539018240
 BoxCollider:
@@ -297,9 +297,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cad9cc6ed4c3794f972c2aaa7e90993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedTurn: 0
-  speedBack: 0
-  speedForward: 0
+  sX: 0
+  sY: 0
+  sZ: 0
+  speedTurn: 10
+  speedBack: 10
+  speedForward: 10
+  maxSpeed: 20
   hoverHeight: 5
 --- !u!114 &114812950517411922
 MonoBehaviour:
