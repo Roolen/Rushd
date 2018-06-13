@@ -151,7 +151,8 @@ namespace Assets.Scripts.LevelGenerator
 
         private void FixedUpdate()
         {
-            if (Time.timeSinceLevelLoad > 1)
+            // Задержка выделителя объектов.
+            if (Time.timeSinceLevelLoad > 1) 
             {
                 RaycastForElement();
             }
