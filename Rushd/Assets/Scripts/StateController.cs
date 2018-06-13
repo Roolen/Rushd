@@ -57,6 +57,14 @@ namespace Assets.Scripts
             SceneManager.LoadScene(SceneManager.sceneCount - 1);
         }
 
+        public void AgainMainMenu()
+        {
+            currentLevel = null;
+            nextLevel = null;
+
+            SceneManager.LoadScene("Menu");
+        }
+
         public void DeleteSelectLevel()
         {
             Debug.Log("Delete file: " + nextLevel.FileLevel.FullName);
