@@ -9188,7 +9188,7 @@ Prefab:
     - target: {fileID: 114278701200490652, guid: 5ebfedb254f76e2469f568a9b690a88d,
         type: 2}
       propertyPath: pathByMap
-      value: C:\\Map\
+      value: Map\
       objectReference: {fileID: 0}
     - target: {fileID: 114278701200490652, guid: 5ebfedb254f76e2469f568a9b690a88d,
         type: 2}
