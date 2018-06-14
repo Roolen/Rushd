@@ -15,7 +15,6 @@ namespace Assets.Scripts.LevelGenerator
             {
                 MakePlatforms();
 
-
                 if (!editorMode) MakeTank();
             }
 

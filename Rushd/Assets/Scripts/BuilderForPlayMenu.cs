@@ -32,6 +32,7 @@ namespace Assets.Scripts
         public Text textLevelDifficult;
 
         private bool isUpdate;
+        private FileSystemWatcher watcher;
 
         void Start ()
         {
@@ -40,7 +41,7 @@ namespace Assets.Scripts
 
             MakeLevelButtons();
 
-            FileSystemWatcher watcher = new FileSystemWatcher {Path = pathByMap};
+            watcher = new FileSystemWatcher { Path = pathByMap };
             watcher.Created += UpdatePlayMenu;
             watcher.Deleted += UpdatePlayMenu;
 
@@ -174,8 +175,13 @@ namespace Assets.Scripts
 
             GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>().nextLevel = level;
 
-            playButton.interactable = true;
-            deleteButton.interactable = true;
+            if (playButton != null) playButton.interactable = true;
+            if (deleteButton != null) deleteButton.interactable = true;
+        }
+
+        private void OnDestroy()
+        {
+            watcher.EnableRaisingEvents = false;
         }
     }
 }
