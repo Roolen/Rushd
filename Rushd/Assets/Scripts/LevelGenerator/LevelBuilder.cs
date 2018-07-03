@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System;
+using Object = System.Object;
+using UnityStandardAssets.Cameras;
 
 namespace Assets.Scripts.LevelGenerator
 {
@@ -30,6 +32,7 @@ namespace Assets.Scripts.LevelGenerator
 
             {
                 tankInstance.AddComponent<PlayerController>();
+                GameObject.FindObjectOfType<FreeLookCam>().GetComponent<FreeLookCam>().SetTarget(tankInstance.transform);
             }
 
             tankInstance.transform.position = new Vector3(landingPlatform.transform.position.x, 5, landingPlatform.transform.position.z);
