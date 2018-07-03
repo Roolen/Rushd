@@ -244,7 +244,9 @@ namespace Assets.Scripts.LevelGenerator
             string pathByNewLevel = "C:\\\\Map\\" + newLevel.NameLevel + ".lvl";
             using (StreamWriter text = File.CreateText(pathByNewLevel))
             {
+                //Запись минимального значения, для того чтобы файл распозновался как xml.
                 text.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+                text.WriteLine("<level> </level>");
             }
 
 
@@ -332,7 +334,7 @@ namespace Assets.Scripts.LevelGenerator
         private bool SaveNewLevel(string pathNewLevel, LevelInfo level)
         {
             List<Platform> platforms = new List<Platform>();
-            for (int i = 0; i < level.HeightLevel * level.WeightLevel - 1; i++)
+            for (int i = 0; i < level.HeightLevel * level.WeightLevel; i++)
             {
                 platforms.Add(new Platform("Platform" + i, TypesPlatform.PlatformOpenSpace, null));
             }

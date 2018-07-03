@@ -3,7 +3,7 @@
   <Class Name="Assets.Scripts.BuilderForPlayMenu" Collapsed="true">
     <Position X="1" Y="1.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAgACAAAAAgAEAAAAUAAgEAAAKAAAAAAQAAAAA=</HashCode>
+      <HashCode>AIQBiAAgACAAAAAgAEAAAAUAAgEAAAKAAgAAAQAAAAE=</HashCode>
       <FileName>Assets\Scripts\BuilderForPlayMenu.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -14,17 +14,10 @@
       <FileName>Assets\Scripts\LevelInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PlayerController" Collapsed="true">
-    <Position X="4" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\PlayerController.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Assets.Scripts.StateController" Collapsed="true">
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACBABAAAAAAAAAAAAAAAAAAApAAAAAAAAAA=</HashCode>
+      <HashCode>AAAgAAAEACBABACABBAAAAAAAAAAAAAApAAAAAQAAAA=</HashCode>
       <FileName>Assets\Scripts\StateController.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -45,21 +38,21 @@
   <Class Name="Assets.Scripts.LevelGenerator.LevelBuilder" Collapsed="true">
     <Position X="6.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAQAA=</HashCode>
+      <HashCode>AgAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAQAA=</HashCode>
       <FileName>Assets\Scripts\LevelGenerator\LevelBuilder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Assets.Scripts.LevelGenerator.LevelData" Collapsed="true">
     <Position X="4" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IQAIACAADAAAAAAAgAAAgIAAACAAAAAACCAAACkAAAE=</HashCode>
+      <HashCode>IQAIACAABAAgAAAAoAAAgIAAACAAAAAACCAAACkAAAE=</HashCode>
       <FileName>Assets\Scripts\LevelGenerator\LevelData.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Assets.Scripts.LevelGenerator.Platform" Collapsed="true">
     <Position X="6.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAEAAAAAAAAAAAAAABEAQAAAAEAAAAAAABAAA=</HashCode>
+      <HashCode>AAAQAAAAEAAABAAAAAQAAAABEAQAAAAEAAAAABABAAA=</HashCode>
       <FileName>Assets\Scripts\LevelGenerator\LevelData.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -77,11 +70,18 @@
       <FileName>Assets\Scripts\LevelGenerator\LevelData.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TankController" Collapsed="true">
-    <Position X="5" Y="4.5" Width="1.5" />
+  <Class Name="Assets.Scripts.TankController" Collapsed="true">
+    <Position X="5.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAJgAAIgiAgCARCIAgEQACQQEAAUABAAEAAACAAAAA=</HashCode>
       <FileName>Assets\Scripts\TankController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.PlayerController" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAyAAAAAAAAAgAAAAAgAABAAAAAAAABBAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="Assets.Scripts.LevelGenerator.Difficult" Collapsed="true">
@@ -112,5 +112,12 @@
       <FileName>Assets\Scripts\LevelGenerator\LevelData.cs</FileName>
     </TypeIdentifier>
   </Enum>
+  <Delegate Name="Assets.Scripts.KeyboardDown" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

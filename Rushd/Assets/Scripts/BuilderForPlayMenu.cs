@@ -45,7 +45,7 @@ namespace Assets.Scripts
             watcher.Created += UpdatePlayMenu;
             watcher.Deleted += UpdatePlayMenu;
 
-            watcher.EnableRaisingEvents = true;
+            //watcher.EnableRaisingEvents = true;
             Debug.Log("Watching: " + pathByMap);
         }
 

@@ -21,8 +21,8 @@ public class CameraEditorController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        xLimit = date.Height * 10;
-        zLimit = date.Weight * 10;
+        xLimit = date.Height * 15;
+        zLimit = date.Weight * 15;
 
         mainCamera.transform.Translate(Input.GetAxis("Horizontal") * speedForCamera, 0, 0);
         mainCamera.transform.Translate(0, 0, Input.GetAxis("Vertical") * speedForCamera, Space.World);
@@ -34,7 +34,7 @@ public class CameraEditorController : MonoBehaviour
         if (mainCamera.transform.position.z > 50 + zLimit) { mainCamera.transform.Translate(0, 0, -speedLimit, Space.World); }
         if (mainCamera.transform.position.z < -50) { mainCamera.transform.Translate(0, 0, speedLimit, Space.World); }
 
-        if (mainCamera.transform.position.y > 90 + zLimit) { mainCamera.transform.Translate(0, -speedLimit, 0, Space.World); }
+        if (mainCamera.transform.position.y > 90) { mainCamera.transform.Translate(0, -speedLimit, 0, Space.World); }
         if (mainCamera.transform.position.y < 40) { mainCamera.transform.Translate(0, speedLimit, 0, Space.World); }
     }
 

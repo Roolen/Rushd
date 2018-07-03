@@ -112,7 +112,7 @@ namespace Assets.Scripts.LevelGenerator
 
             set
             {
-                if (value <= 32)
+                if (value <= 99)
                 {
                     heightLevel = value;
                 }
@@ -131,7 +131,7 @@ namespace Assets.Scripts.LevelGenerator
 
             set
             {
-                if (value <= 32)
+                if (value <= 99)
                 {
                     weightLevel = value;
                 }
