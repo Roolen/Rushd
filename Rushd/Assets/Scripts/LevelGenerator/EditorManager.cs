@@ -13,36 +13,28 @@ namespace Assets.Scripts.LevelGenerator
     public class EditorManager : MonoBehaviour
     {
         [Header("Экземпляр StateController")]
-        [SerializeField]
-        private StateController stateController;
+        [SerializeField] private StateController stateController;
 
         [Header("Экземпляр LevelData")]
-        [SerializeField]
-        private LevelData dates;
+        [SerializeField] private LevelData dates;
 
         [Header("Префаб с кнопкой для редактора")]
-        [SerializeField]
-        private Button buttonEditor;
+        [SerializeField] private Button buttonEditor;
 
         [Header("Панель с типами платформ")]
-        [SerializeField]
-        private Transform panelPlatforms;
+        [SerializeField] private Transform panelPlatforms;
 
         [Header("Панель с типами предметов")]
-        [SerializeField]
-        private Transform panelItems;
+        [SerializeField] private Transform panelItems;
 
         [Header("Панель с типами танков")]
-        [SerializeField]
-        private Transform panelTanks;
+        [SerializeField] private Transform panelTanks;
 
         [Header("Панель для редактирования атрибутов элемента")]
-        [SerializeField]
-        private GameObject panelEditAttributesElement;
+        [SerializeField] private GameObject panelEditAttributesElement;
 
         [Header("Цвет выделения для элементов уровня")]
-        [SerializeField]
-        private Color colorForSelectElement;
+        [SerializeField] private Color colorForSelectElement;
 
         private TypeElement typeSelectElement;
         private GameObject selectElement;

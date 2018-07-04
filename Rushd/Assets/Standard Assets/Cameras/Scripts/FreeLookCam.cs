@@ -1,7 +1,8 @@
-using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+// ReSharper disable once CheckNamespace
 namespace UnityStandardAssets.Cameras
 {
     public class FreeLookCam : PivotBasedCameraRig
@@ -9,49 +10,92 @@ namespace UnityStandardAssets.Cameras
         // This script is designed to be placed on the root object of a camera rig,
         // comprising 3 gameobjects, each parented to the next:
 
-        // 	Camera Rig
-        // 		Pivot
-        // 			Camera
+        // 	Camera Rig (Штатив)
+        // 		Pivot (Точка опоры)
+        // 			Camera (Камера)
 
-        [SerializeField] private float m_MoveSpeed = 1f;                      // How fast the rig will move to keep up with the target's position.
-        [Range(0f, 10f)] [SerializeField] private float m_TurnSpeed = 1.5f;   // How fast the rig will rotate from user input.
-        [SerializeField] private float m_TurnSmoothing = 0.0f;                // How much smoothing to apply to the turn input, to reduce mouse-turn jerkiness
-        [SerializeField] private float m_TiltMax = 75f;                       // The maximum value of the x axis rotation of the pivot.
-        [SerializeField] private float m_TiltMin = 45f;                       // The minimum value of the x axis rotation of the pivot.
-        [SerializeField] private bool m_LockCursor = false;                   // Whether the cursor should be hidden and locked.
-        [SerializeField] private bool m_VerticalAutoReturn = false;           // set wether or not the vertical axis should auto return
+        /// <summary>
+        /// Как быстро двигается штатив, чтобы не отставать от цели.
+        /// </summary>
+        [SerializeField] private float moveSpeed = 1f;
 
-        private float m_LookAngle;                    // The rig's y axis rotation.
-        private float m_TiltAngle;                    // The pivot's x axis rotation.
-        private const float k_LookDistance = 100f;    // How far in front of the pivot the character's look target is.
-		private Vector3 m_PivotEulers;
-		private Quaternion m_PivotTargetRot;
-		private Quaternion m_TransformTargetRot;
+        /// <summary>
+        /// Как быстро вращается штатив, при вводе пользователя.
+        /// </summary>
+        [Range(0f, 10f)] [SerializeField] private float turnSpeed = 1.5f;
+
+        /// <summary>
+        /// Степень сглаживания, при повороте штатива с помощью мыши.
+        /// </summary>
+        [SerializeField] private float turnSmoothing = 0.0f;
+
+        /// <summary>
+        /// Максимальное значения оси x для поворота точки опоры.
+        /// </summary>
+        [SerializeField] private float tiltMax = 75f;
+
+        /// <summary>
+        /// Минимальное значение оси x для поворота точки опоры.
+        /// </summary>
+        [SerializeField] private float tiltMin = 45f;
+
+        /// <summary>
+        /// Должен ли курсор захватываться.
+        /// </summary>
+        [SerializeField] private bool lockCursor = false;
+
+        /// <summary>
+        /// Должна ли вертикальная ось возврощатся в исходное положение.
+        /// </summary>
+        [SerializeField] private bool verticalAutoReturn = false;
+
+        /// <summary>
+        /// Вращение штатива по оси Y.
+        /// </summary>
+        private float lookAngle;
+
+        /// <summary>
+        /// Вращение штатива по оси X.
+        /// </summary>
+        private float tiltAngle;
+
+        /// <summary>
+        /// How far in front of the pivot the character's look target is.
+        /// </summary>
+        //private const float LookDistance = 100f;
+
+        private Vector3 pivotEulers;
+
+		private Quaternion pivotTargetRot;
+
+		private Quaternion transformTargetRot;
 
         protected override void Awake()
         {
             base.Awake();
             // Lock or unlock the cursor.
-            Cursor.lockState = m_LockCursor ? CursorLockMode.Locked : CursorLockMode.None;
-            Cursor.visible = !m_LockCursor;
-			m_PivotEulers = m_Pivot.rotation.eulerAngles;
+            Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !lockCursor;
+			pivotEulers = pivot.rotation.eulerAngles;
 
-	        m_PivotTargetRot = m_Pivot.transform.localRotation;
-			m_TransformTargetRot = transform.localRotation;
+	        pivotTargetRot = pivot.transform.localRotation;
+			transformTargetRot = transform.localRotation;
         }
 
 
+        [UsedImplicitly]
         protected void Update()
         {
             HandleRotationMovement();
-            if (m_LockCursor && Input.GetMouseButtonUp(0))
+            if (lockCursor && Input.GetMouseButtonUp(0))
             {
-                Cursor.lockState = m_LockCursor ? CursorLockMode.Locked : CursorLockMode.None;
-                Cursor.visible = !m_LockCursor;
+                Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
+                Cursor.visible = !lockCursor;
             }
         }
 
 
+        [UsedImplicitly]
         private void OnDisable()
         {
             Cursor.lockState = CursorLockMode.None;
@@ -61,9 +105,9 @@ namespace UnityStandardAssets.Cameras
 
         protected override void FollowTarget(float deltaTime)
         {
-            if (m_Target == null) return;
+            if (target == null) return;
             // Move the rig towards target position.
-            transform.position = Vector3.Lerp(transform.position, m_Target.position, deltaTime*m_MoveSpeed);
+            transform.position = Vector3.Lerp(transform.position, target.position, deltaTime*moveSpeed);
         }
 
 
@@ -77,38 +121,38 @@ namespace UnityStandardAssets.Cameras
             var y = CrossPlatformInputManager.GetAxis("Mouse Y");
 
             // Adjust the look angle by an amount proportional to the turn speed and horizontal input.
-            m_LookAngle += x*m_TurnSpeed;
+            lookAngle += x*turnSpeed;
 
             // Rotate the rig (the root object) around Y axis only:
-            m_TransformTargetRot = Quaternion.Euler(0f, m_LookAngle, 0f);
+            transformTargetRot = Quaternion.Euler(0f, lookAngle, 0f);
 
-            if (m_VerticalAutoReturn)
+            if (verticalAutoReturn)
             {
                 // For tilt input, we need to behave differently depending on whether we're using mouse or touch input:
                 // on mobile, vertical input is directly mapped to tilt value, so it springs back automatically when the look input is released
                 // we have to test whether above or below zero because we want to auto-return to zero even if min and max are not symmetrical.
-                m_TiltAngle = y > 0 ? Mathf.Lerp(0, -m_TiltMin, y) : Mathf.Lerp(0, m_TiltMax, -y);
+                tiltAngle = y > 0 ? Mathf.Lerp(0, -tiltMin, y) : Mathf.Lerp(0, tiltMax, -y);
             }
             else
             {
                 // on platforms with a mouse, we adjust the current angle based on Y mouse input and turn speed
-                m_TiltAngle -= y*m_TurnSpeed;
+                tiltAngle -= y*turnSpeed;
                 // and make sure the new value is within the tilt range
-                m_TiltAngle = Mathf.Clamp(m_TiltAngle, -m_TiltMin, m_TiltMax);
+                tiltAngle = Mathf.Clamp(tiltAngle, -tiltMin, tiltMax);
             }
 
             // Tilt input around X is applied to the pivot (the child of this object)
-			m_PivotTargetRot = Quaternion.Euler(m_TiltAngle, m_PivotEulers.y , m_PivotEulers.z);
+			pivotTargetRot = Quaternion.Euler(tiltAngle, pivotEulers.y , pivotEulers.z);
 
-			if (m_TurnSmoothing > 0)
+			if (turnSmoothing > 0)
 			{
-				m_Pivot.localRotation = Quaternion.Slerp(m_Pivot.localRotation, m_PivotTargetRot, m_TurnSmoothing * Time.deltaTime);
-				transform.localRotation = Quaternion.Slerp(transform.localRotation, m_TransformTargetRot, m_TurnSmoothing * Time.deltaTime);
+				pivot.localRotation = Quaternion.Slerp(pivot.localRotation, pivotTargetRot, turnSmoothing * Time.deltaTime);
+				transform.localRotation = Quaternion.Slerp(transform.localRotation, transformTargetRot, turnSmoothing * Time.deltaTime);
 			}
 			else
 			{
-				m_Pivot.localRotation = m_PivotTargetRot;
-				transform.localRotation = m_TransformTargetRot;
+				pivot.localRotation = pivotTargetRot;
+				transform.localRotation = transformTargetRot;
 			}
         }
     }

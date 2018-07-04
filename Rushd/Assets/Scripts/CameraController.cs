@@ -10,8 +10,8 @@ namespace Assets.Scripts
         private void FixedUpdate()
         {
             GetComponent<Transform>().LookAt(targetObject);
-                if (Vector3.Distance(transform.position, targetObject.position) > 15)
-                    transform.Translate(targetObject.position * 0.01f);
+
+            transform.position = Vector3.Lerp(transform.position, targetObject.position, Time.deltaTime * 1);
 
             transform.position = new Vector3(transform.position.x, 10, transform.position.z);
         }

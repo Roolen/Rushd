@@ -94,13 +94,15 @@ namespace Assets.Scripts.LevelGenerator
                             platformInstance.GetComponent<EditorElement>().elementOn = tankInstance;
                         }
 
+                        if (!editorMode)
+                        {
+                            tankInstance.AddComponent<TankBot>();
+                            tankInstance.GetComponent<TankBot>().defenseTarget = GameObject.Find(platform.TankOnPlatform.TargetPoint);
+                        }
+
                         tankInstance.name = platform.TankOnPlatform.NameTank;
                         tankInstance.transform.Rotate(0, platform.TankOnPlatform.RotateTank, 0);
 
-                        {
-                            tankInstance.AddComponent<TankBot>();
-                            tankInstance.GetComponent<TankBot>().targetPoint = GameObject.Find(platform.TankOnPlatform.TargetPoint);
-                        }
                     }
 
                     x++;

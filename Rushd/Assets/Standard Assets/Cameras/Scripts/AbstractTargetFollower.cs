@@ -5,16 +5,30 @@ namespace UnityStandardAssets.Cameras
 {
     public abstract class AbstractTargetFollower : MonoBehaviour
     {
-        public enum UpdateType // The available methods of updating are:
+        /// <summary>
+        /// Методы обновления.
+        /// </summary>
+        public enum UpdateType
         {
-            FixedUpdate, // Update in FixedUpdate (for tracking rigidbodies).
-            LateUpdate, // Update in LateUpdate. (for tracking objects that are moved in Update)
+            FixedUpdate,
+            LateUpdate,
             ManualUpdate, // user must call to update camera
         }
 
-        [SerializeField] protected Transform m_Target;            // The target object to follow
-        [SerializeField] private bool m_AutoTargetPlayer = true;  // Whether the rig should automatically target the player.
-        [SerializeField] private UpdateType m_UpdateType;         // stores the selected update type
+        /// <summary>
+        /// Цель за которой следует камера.
+        /// </summary>
+        [SerializeField] protected Transform target;
+
+        /// <summary>
+        /// Должен ли штатив автоматически нацеливаться на игрока.
+        /// </summary>
+        [SerializeField] private bool autoTargetPlayer = true;
+
+        /// <summary>
+        /// Тип обновления.
+        /// </summary>
+        [SerializeField] private UpdateType updateType;
 
         protected Rigidbody targetRigidbody;
 
@@ -23,12 +37,12 @@ namespace UnityStandardAssets.Cameras
         {
             // if auto targeting is used, find the object tagged "Player"
             // any class inheriting from this should call base.Start() to perform this action!
-            if (m_AutoTargetPlayer)
+            if (autoTargetPlayer)
             {
                 FindAndTargetPlayer();
             }
-            if (m_Target == null) return;
-            targetRigidbody = m_Target.GetComponent<Rigidbody>();
+            if (target == null) return;
+            targetRigidbody = target.GetComponent<Rigidbody>();
         }
 
 
@@ -36,11 +50,11 @@ namespace UnityStandardAssets.Cameras
         {
             // we update from here if updatetype is set to Fixed, or in auto mode,
             // if the target has a rigidbody, and isn't kinematic.
-            if (m_AutoTargetPlayer && (m_Target == null || !m_Target.gameObject.activeSelf))
+            if (autoTargetPlayer && (target == null || !target.gameObject.activeSelf))
             {
                 FindAndTargetPlayer();
             }
-            if (m_UpdateType == UpdateType.FixedUpdate)
+            if (updateType == UpdateType.FixedUpdate)
             {
                 FollowTarget(Time.deltaTime);
             }
@@ -51,11 +65,11 @@ namespace UnityStandardAssets.Cameras
         {
             // we update from here if updatetype is set to Late, or in auto mode,
             // if the target does not have a rigidbody, or - does have a rigidbody but is set to kinematic.
-            if (m_AutoTargetPlayer && (m_Target == null || !m_Target.gameObject.activeSelf))
+            if (autoTargetPlayer && (target == null || !target.gameObject.activeSelf))
             {
                 FindAndTargetPlayer();
             }
-            if (m_UpdateType == UpdateType.LateUpdate)
+            if (updateType == UpdateType.LateUpdate)
             {
                 FollowTarget(Time.deltaTime);
             }
@@ -66,11 +80,11 @@ namespace UnityStandardAssets.Cameras
         {
             // we update from here if updatetype is set to Late, or in auto mode,
             // if the target does not have a rigidbody, or - does have a rigidbody but is set to kinematic.
-            if (m_AutoTargetPlayer && (m_Target == null || !m_Target.gameObject.activeSelf))
+            if (autoTargetPlayer && (target == null || !target.gameObject.activeSelf))
             {
                 FindAndTargetPlayer();
             }
-            if (m_UpdateType == UpdateType.ManualUpdate)
+            if (updateType == UpdateType.ManualUpdate)
             {
                 FollowTarget(Time.deltaTime);
             }
@@ -92,13 +106,13 @@ namespace UnityStandardAssets.Cameras
 
         public virtual void SetTarget(Transform newTransform)
         {
-            m_Target = newTransform;
+            target = newTransform;
         }
 
 
         public Transform Target
         {
-            get { return m_Target; }
+            get { return target; }
         }
     }
 }

@@ -6,30 +6,17 @@ namespace Assets.Scripts
     [RequireComponent(typeof(Rigidbody))]
     public class TankController : MonoBehaviour
     {
-        [Header("Скорость танка")]
-        public float sX;
-        public float sY;
-        public float sZ;
+        public Vector3 velocityNow;
 
-        [Header("Скорость поворота")]
-        [SerializeField]
-        private float speedTurn;
+        [SerializeField] private float speedTurn;
 
-        [Header("Скорость движения назад")]
-        [SerializeField]
-        private float speedBack;
+        [SerializeField] private float speedBack;
 
-        [Header("Скорость движения вперед")]
-        [SerializeField]
-        private float speedForward;
+        [SerializeField] private float speedForward;
 
-        [Header("Максимальная скорость")]
-        [SerializeField]
-        private float maxSpeed;
+        [SerializeField] private float maxSpeed;
 
-        [Header("Высота парения")]
-        [SerializeField]
-        private int hoverHeight;
+        [SerializeField] private int hoverHeight;
 
         private Rigidbody thisRigidbody;
 
@@ -122,7 +109,7 @@ namespace Assets.Scripts
         /// </summary>
         public void MoveForwardTank()
         {
-                ThisRigidbody.AddRelativeForce(Vector3.right * -SpeedForward); 
+                ThisRigidbody.AddRelativeForce(Vector3.forward * SpeedForward); 
         }
 
         /// <summary>
@@ -146,7 +133,7 @@ namespace Assets.Scripts
         /// </summary>
         public void MoveBackTank()
         {
-            ThisRigidbody.AddRelativeForce(Vector3.right * SpeedBack);
+            ThisRigidbody.AddRelativeForce(Vector3.back * SpeedBack);
         }
 
         private void HoverTank()
@@ -175,25 +162,14 @@ namespace Assets.Scripts
         {
             HoverTank();
             StabilizationTank();
-            //DebugMoveKeyboard();
             DebugVelocity();
-        }
-
-        private void DebugMoveKeyboard()
-        {
-            if (Input.GetKey(KeyCode.W)) MoveForwardTank();
-            if (Input.GetKey(KeyCode.S)) MoveBackTank();
-            if (Input.GetKey(KeyCode.A)) TurnLeftTank();
-            if (Input.GetKey(KeyCode.D)) TurnRightTank();
         }
 
         private void DebugVelocity()
         {
             Debug.DrawRay(transform.position, thisRigidbody.velocity, Color.red);
 
-            sX = thisRigidbody.velocity.x;
-            sY = thisRigidbody.velocity.y;
-            sZ = thisRigidbody.velocity.z;
+            velocityNow = thisRigidbody.velocity;
         }
     
     }
