@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -17,6 +18,10 @@ namespace Assets.Scripts
         [SerializeField] private float maxSpeed;
 
         [SerializeField] private int hoverHeight;
+
+        [SerializeField] private Transform pivotWeapon;
+
+        [SerializeField] private GameObject shellCurrent;
 
         private Rigidbody thisRigidbody;
 
@@ -99,6 +104,7 @@ namespace Assets.Scripts
 
         #endregion
 
+        [UsedImplicitly]
         private void Start()
         {
             thisRigidbody = GetComponent<Rigidbody>();
@@ -136,6 +142,11 @@ namespace Assets.Scripts
             ThisRigidbody.AddRelativeForce(Vector3.back * SpeedBack);
         }
 
+        public void ShootTank()
+        {
+            Instantiate(shellCurrent, pivotWeapon.position, Quaternion.identity);
+        }
+
         private void HoverTank()
         {
             RaycastHit hit;
@@ -158,6 +169,7 @@ namespace Assets.Scripts
             }
         }
 
+        [UsedImplicitly]
         private void FixedUpdate()
         {
             HoverTank();

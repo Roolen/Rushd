@@ -7,6 +7,7 @@ namespace Assets.Scripts
     public class PlayerController : MonoBehaviour
     {
         public event KeyboardDown OnKeyboardDown;
+
         private TankController tank;
 
         private void Start()
@@ -22,6 +23,11 @@ namespace Assets.Scripts
         private void FixedUpdate()
         {
             if (OnKeyboardDown != null) OnKeyboardDown.Invoke();
+
+            if (Input.GetMouseButton(0))
+            {
+                tank.ShootTank();
+            }
         }
 
         private void ForwardMove()

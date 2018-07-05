@@ -18,6 +18,9 @@ namespace Assets.Scripts.LevelGenerator
         [Header("Экземпляр LevelData")]
         [SerializeField] private LevelData dates;
 
+        [Header("Экземпляр ContentManager")]
+        [SerializeField] private ContentManager content;
+
         [Header("Префаб с кнопкой для редактора")]
         [SerializeField] private Button buttonEditor;
 
@@ -258,7 +261,7 @@ namespace Assets.Scripts.LevelGenerator
         {
             int i = -30;
 
-            foreach (GameObject platform in Dates.typesPlatforms)
+            foreach (GameObject platform in content.TypesPlatforms)
             {
                 Button buttonInstance = Instantiate(ButtonEditor, PanelPlatforms.transform);
                 buttonInstance.GetComponentInChildren<Text>().text = platform.name;
@@ -271,7 +274,7 @@ namespace Assets.Scripts.LevelGenerator
 
             int j = -30;
 
-            foreach (GameObject item in Dates.typesItems)
+            foreach (GameObject item in content.TypesItems)
             {
                 Button buttonInstance = Instantiate(ButtonEditor, PanelItems.transform);
                 buttonInstance.GetComponentInChildren<Text>().text = item.name;
@@ -284,7 +287,7 @@ namespace Assets.Scripts.LevelGenerator
 
             int c = -30;
 
-            foreach (GameObject tank in Dates.tanksTypes)
+            foreach (GameObject tank in content.TanksTypes)
             {
                 Button buttonInstance = Instantiate(ButtonEditor, PanelTanks.transform);
                 buttonInstance.GetComponentInChildren<Text>().text = tank.name;

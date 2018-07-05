@@ -44,13 +44,6 @@ namespace Assets.Scripts.LevelGenerator
 
     public class LevelData : MonoBehaviour
     {
-
-        public GameObject[] tanksTypes;
-
-        public GameObject[] typesPlatforms;
-
-        public GameObject[] typesItems;
-
         private string nameLevel;
         private Difficult difficultLevel;
         private string description;

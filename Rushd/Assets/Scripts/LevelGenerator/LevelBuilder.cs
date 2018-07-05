@@ -9,6 +9,8 @@ namespace Assets.Scripts.LevelGenerator
     {
         public LevelData data;
 
+        public ContentManager content;
+
         public bool editorMode;
 
         void Start ()
@@ -26,7 +28,7 @@ namespace Assets.Scripts.LevelGenerator
         {
             GameObject landingPlatform = GameObject.FindWithTag("LandingPlatform");
 
-            GameObject tankInstance = Instantiate(data.tanksTypes[1]);
+            GameObject tankInstance = Instantiate(content.TanksTypes[1]);
 
             tankInstance.name = "PlayerTank";
 
@@ -48,7 +50,7 @@ namespace Assets.Scripts.LevelGenerator
                 foreach (var platform in data.Platforms)
                 {
 
-                    GameObject platformInstance = Instantiate(data.typesPlatforms[(int)platform.TypePlatform]);
+                    GameObject platformInstance = Instantiate(content.TypesPlatforms[(int) platform.TypePlatform]);
 
                     if (editorMode)
                     {
@@ -62,14 +64,17 @@ namespace Assets.Scripts.LevelGenerator
 
                     platformInstance.name = platform.NamePlatform;
 
-                    platformInstance.tag = platform.TypePlatform.ToString();
+                    if (platform.TypePlatform == TypesPlatform.LandingPlatform)
+                    {
+                        platformInstance.tag = platform.TypePlatform.ToString();
+                    }
 
                     platformInstance.transform.position = new Vector3(x * 15, 0, z * 15);
 
 
                     if (platform.ItemOnPlatform != null)
                     {
-                        GameObject itemInstance = Instantiate(data.typesItems[(int) platform.ItemOnPlatform.TypeItem]);
+                        GameObject itemInstance = Instantiate(content.TypesItems[(int)platform.ItemOnPlatform.TypeItem]);
 
                         if (editorMode)
                         {
@@ -85,7 +90,7 @@ namespace Assets.Scripts.LevelGenerator
 
                     if (platform.TankOnPlatform != null)
                     {
-                        GameObject tankInstance = Instantiate(data.tanksTypes[(int) platform.TankOnPlatform.TypeTank], new Vector3(x*15, 5, z*15), new Quaternion());
+                        GameObject tankInstance = Instantiate(content.TanksTypes[(int)platform.TankOnPlatform.TypeTank], new Vector3(x*15, 5, z*15), new Quaternion());
 
                         if (editorMode)
                         {
