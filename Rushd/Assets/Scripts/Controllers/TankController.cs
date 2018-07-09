@@ -1,8 +1,16 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Controllers
 {
+    public enum DirectionMove
+    {
+        Forward,
+        Back,
+        Left,
+        Right
+    }
+
     // ReSharper disable once ClassNeverInstantiated.Global
     [RequireComponent(typeof(Rigidbody))]
     public class TankController : MonoBehaviour
@@ -110,10 +118,18 @@ namespace Assets.Scripts
             thisRigidbody = GetComponent<Rigidbody>();
         }
 
+        public void MoveTank(DirectionMove typeMove)
+        {
+            if (typeMove == DirectionMove.Forward) MoveForwardTank();
+            if (typeMove == DirectionMove.Back) MoveBackTank();
+            if (typeMove == DirectionMove.Left) TurnLeftTank();
+            if (typeMove == DirectionMove.Right) TurnRightTank();
+        }
+
         /// <summary>
         /// Сдвинуть танк вперед.
         /// </summary>
-        public void MoveForwardTank()
+        private void MoveForwardTank()
         {
                 ThisRigidbody.AddRelativeForce(Vector3.forward * SpeedForward); 
         }
@@ -121,7 +137,7 @@ namespace Assets.Scripts
         /// <summary>
         /// Повернуть танк налево.
         /// </summary>
-        public void TurnLeftTank()
+        private void TurnLeftTank()
         {
             ThisRigidbody.AddTorque(new Vector3(0, -SpeedTurn, 0));
         }
@@ -129,7 +145,7 @@ namespace Assets.Scripts
         /// <summary>
         /// Повернуть танк направо.
         /// </summary>
-        public void TurnRightTank()
+        private void TurnRightTank()
         {
             ThisRigidbody.AddTorque(new Vector3(0, SpeedTurn, 0));
         }
@@ -137,7 +153,7 @@ namespace Assets.Scripts
         /// <summary>
         /// Дать задний ход.
         /// </summary>
-        public void MoveBackTank()
+        private void MoveBackTank()
         {
             ThisRigidbody.AddRelativeForce(Vector3.back * SpeedBack);
         }
