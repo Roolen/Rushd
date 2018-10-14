@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Assets
 {
@@ -13,6 +15,8 @@ namespace Assets
         public int counterPlatforms;
         public int counterTanks;
         public int counterItems;
+
+        
 
         public void OnEnable()
         {
@@ -36,70 +40,76 @@ namespace Assets
 
         private void UpdatePlatforms()
         {
-            counterPlatforms = EditorGUILayout.IntField("Count of platforms: ", counterPlatforms);
+            EditorGUILayout.LabelField("Platforms: ", target.TypesPlatforms.Count.ToString());
 
-            if (GUILayout.Button("Add platforms"))
+            string[] platforms = AssetDatabase.FindAssets("l:Platform");
+            List<GameObject> objectsPlatforms = new List<GameObject>();
+
+            foreach (var platform in platforms)
             {
-                for (int i = 0; i < counterPlatforms; i++)
-                {
-                    if (i > target.TypesPlatforms.Count - 1)
-                    {
-                        target.TypesPlatforms.Add(null);
-                    }
-                }
+                objectsPlatforms.Add(AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(platform)));
             }
 
-            EditorGUILayout.LabelField("Current platforms: ", target.TypesPlatforms.Count.ToString());
-
-            for (int i = 0; i < target.TypesPlatforms.Count; i++)
+            target.TypesPlatforms.Clear();
+            foreach (var objectPlatform in objectsPlatforms)
             {
-                target.TypesPlatforms[i] = (GameObject)EditorGUILayout.ObjectField(target.TypesPlatforms[i], typeof(Object), true);
+                
+                target.TypesPlatforms.Add(objectPlatform);
+            }
+
+            foreach (var objectPlatform in objectsPlatforms)
+            {
+                EditorGUILayout.ObjectField(objectPlatform, typeof(Object), true);
             }
         }
 
         private void UpdateTanks()
         {
-            counterTanks = EditorGUILayout.IntField("Count of tanks: ", counterTanks);
+            EditorGUILayout.LabelField("Tanks: ", target.TanksTypes.Count.ToString());
 
-            if (GUILayout.Button("Add tanks"))
+            string[] tanks = AssetDatabase.FindAssets("l:Tank");
+            List<GameObject> objectsTanks = new List<GameObject>();
+
+            foreach (var tank in tanks)
             {
-                for (int i = 0; i < counterTanks; i++)
-                {
-                    if (i > target.TanksTypes.Count - 1)
-                    {
-                        target.TanksTypes.Add(null);
-                    }
-                }
+                objectsTanks.Add(AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(tank)));
             }
 
-            EditorGUILayout.LabelField("Current tanks: ", target.TanksTypes.Count.ToString());
-
-            for (int i = 0; i < target.TanksTypes.Count; i++)
+            target.TanksTypes.Clear();
+            foreach (var objectTank in objectsTanks)
             {
-                target.TanksTypes[i] = (GameObject)EditorGUILayout.ObjectField(target.TanksTypes[i], typeof(Object), true);
+
+                target.TanksTypes.Add(objectTank);
+            }
+
+            foreach (var objectTank in objectsTanks)
+            {
+                EditorGUILayout.ObjectField(objectTank, typeof(Object), true);
             }
         }
 
         private void UpdateItems()
         {
-            counterItems = EditorGUILayout.IntField("Count of items: ", counterItems);
+            EditorGUILayout.LabelField("Items: ", target.TypesItems.Count.ToString());
 
-            if (GUILayout.Button("Add items"))
+            string[] items = AssetDatabase.FindAssets("l:Item");
+            List<GameObject> objectsItems = new List<GameObject>();
+
+            foreach (var item in items)
             {
-                for (int i = 0; i < counterItems; i++)
-                {
-                    if (i > target.TypesItems.Count - 1)
-                    {
-                        target.TypesItems.Add(null);
-                    }
-                }
+                objectsItems.Add(AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(item)));
             }
 
-            EditorGUILayout.LabelField("Current items: ", target.TypesItems.Count.ToString());
-
-            for (int i = 0; i < target.TypesItems.Count; i++)
+            target.TypesItems.Clear();
+            foreach (var objectItem in objectsItems)
             {
-                target.TypesItems[i] = (GameObject)EditorGUILayout.ObjectField(target.TypesItems[i], typeof(Object), true);
+
+                target.TypesItems.Add(objectItem);
+            }
+
+            foreach (var objectItem in objectsItems)
+            {
+                EditorGUILayout.ObjectField(objectItem, typeof(Object), true);
             }
         }
     }

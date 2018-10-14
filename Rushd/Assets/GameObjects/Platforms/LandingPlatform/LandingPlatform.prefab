@@ -109,4 +109,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeGameObject: 0
-  universalType: 0
+  universalType: 1

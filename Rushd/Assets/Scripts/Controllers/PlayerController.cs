@@ -2,36 +2,14 @@
 
 namespace Assets.Scripts.Controllers
 {
-    /// <summary>
-    /// Комманда для движения танка.
-    /// </summary>
-    public class TankMoveCommand : ICommandController
-    {
-        private readonly TankController tankController;
-        private readonly DirectionMove directionMove;
-
-        public TankMoveCommand(TankController tank, DirectionMove directionMove)
-        {
-            tankController = tank;
-            this.directionMove = directionMove;
-        }
-
-        void ICommandController.Execute()
-        {
-            tankController.MoveTank(directionMove);
-        }
-
-        void ICommandController.Undo()
-        {
-            
-        }
-    }
 
     /// <summary>
     /// Класс для управления танком, предназначеный для игрока.
     /// </summary>
     public class PlayerController : MonoBehaviour
     {
+        [SerializeField] private bool isMove;
+
         private TankController tank;
         private ICommandController[] commandsMoveTank;  // accessory, see the DirectionMove enumeration.
 
@@ -44,7 +22,7 @@ namespace Assets.Scripts.Controllers
         private void Start()
         {
             tank = GetComponent<TankController>();
-
+            isMove = true;
 
             commandsMoveTank = new ICommandController[4];
 
@@ -56,15 +34,23 @@ namespace Assets.Scripts.Controllers
 
         private void FixedUpdate()
         {
-            ForwardMove();
-            BackMove();
-            LeftTurn();
-            RightTurn();
+            if (isMove)
+            {
+                ForwardMove();
+                BackMove();
+                LeftTurn();
+                RightTurn();
+            }
 
             if (Input.GetMouseButton(0))
             {
                 tank.ShootTank();
             }
+        }
+
+        public void IsMove(bool flag)
+        {
+            isMove = flag;
         }
 
         private void ForwardMove()
@@ -87,5 +73,30 @@ namespace Assets.Scripts.Controllers
             if (Input.GetAxis("Horizontal") > 0.1) commandsMoveTank[3].Execute();
         }
 
+    }
+
+    /// <summary>
+    /// Комманда для движения танка.
+    /// </summary>
+    public class TankMoveCommand : ICommandController
+    {
+        private readonly TankController tankController;
+        private readonly DirectionMove directionMove;
+
+        public TankMoveCommand(TankController tank, DirectionMove directionMove)
+        {
+            tankController = tank;
+            this.directionMove = directionMove;
+        }
+
+        void ICommandController.Execute()
+        {
+            tankController.MoveTank(directionMove);
+        }
+
+        void ICommandController.Undo()
+        {
+
+        }
     }
 }

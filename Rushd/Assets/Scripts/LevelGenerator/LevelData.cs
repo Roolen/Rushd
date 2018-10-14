@@ -19,8 +19,8 @@ namespace Assets.Scripts.LevelGenerator
     /// </summary>
     public enum TypesPlatform
     {
-        LandingPlatform,
         EvacuationPlatform,
+        LandingPlatform,
         PlatformOpenSpace,
         PlatformWall
     }
