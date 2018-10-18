@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System;
 using Assets.Scripts.Controllers;
-using Object = System.Object;
 using UnityStandardAssets.Cameras;
 
 namespace Assets.Scripts.LevelGenerator

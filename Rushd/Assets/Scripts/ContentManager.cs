@@ -1,26 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class ContentManager : MonoBehaviour
     {
-        [SerializeField] private List<GameObject> tanksTypes = new List<GameObject>();
-
-        [SerializeField] private List<GameObject> typesPlatforms = new List<GameObject>();
-
-        [SerializeField] private List<GameObject> typesItems = new List<GameObject>();
+        public Content content;
+        private string pathContent;
 
         public List<GameObject> TanksTypes
         {
             get
             {
-                return tanksTypes;
+                return content.TanksTypes;
             }
 
             set
             {
-                tanksTypes = value;
+                content.TanksTypes = value;
             }
         }
 
@@ -28,12 +27,12 @@ namespace Assets.Scripts
         {
             get
             {
-                return typesPlatforms;
+                return content.TypesPlatforms;
             }
 
             set
             {
-                typesPlatforms = value;
+                content.TypesPlatforms = value;
             }
         }
 
@@ -41,13 +40,36 @@ namespace Assets.Scripts
         {
             get
             {
-                return typesItems;
+                return content.TypesItems;
             }
 
             set
             {
-                typesItems = value;
+                content.TypesItems = value;
             }
+        }
+
+        public DateTime LastChange
+        {
+            get { return content.lastChange; }
+            set
+            {
+                if (content != null) content.lastChange = value;
+            }
+        }
+
+        public void UpdateContent()
+        {
+            pathContent = "Assets/GameObjects/SystemObjects/Content.prefab";
+
+            content = AssetDatabase.LoadAssetAtPath<Content>(pathContent).GetComponent<Content>();
+        }
+
+        public void SaveContent()
+        {
+            AssetDatabase.ForceReserializeAssets();
+
+            UpdateContent();
         }
     }
 }

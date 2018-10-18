@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114758725341059298}
   - component: {fileID: 23270823439015418}
   m_Layer: 0
-  m_Name: MediumTank
+  m_Name: TestTank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,4 +411,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeGameObject: 2
-  universalType: 1
+  universalType: 3

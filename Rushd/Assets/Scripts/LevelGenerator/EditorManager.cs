@@ -8,6 +8,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+// ReSharper disable IdentifierTypo
+#pragma warning disable 649
+
 namespace Assets.Scripts.LevelGenerator
 {
     public class EditorManager : MonoBehaviour
@@ -39,34 +42,9 @@ namespace Assets.Scripts.LevelGenerator
         [Header("Цвет выделения для элементов уровня")]
         [SerializeField] private Color colorForSelectElement;
 
-        private TypeElement typeSelectElement;
-        private GameObject selectElement;
+        public TypeElement TypeSelectElement { get; set; }
 
-        public TypeElement TypeSelectElement
-        {
-            get
-            {
-                return typeSelectElement;
-            }
-
-            set
-            {
-                typeSelectElement = value;
-            }
-        }
-
-        public GameObject SelectElement
-        {
-            get
-            {
-                return selectElement;
-            }
-
-            set
-            {
-                selectElement = value;
-            }
-        }
+        public GameObject SelectElement { get; set; }
 
         #region Properties
 
@@ -204,8 +182,8 @@ namespace Assets.Scripts.LevelGenerator
         /// </summary>
         public void ChangeAttributeLevel()
         {
-            int y = Dates.Height;
-            int x = Dates.Weight;
+            //int y = Dates.Height;
+            //int x = Dates.Weight;
             if (GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text != "")
             {
                 Dates.NameLevel = GameObject.Find("InputFieldAttributeNameLevel").GetComponent<InputField>().text;
@@ -257,7 +235,7 @@ namespace Assets.Scripts.LevelGenerator
         /// <summary>
         /// Выводит элементы на панели типов, для разных элементов.
         /// </summary>
-        public void ShowElementsPanels()
+        private void ShowElementsPanels()
         {
             int i = -30;
 
@@ -267,7 +245,8 @@ namespace Assets.Scripts.LevelGenerator
                 buttonInstance.GetComponentInChildren<Text>().text = platform.name;
                 buttonInstance.transform.Translate(75, i, 0);
 
-                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(platform.GetComponent<TypeElement>(), platform.gameObject); });
+                var platformLocal = platform;
+                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(platformLocal.GetComponent<TypeElement>(), platformLocal.gameObject); });
 
                 i -= 30;
             }
@@ -280,7 +259,8 @@ namespace Assets.Scripts.LevelGenerator
                 buttonInstance.GetComponentInChildren<Text>().text = item.name;
                 buttonInstance.transform.Translate(75, j, 0);
 
-                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(item.GetComponent<TypeElement>(), item.gameObject); });
+                var itemLocale = item;
+                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(itemLocale.GetComponent<TypeElement>(), itemLocale.gameObject); });
 
                 j -= 30;
             }
@@ -293,7 +273,8 @@ namespace Assets.Scripts.LevelGenerator
                 buttonInstance.GetComponentInChildren<Text>().text = tank.name;
                 buttonInstance.transform.Translate(75, c, 0);
 
-                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(tank.GetComponent<TypeElement>(), tank.gameObject); });
+                var tankLocal = tank;
+                buttonInstance.onClick.AddListener(delegate { ButtonEditor_Click(tankLocal.GetComponent<TypeElement>(), tankLocal.gameObject); });
 
                 c -= 30;
             }
@@ -307,7 +288,7 @@ namespace Assets.Scripts.LevelGenerator
         {
             if (element.typeElement == 0)
             {
-                GameObject panel = GameObject.FindObjectOfType<EditorManager>().PanelEditAttributesElement;
+                GameObject panel = FindObjectOfType<EditorManager>().PanelEditAttributesElement;
 
                 panel.SetActive(true);
                 GameObject.Find("InputFieldNamePlatform").GetComponent<InputField>().text = element.nameElement;
@@ -354,8 +335,7 @@ namespace Assets.Scripts.LevelGenerator
         /// <returns>Успешность сохранения</returns>
         private bool SaveChangesInFile(LevelData data, string pathByFileLevel)
         {
-            FileInfo fileLevel = null;
-            fileLevel = new FileInfo(pathByFileLevel);
+            var fileLevel = new FileInfo(pathByFileLevel);
             
 
             if (!fileLevel.Exists)
@@ -436,8 +416,11 @@ namespace Assets.Scripts.LevelGenerator
         /// <param name="valueOfAttribute"></param>
         private void SaveAttribute(XmlNode xmlNode, XmlDocument xmlDoc, string nameOfAttribute, string valueOfAttribute)
         {
-            XmlAttribute attributeName = xmlNode.Attributes.Append(xmlDoc.CreateAttribute(nameOfAttribute));
-            attributeName.AppendChild(xmlDoc.CreateTextNode(valueOfAttribute));
+            if (xmlNode.Attributes != null)
+            {
+                XmlAttribute attributeName = xmlNode.Attributes.Append(xmlDoc.CreateAttribute(nameOfAttribute));
+                attributeName.AppendChild(xmlDoc.CreateTextNode(valueOfAttribute));
+            }
         }
 
 
