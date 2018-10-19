@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -8,7 +7,6 @@ namespace Assets.Scripts
     public class ContentManager : MonoBehaviour
     {
         public Content content;
-        private string pathContent;
 
         public List<GameObject> TanksTypes
         {
@@ -56,20 +54,6 @@ namespace Assets.Scripts
             {
                 if (content != null) content.lastChange = value;
             }
-        }
-
-        public void UpdateContent()
-        {
-            pathContent = "Assets/GameObjects/SystemObjects/Content.prefab";
-
-            content = AssetDatabase.LoadAssetAtPath<Content>(pathContent).GetComponent<Content>();
-        }
-
-        public void SaveContent()
-        {
-            AssetDatabase.ForceReserializeAssets();
-
-            UpdateContent();
         }
     }
 }

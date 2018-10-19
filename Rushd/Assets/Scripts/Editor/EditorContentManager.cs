@@ -21,7 +21,6 @@ namespace Assets
         public void OnEnable()
         {
             target = (ContentManager)base.target;
-            target.UpdateContent();
         }
 
         public override void OnInspectorGUI()
@@ -29,9 +28,9 @@ namespace Assets
             
             serializedObject.Update();
 
-            if (GUI.Button(new Rect(180, 148, 80, 30), "Update"))
+            if (GUI.Button(new Rect(180, 158, 80, 30), "Update"))
             {
-                target.SaveContent();
+                AssetDatabase.ForceReserializeAssets();
 
                 Repaint();
 
@@ -41,7 +40,8 @@ namespace Assets
             UpdatePlatforms();
             UpdateTanks();
             UpdateItems();
-            
+
+            EditorGUILayout.ObjectField(target.content, typeof(Content));
 
             EditorGUILayout.PrefixLabel(target.LastChange.ToString(CultureInfo.InvariantCulture));
 
