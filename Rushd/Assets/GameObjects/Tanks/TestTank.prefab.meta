@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: 00360032f7dce0041932610c5b2db6fa
+labels:
+- Tank
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

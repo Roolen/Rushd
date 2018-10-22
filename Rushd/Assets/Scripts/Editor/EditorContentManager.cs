@@ -12,7 +12,7 @@ namespace Assets
     [CustomEditor(typeof(ContentManager))]
     public class EditorContentManager : Editor
     {
-        public new ContentManager target;
+        [SerializeField] private new ContentManager target;
 
         public int counterPlatforms;
         public int counterTanks;
@@ -41,7 +41,7 @@ namespace Assets
             UpdateTanks();
             UpdateItems();
 
-            EditorGUILayout.ObjectField(target.content, typeof(Content));
+            EditorGUILayout.ObjectField(target.content, typeof(Content), true);
 
             EditorGUILayout.PrefixLabel(target.LastChange.ToString(CultureInfo.InvariantCulture));
 
