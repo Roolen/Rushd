@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers
@@ -26,6 +27,8 @@ namespace Assets.Scripts.Controllers
         [SerializeField] private float maxSpeed;
 
         [SerializeField] private int hoverHeight;
+
+        [SerializeField] private Transform tower;
 
         [SerializeField] private Transform pivotWeapon;
 
@@ -113,7 +116,7 @@ namespace Assets.Scripts.Controllers
         #endregion
 
         [UsedImplicitly]
-        private void Start()
+        private void Awake()
         {
             thisRigidbody = GetComponent<Rigidbody>();
         }
@@ -183,6 +186,12 @@ namespace Assets.Scripts.Controllers
             {
                 thisRigidbody.velocity = thisRigidbody.velocity.normalized * MaxSpeed;
             }
+        }
+
+        public void RotateTower(float turn)
+        {
+            //tower.eulerAngles = new Vector3(0f, turn, 0f);  //First version, without smoothness.
+            tower.eulerAngles = new Vector3(0.0f, Mathf.LerpAngle(tower.eulerAngles.y, turn, 0.1f), 0.0f);
         }
 
         [UsedImplicitly]

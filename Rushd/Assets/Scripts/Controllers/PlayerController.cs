@@ -12,6 +12,7 @@ namespace Assets.Scripts.Controllers
 
         private TankController tank;
         private ICommandController[] commandsMoveTank;  // accessory, see the DirectionMove enumeration.
+        private Transform cameraPlayer;
 
         public void SetCommand(int numberCommand, ICommandController command)
         {
@@ -30,10 +31,14 @@ namespace Assets.Scripts.Controllers
             {
                 commandsMoveTank[i] = new TankMoveCommand(tank, (DirectionMove) i);
             }
+
+            cameraPlayer = GameObject.Find("Camera").GetComponent<Transform>();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
+            tank.RotateTower(cameraPlayer.eulerAngles.y);
+
             if (isMove)
             {
                 ForwardMove();
