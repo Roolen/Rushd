@@ -190,7 +190,8 @@ namespace Assets.Scripts.Controllers
 
         public void RotateTower(float turn)
         {
-            tower.eulerAngles = new Vector3(0f, turn, 0f);
+            //tower.eulerAngles = new Vector3(0f, turn, 0f);  //First version, without smoothness.
+            tower.eulerAngles = new Vector3(0.0f, Mathf.LerpAngle(tower.eulerAngles.y, turn, 0.1f), 0.0f);
         }
 
         [UsedImplicitly]

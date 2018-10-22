@@ -190,7 +190,6 @@ GameObject:
   - component: {fileID: 4853124468931666}
   - component: {fileID: 33902693651104052}
   - component: {fileID: 23124394444947960}
-  - component: {fileID: 136753150351068382}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -218,7 +217,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1215973449887966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.2977095, y: 0.7914181, z: 18.5294}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4820818029033084}
@@ -782,16 +781,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeGameObject: 2
   universalType: 2
---- !u!136 &136753150351068382
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1590826731554004}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
