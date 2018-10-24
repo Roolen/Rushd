@@ -1,5 +1,5 @@
 ﻿using System;
-using JetBrains.Annotations;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers
@@ -17,6 +17,8 @@ namespace Assets.Scripts.Controllers
     public class TankController : MonoBehaviour
     {
         public Vector3 velocityNow;
+
+        [SerializeField] private int health;
 
         [SerializeField] private float speedTurn;
 
@@ -113,9 +115,60 @@ namespace Assets.Scripts.Controllers
             }
         }
 
+        public Transform Tower
+        {
+            get
+            {
+                return tower;
+            }
+
+            set
+            {
+                tower = value;
+            }
+        }
+
+        public Transform PivotWeapon
+        {
+            get
+            {
+                return pivotWeapon;
+            }
+
+            set
+            {
+                pivotWeapon = value;
+            }
+        }
+
+        public GameObject ShellCurrent
+        {
+            get
+            {
+                return shellCurrent;
+            }
+
+            set
+            {
+                shellCurrent = value;
+            }
+        }
+
+        public int Health
+        {
+            get
+            {
+                return health;
+            }
+
+            set
+            {
+                if (value > 0) health = value;
+            }
+        }
+
         #endregion
 
-        [UsedImplicitly]
         private void Awake()
         {
             thisRigidbody = GetComponent<Rigidbody>();
@@ -127,6 +180,12 @@ namespace Assets.Scripts.Controllers
             if (typeMove == DirectionMove.Back) MoveBackTank();
             if (typeMove == DirectionMove.Left) TurnLeftTank();
             if (typeMove == DirectionMove.Right) TurnRightTank();
+        }
+
+        public void RotateTower(float turn)
+        {
+            //tower.eulerAngles = new Vector3(0f, turn, 0f);  //First version, without smoothness.
+            Tower.eulerAngles = new Vector3(0.0f, Mathf.LerpAngle(Tower.eulerAngles.y, turn, 0.1f), 0.0f);
         }
 
         /// <summary>
@@ -163,7 +222,10 @@ namespace Assets.Scripts.Controllers
 
         public void ShootTank()
         {
-            Instantiate(shellCurrent, pivotWeapon.position, Quaternion.identity);
+            var bullet = Instantiate(ShellCurrent, PivotWeapon.position, Quaternion.identity).GetComponent<Bullet>();
+            bullet.SetStartVector(pivotWeapon.forward);
+
+            bullet.Shoot();
         }
 
         private void HoverTank()
@@ -188,13 +250,6 @@ namespace Assets.Scripts.Controllers
             }
         }
 
-        public void RotateTower(float turn)
-        {
-            //tower.eulerAngles = new Vector3(0f, turn, 0f);  //First version, without smoothness.
-            tower.eulerAngles = new Vector3(0.0f, Mathf.LerpAngle(tower.eulerAngles.y, turn, 0.1f), 0.0f);
-        }
-
-        [UsedImplicitly]
         private void FixedUpdate()
         {
             HoverTank();
