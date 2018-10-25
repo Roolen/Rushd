@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Controllers;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -12,6 +11,15 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<TankController>() != null)
+        {
+            var tc = collision.gameObject.GetComponent<TankController>();
+            tc.SetDamage(20f);
+        }
     }
 
     public void SetStartVector(Vector3 vector)

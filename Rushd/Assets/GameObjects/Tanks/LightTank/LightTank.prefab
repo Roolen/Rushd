@@ -760,7 +760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityNow: {x: 0, y: 0, z: 0}
-  health: 0
+  health: 50
   speedTurn: 10
   speedBack: 10
   speedForward: 20

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Assets.Scripts.Controllers
     {
         public Vector3 velocityNow;
 
-        [SerializeField] private int health;
+        [SerializeField] private float health;
 
         [SerializeField] private float speedTurn;
 
@@ -154,16 +155,17 @@ namespace Assets.Scripts.Controllers
             }
         }
 
-        public int Health
+        public float Health
         {
             get
             {
                 return health;
             }
 
-            set
+            private set
             {
-                if (value > 0) health = value;
+                if (value < 0) health = 0f;
+                else health = value;
             }
         }
 
@@ -185,7 +187,21 @@ namespace Assets.Scripts.Controllers
         public void RotateTower(float turn)
         {
             //tower.eulerAngles = new Vector3(0f, turn, 0f);  //First version, without smoothness.
-            Tower.eulerAngles = new Vector3(0.0f, Mathf.LerpAngle(Tower.eulerAngles.y, turn, 0.1f), 0.0f);
+            Tower.eulerAngles = new Vector3(0.0f, Mathf.LerpAngle(Tower.eulerAngles.y, turn, 0.2f), 0.0f);
+        }
+
+        public void SetDamage(float damage)
+        {
+            Health -= damage;
+
+            var renderers = GetComponentsInChildren<Renderer>();
+            foreach (Renderer rend in renderers)
+            {
+                rend.material.color = Color.red;
+                StartCoroutine(ChangeColorToDefault(rend.material));
+            }
+
+            if (Health == 0f) Destroy(gameObject);
         }
 
         /// <summary>
@@ -263,6 +279,12 @@ namespace Assets.Scripts.Controllers
 
             velocityNow = thisRigidbody.velocity;
         }
-    
+
+        private IEnumerator ChangeColorToDefault(Material material)
+        {
+            yield return new WaitForSeconds(0.2f);
+            material.color = Color.white;
+        }
+
     }
 }
