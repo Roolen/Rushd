@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Controllers
 {
-    public class TankBot : MonoBehaviour
+    public class BotController : MonoBehaviour
     {
         public GameObject defenseTarget;
         public Transform target;

@@ -37,6 +37,10 @@ namespace Assets.Scripts.Controllers
 
         [SerializeField] private GameObject shellCurrent;
 
+        [SerializeField] private float radiusExplosion;
+
+        [SerializeField] private float forceExplosion;
+
         private Rigidbody thisRigidbody;
 
         #region Properties
@@ -176,6 +180,13 @@ namespace Assets.Scripts.Controllers
             thisRigidbody = GetComponent<Rigidbody>();
         }
 
+        private void FixedUpdate()
+        {
+            HoverTank();
+            StabilizationTank();
+            DebugVelocity();
+        }
+
         public void MoveTank(DirectionMove typeMove)
         {
             if (typeMove == DirectionMove.Forward) MoveForwardTank();
@@ -201,7 +212,7 @@ namespace Assets.Scripts.Controllers
                 StartCoroutine(ChangeColorToDefault(rend.material));
             }
 
-            if (Health == 0f) Destroy(gameObject);
+            if (Health == 0f) DestroyTank();
         }
 
         /// <summary>
@@ -266,11 +277,35 @@ namespace Assets.Scripts.Controllers
             }
         }
 
-        private void FixedUpdate()
+        private void DestroyTank()
         {
-            HoverTank();
-            StabilizationTank();
-            DebugVelocity();
+            var childs = GetComponentsInChildren<Transform>();
+            foreach (var child in childs)
+            {
+                child.parent = null;
+
+                if (!child.gameObject.GetComponent<Rigidbody>())
+                    child.gameObject.AddComponent<Rigidbody>().mass = 2;
+
+                child.gameObject.AddComponent<BoxCollider>();
+            }
+
+            ExplosionTank();
+            Destroy(gameObject);
+        }
+
+        private void ExplosionTank()
+        {
+            var colliders = Physics.OverlapSphere(transform.position, radiusExplosion);
+            foreach (Collider hit in colliders)
+            {
+                if (hit.GetComponent<Rigidbody>())
+                {
+                    Rigidbody rib = hit.GetComponent<Rigidbody>();
+
+                    rib.AddExplosionForce(forceExplosion,transform.position, radiusExplosion, 3f);
+                }
+            }
         }
 
         private void DebugVelocity()
