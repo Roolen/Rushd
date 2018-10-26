@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
+  typePlayerTank: 2
   content: {fileID: 0}
   editorMode: 0
 --- !u!114 &114629688935825430

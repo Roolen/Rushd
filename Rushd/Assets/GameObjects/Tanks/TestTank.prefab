@@ -397,6 +397,7 @@ MonoBehaviour:
   speedForward: 20
   maxSpeed: 30
   hoverHeight: 3
+  tower: {fileID: 0}
   pivotWeapon: {fileID: 4030366600600814}
   shellCurrent: {fileID: 0}
 --- !u!114 &114758725341059298
