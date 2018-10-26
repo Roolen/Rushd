@@ -9,6 +9,8 @@ namespace Assets.Scripts.LevelGenerator
     {
         public LevelData data;
 
+        [SerializeField] [Range(0, 2)] private int typePlayerTank;
+
         public ContentManager content;
 
         public bool editorMode;
@@ -28,7 +30,7 @@ namespace Assets.Scripts.LevelGenerator
         {
             GameObject landingPlatform = GameObject.FindWithTag("LandingPlatform");
 
-            GameObject tankInstance = Instantiate(content.TanksTypes[1]);
+            GameObject tankInstance = Instantiate(content.TanksTypes[typePlayerTank]);
 
             tankInstance.name = "PlayerTank";
 
@@ -101,8 +103,8 @@ namespace Assets.Scripts.LevelGenerator
 
                         if (!editorMode)
                         {
-                            tankInstance.AddComponent<TankBot>();
-                            tankInstance.GetComponent<TankBot>().defenseTarget = GameObject.Find(platform.TankOnPlatform.TargetPoint);
+                            tankInstance.AddComponent<BotController>();
+                            tankInstance.GetComponent<BotController>().defenseTarget = GameObject.Find(platform.TankOnPlatform.TargetPoint);
                         }
 
                         tankInstance.name = platform.TankOnPlatform.NameTank;

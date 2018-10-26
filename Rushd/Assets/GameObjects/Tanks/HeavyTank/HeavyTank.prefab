@@ -72,7 +72,6 @@ GameObject:
   - component: {fileID: 4735677419997626}
   - component: {fileID: 33376696023614800}
   - component: {fileID: 23049705390270530}
-  - component: {fileID: 65016892991060366}
   m_Layer: 0
   m_Name: TowerBody
   m_TagString: Untagged
@@ -90,7 +89,6 @@ GameObject:
   - component: {fileID: 4409431809248368}
   - component: {fileID: 33634394921965740}
   - component: {fileID: 23781956302220316}
-  - component: {fileID: 136707122365685670}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -120,7 +118,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1594655934600256}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5549908, y: -0.63588643, z: 0.517694}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4278520397199416}
@@ -190,7 +188,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1904214949606134}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.1, z: -0}
+  m_LocalPosition: {x: 0, y: 1.3, z: -0}
   m_LocalScale: {x: 0.9000003, y: 0.7499998, z: 2.0833328}
   m_Children: []
   m_Father: {fileID: 4409431809248368}
@@ -337,18 +335,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!65 &65016892991060366
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1719629360915328}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65401392009610630
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -359,8 +345,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.3, z: 1}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!114 &114228769427996886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -373,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeGameObject: 2
-  universalType: 2
+  universalType: 0
 --- !u!114 &114589298863402126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,7 +375,7 @@ MonoBehaviour:
   health: 120
   speedTurn: 20
   speedBack: 10
-  speedForward: 20
+  speedForward: 25
   maxSpeed: 30
   hoverHeight: 3
   tower: {fileID: 4735677419997626}
@@ -398,16 +384,3 @@ MonoBehaviour:
     type: 2}
   radiusExplosion: 100
   forceExplosion: 350
---- !u!136 &136707122365685670
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1775498922383876}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

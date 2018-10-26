@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 350
-  radiusExplosion: 5
-  forceExplosion: 250
+  radiusExplosion: 50
+  forceExplosion: 300
 --- !u!135 &135371418761512800
 SphereCollider:
   m_ObjectHideFlags: 1
