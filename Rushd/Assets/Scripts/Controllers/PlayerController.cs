@@ -35,7 +35,7 @@ namespace Assets.Scripts.Controllers
             cameraPlayer = GameObject.Find("Camera").GetComponent<Transform>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             tank.RotateTower(cameraPlayer.eulerAngles.y);
 
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Controllers
                 RightTurn();
             }
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 tank.ShootTank();
             }

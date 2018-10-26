@@ -30,7 +30,7 @@ namespace Assets
 
             if (GUI.Button(new Rect(180, 158, 80, 30), "Update"))
             {
-                AssetDatabase.ForceReserializeAssets();
+                AssetDatabase.ForceReserializeAssets(new List<string>() {"Assets/GameObjects/SystemObjects/Content.prefab"});
 
                 Repaint();
 
