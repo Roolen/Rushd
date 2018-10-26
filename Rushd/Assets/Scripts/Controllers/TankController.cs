@@ -41,7 +41,10 @@ namespace Assets.Scripts.Controllers
 
         [SerializeField] private float forceExplosion;
 
+        [SerializeField] private float rateOfFire;
+
         private Rigidbody thisRigidbody;
+        private float time;
 
         #region Properties
 
@@ -185,6 +188,8 @@ namespace Assets.Scripts.Controllers
             HoverTank();
             StabilizationTank();
             DebugVelocity();
+
+            if (time > 0) time -= Time.deltaTime;
         }
 
         public void MoveTank(DirectionMove typeMove)
@@ -249,10 +254,15 @@ namespace Assets.Scripts.Controllers
 
         public void ShootTank()
         {
-            var bullet = Instantiate(ShellCurrent, PivotWeapon.position, Quaternion.identity).GetComponent<Bullet>();
-            bullet.SetStartVector(pivotWeapon.forward);
+            if (time <= 0)
+            {
+                var bullet = Instantiate(ShellCurrent, PivotWeapon.position, Quaternion.identity).GetComponent<Bullet>();
+                bullet.SetStartVector(pivotWeapon.forward);
 
-            bullet.Shoot();
+                bullet.Shoot();
+
+                time = 60 / rateOfFire;
+            }
         }
 
         private void HoverTank()
