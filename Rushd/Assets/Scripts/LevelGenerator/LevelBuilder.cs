@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using Assets.Scripts.Controllers;
+using UnityEngine.AI;
 using UnityStandardAssets.Cameras;
 
 namespace Assets.Scripts.LevelGenerator
@@ -24,6 +25,7 @@ namespace Assets.Scripts.LevelGenerator
                 if (!editorMode) MakeTank();
             }
 
+            MakeNavMesh();
         }
 
         private void MakeTank()
@@ -121,6 +123,16 @@ namespace Assets.Scripts.LevelGenerator
             {
                 Debug.LogWarning("Не удалось загрузить платформы на сцену");
             }
+        }
+
+        private void MakeNavMesh()
+        {
+
+            NavMeshSurface navMesh = gameObject.AddComponent<NavMeshSurface>();
+
+            navMesh.tileSize = 4;
+
+            navMesh.BuildNavMesh();
         }
     }
 }

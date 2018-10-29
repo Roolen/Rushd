@@ -189,7 +189,8 @@ namespace Assets.Scripts.Controllers
             StabilizationTank();
             DebugVelocity();
 
-            if (time > 0) time -= Time.deltaTime;
+            if (time > 0f) time -= Time.deltaTime;
+            Debug.Log(time);
         }
 
         public void MoveTank(DirectionMove typeMove)
@@ -261,7 +262,7 @@ namespace Assets.Scripts.Controllers
 
                 bullet.Shoot();
 
-                time = 60 / rateOfFire;
+                time = 60f / rateOfFire;
             }
         }
 
@@ -330,6 +331,5 @@ namespace Assets.Scripts.Controllers
             yield return new WaitForSeconds(0.2f);
             material.color = Color.white;
         }
-
     }
 }

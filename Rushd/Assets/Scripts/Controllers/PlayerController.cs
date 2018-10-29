@@ -46,7 +46,10 @@ namespace Assets.Scripts.Controllers
                 LeftTurn();
                 RightTurn();
             }
+        }
 
+        private void Update()
+        {
             if (Input.GetMouseButtonDown(0))
             {
                 tank.ShootTank();
