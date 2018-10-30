@@ -772,6 +772,7 @@ MonoBehaviour:
     type: 2}
   radiusExplosion: 50
   forceExplosion: 1500
+  rateOfFire: 80
 --- !u!114 &114693651953942184
 MonoBehaviour:
   m_ObjectHideFlags: 1

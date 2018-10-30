@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1804cd379e9b442a4a8cf1754a981e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathByMap: C:\\Map\
+  pathByMap: \Map\
   contentArea: {fileID: 0}
   buttonLevel: {fileID: 114255481252498580, guid: 78cd231c425a6414d91b7a347105eab4,
     type: 2}
