@@ -106,7 +106,7 @@ namespace Assets.Scripts.LevelGenerator
                         if (!editorMode)
                         {
                             tankInstance.AddComponent<BotController>();
-                            tankInstance.GetComponent<BotController>().defenseTarget = GameObject.Find(platform.TankOnPlatform.TargetPoint);
+                            //tankInstance.GetComponent<BotController>().defenseTarget = GameObject.Find(platform.TankOnPlatform.TargetPoint);
                         }
 
                         tankInstance.name = platform.TankOnPlatform.NameTank;

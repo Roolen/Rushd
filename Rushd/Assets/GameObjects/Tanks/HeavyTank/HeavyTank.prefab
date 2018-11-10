@@ -384,3 +384,4 @@ MonoBehaviour:
     type: 2}
   radiusExplosion: 100
   forceExplosion: 350
+  rateOfFire: 100

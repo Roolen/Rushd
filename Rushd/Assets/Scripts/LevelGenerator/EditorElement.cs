@@ -152,7 +152,7 @@ public class EditorElement : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))
             {
-                Platform mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
+                mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
 
                 if (elementOn.GetComponent<EditorElement>().typeElement == 1)
                 {

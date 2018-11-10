@@ -1,22 +1,36 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = System.Random;
 
 namespace Assets.Scripts.Controllers
 {
     public class BotController : MonoBehaviour
     {
-        public GameObject defenseTarget;
-        public Transform target;
-        public float angle;
+        /// <summary>
+        /// Цель для движения бота.
+        /// </summary>
+        [SerializeField] private Transform target;
+        /// <summary>
+        /// Угол обзора бота.
+        /// </summary>
+        [SerializeField] [Range(0, 180)] private float angle;
+        /// <summary>
+        /// Скорость поворота башни для бота.
+        /// </summary>
+        [SerializeField] private float speedOfTower;
 
-        private static System.Random random = new System.Random();
+
+        private static Random random = new Random();
         private TankController tankController;
-        private float timer = 0;
-        private float timerForMove = 0;
+        /// <summary>
+        /// Время тикета для создания новой цели.
+        /// </summary>
+        private float timerToChangeTarget;
+        /// <summary>
+        /// Время тикета для движения.
+        /// </summary>
+        private float timerForMove;
 
         private void Start()
         {
@@ -27,44 +41,58 @@ namespace Assets.Scripts.Controllers
 
         private void Update()
         {
-            timer -= Time.deltaTime;
-            timerForMove -= Time.deltaTime;
+            { //Уменьшает время счетчиков каждый кадр.
+                timerToChangeTarget -= Time.deltaTime;
+                timerForMove -= Time.deltaTime;
+            }
 
             if (timerForMove <= 0)
             {
                 Move();
                 timerForMove = 0.05f;
             }
-            if (timer <= 0)
+            if (timerToChangeTarget <= 0)
             {
-                MoveToRandomPositionTarget();
-                tankController.ShootTank();
-                timer = 3f;
+                CreateNewPositionTarget();
+                tankController.ShootTank();  //todo создать нормальную функцию стрельбы
+                timerToChangeTarget = 3f;
             }
         }
 
-        private void MoveToRandomPositionTarget()
+        /// <summary>
+        /// Создает новую (рандомную) позицию для цели.
+        /// </summary>
+        private void CreateNewPositionTarget()
         {
             int randomX = random.Next((int) transform.position.x - 50, (int) transform.position.x + 50);
             int randomZ = random.Next((int) transform.position.z - 50, (int) transform.position.z + 50);
             Vector3 randomPosition = new Vector3(randomX, transform.position.y, randomZ);
+
             target.position = randomPosition;
         }
 
+        /// <summary>
+        /// Перемещает танк бота на новую позицию.
+        /// </summary>
         private void Move()
         {
             TankController tc = tankController;
+            float angleToTarget = Vector3.SignedAngle(transform.position - target.position, transform.forward, Vector3.up);
 
-            if (Vector3.SignedAngle(transform.position - target.position, transform.forward, Vector3.up) > 1f) tc.MoveTank(DirectionMove.Right);
-            else if (Vector3.SignedAngle(transform.position - target.position, transform.forward, Vector3.up) < 1f) tc.MoveTank(DirectionMove.Left);
+            if (angleToTarget > 1f) tc.MoveTank(DirectionMove.Right);
+            else if (angleToTarget < 1f) tc.MoveTank(DirectionMove.Left);
 
             Transform tower = tc.Tower;
-            Transform player = FindObjectOfType<PlayerController>().transform;
-            float angleToTagerTower = Vector3.SignedAngle(tower.position - player.position, tower.forward, Vector3.up);
-            tc.RotateTowerToAngle(angleToTagerTower * 4f);
+            if (FindObjectOfType<PlayerController>())
+            {
+                Transform player = FindObjectOfType<PlayerController>().transform;
+
+                float angleToTagertTower = Vector3.SignedAngle(tower.position - player.position, tower.forward, Vector3.up);
+                tc.RotateTowerToAngle(angleToTagertTower * speedOfTower);
+            }
             
 
-            tc.MoveTank(DirectionMove.Forward);
+            tc.MoveTank(DirectionMove.Forward);  //todo Нужна проверка на достижение цели
         }
     }
 }

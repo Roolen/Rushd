@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityStandardAssets.Cameras;
 
 namespace Assets.Scripts.Controllers
 {
@@ -9,10 +11,12 @@ namespace Assets.Scripts.Controllers
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private bool isMove;
+        [SerializeField] private GameObject menuPanel;
 
         private TankController tank;
         private ICommandController[] commandsMoveTank;  // accessory, see the DirectionMove enumeration.
         private Transform cameraPlayer;
+        private Text textHealth;
 
         public void SetCommand(int numberCommand, ICommandController command)
         {
@@ -23,6 +27,9 @@ namespace Assets.Scripts.Controllers
         private void Start()
         {
             tank = GetComponent<TankController>();
+            textHealth = GameObject.Find("TextHealth").GetComponent<Text>();
+            menuPanel = GameObject.Find("PanelMenu");
+            menuPanel.SetActive(false);
             isMove = true;
 
             commandsMoveTank = new ICommandController[4];
@@ -38,6 +45,7 @@ namespace Assets.Scripts.Controllers
         private void FixedUpdate()
         {
             tank.RotateTower(cameraPlayer.eulerAngles.y);
+            textHealth.text = tank.Health.ToString();
 
             if (isMove)
             {
@@ -54,6 +62,22 @@ namespace Assets.Scripts.Controllers
             {
                 tank.ShootTank();
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (menuPanel.activeSelf)
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    menuPanel.SetActive(false);
+                }
+                else if (!menuPanel.activeSelf)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    menuPanel.SetActive(true);
+                }
+            }
         }
 
         public void IsMove(bool flag)
@@ -63,7 +87,7 @@ namespace Assets.Scripts.Controllers
 
         private void ForwardMove()
         {
-            if (Input.GetAxis("Vertical") > 0.1) commandsMoveTank[0].Execute(); 
+            if (Input.GetAxis("Vertical") > 0.1) commandsMoveTank[0].Execute();
         }
 
         private void BackMove()

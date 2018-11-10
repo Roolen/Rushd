@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using Assets.Scripts.Controllers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -43,6 +44,8 @@ namespace Assets.Scripts.LevelGenerator
         public TypeElement TypeSelectElement { get; set; }
 
         public GameObject SelectElement { get; set; }
+
+        private ICommandController[] commansEditor;
 
         #region Properties
 
@@ -434,5 +437,20 @@ namespace Assets.Scripts.LevelGenerator
             element.Rename(GameObject.Find("InputFieldNamePlatform").GetComponent<InputField>().text);
         }
 
+    }
+
+    public class EditorCommand : ICommandController
+    {
+        
+
+        void ICommandController.Execute()
+        {
+            throw new NotImplementedException();
+        }
+
+        void ICommandController.Undo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
