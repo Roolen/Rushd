@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using Assets.Scripts.Controllers;
+using UnityEngine.AI;
 using UnityStandardAssets.Cameras;
 
 namespace Assets.Scripts.LevelGenerator
@@ -24,6 +25,7 @@ namespace Assets.Scripts.LevelGenerator
                 if (!editorMode) MakeTank();
             }
 
+            MakeNavMesh();
         }
 
         private void MakeTank()
@@ -59,7 +61,7 @@ namespace Assets.Scripts.LevelGenerator
                         EditorElement edElement = platformInstance.AddComponent<EditorElement>();
                         edElement.typeElement = 0;
                         edElement.nameElement = platform.NamePlatform;
-                        edElement.universalType = (int)platform.TypePlatform;
+                        edElement.indexElement = (int)platform.TypePlatform;
 
                         if (platform.TypePlatform == TypesPlatform.LandingPlatform) { edElement.thisLandingPlatform = true; }
                     }
@@ -104,7 +106,7 @@ namespace Assets.Scripts.LevelGenerator
                         if (!editorMode)
                         {
                             tankInstance.AddComponent<BotController>();
-                            tankInstance.GetComponent<BotController>().defenseTarget = GameObject.Find(platform.TankOnPlatform.TargetPoint);
+                            //tankInstance.GetComponent<BotController>().defenseTarget = GameObject.Find(platform.TankOnPlatform.TargetPoint);
                         }
 
                         tankInstance.name = platform.TankOnPlatform.NameTank;
@@ -121,6 +123,16 @@ namespace Assets.Scripts.LevelGenerator
             {
                 Debug.LogWarning("Не удалось загрузить платформы на сцену");
             }
+        }
+
+        private void MakeNavMesh()
+        {
+
+            NavMeshSurface navMesh = gameObject.AddComponent<NavMeshSurface>();
+
+            navMesh.tileSize = 4;
+
+            navMesh.BuildNavMesh();
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Assets.Scripts.Controllers
 
             set
             {
-                if (value < 10) speedTurn = value;
+                if (value <= 50) speedTurn = value;
                 else Debug.LogWarning("Попытка задать некорректную скорость поворота " + value);
             }
         }
@@ -189,7 +189,7 @@ namespace Assets.Scripts.Controllers
             StabilizationTank();
             DebugVelocity();
 
-            if (time > 0) time -= Time.deltaTime;
+            if (time > 0f) time -= Time.deltaTime;
         }
 
         public void MoveTank(DirectionMove typeMove)
@@ -202,8 +202,12 @@ namespace Assets.Scripts.Controllers
 
         public void RotateTower(float turn)
         {
-            //tower.eulerAngles = new Vector3(0f, turn, 0f);  //First version, without smoothness.
             Tower.eulerAngles = new Vector3(0.0f, Mathf.LerpAngle(Tower.eulerAngles.y, turn, 0.2f), 0.0f);
+        }
+
+        public void RotateTowerToAngle(float angle)
+        {
+            tower.Rotate(0f, angle * Time.deltaTime, 0f);
         }
 
         public void SetDamage(float damage)
@@ -261,7 +265,7 @@ namespace Assets.Scripts.Controllers
 
                 bullet.Shoot();
 
-                time = 60 / rateOfFire;
+                time = 60f / rateOfFire;
             }
         }
 
@@ -330,6 +334,5 @@ namespace Assets.Scripts.Controllers
             yield return new WaitForSeconds(0.2f);
             material.color = Color.white;
         }
-
     }
 }
