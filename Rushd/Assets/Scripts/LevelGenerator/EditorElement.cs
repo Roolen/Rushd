@@ -8,16 +8,34 @@ using UnityEngine;
 
 public class EditorElement : MonoBehaviour
 {
+    /// <summary>
+    /// Название элемента.
+    /// </summary>
     public string nameElement;
+    /// <summary>
+    /// Тип элемента (например танк).
+    /// </summary>
     public int typeElement;
-    public int universalType;
+    /// <summary>
+    /// Номер элемента в массиве элементов типа.
+    /// </summary>
+    public int indexElement;
     public int idForElement;
+    /// <summary>
+    /// Дочерний элемент находящийся на платформе.
+    /// </summary>
     public GameObject elementOn;
+    /// <summary>
+    /// Является ли данный элемент десантной платформой. 
+    /// </summary>
     public bool thisLandingPlatform;
     private Platform mirrorPlatform;
 
     private EditorManager editor;
 
+    /// <summary>
+    /// Постоянный цвет элемента.
+    /// </summary>
     private Color stableColor;
     private float timer;
 
@@ -145,14 +163,11 @@ public class EditorElement : MonoBehaviour
     /// <summary>
     /// Набор логики для редактирования свойств элемента.
     /// </summary>
-    public void Enter()
+    public void RemoveElementOn()
     {
         if (typeElement == 0 && !thisLandingPlatform)
         {
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
+                 Platform mirrorPlatform = FindObjectOfType<LevelData>().Platforms.Find(platform => platform.NamePlatform == nameElement);
 
                 if (elementOn.GetComponent<EditorElement>().typeElement == 1)
                 {
@@ -166,22 +181,18 @@ public class EditorElement : MonoBehaviour
                 }
 
                 Destroy(elementOn);
-            }
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                RotateTank(90);
-            }
-            else if (Input.GetKeyDown(KeyCode.Q))
-            {
-                RotateTank(-90);
-            }
         }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
             EditorManager.CallAttributeEditor(this);
         }
+    }
+
+    public void RotateElement(bool isRight)
+    {
+        if (isRight) RotateTank(90);
+        else RotateTank(-90);
     }
 
     private void RotateTank(int rotateOnY)

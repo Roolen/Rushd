@@ -18,7 +18,7 @@ namespace Assets.Scripts.Controllers
         /// <summary>
         /// Скорость поворота башни для бота.
         /// </summary>
-        [SerializeField] private float speedOfTower;
+        [SerializeField] private float speedOfTower = 4;
 
 
         private static Random random = new Random();

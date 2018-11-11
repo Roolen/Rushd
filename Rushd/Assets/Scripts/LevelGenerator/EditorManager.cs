@@ -6,6 +6,7 @@ using Assets.Scripts.Controllers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Object = System.Object;
 
 // ReSharper disable IdentifierTypo
 #pragma warning disable 649
@@ -45,7 +46,7 @@ namespace Assets.Scripts.LevelGenerator
 
         public GameObject SelectElement { get; set; }
 
-        private ICommandController[] commansEditor;
+        private IEditorCommandController commandEditor;
 
         #region Properties
 
@@ -123,7 +124,7 @@ namespace Assets.Scripts.LevelGenerator
             ShowElementsPanels();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             // Задержка выделителя объектов.
             if (Time.timeSinceLevelLoad > 1) 
@@ -145,11 +146,15 @@ namespace Assets.Scripts.LevelGenerator
                 if (EventSystem.current.IsPointerOverGameObject()) return;
 
                 EditorElement element = hit.transform.gameObject.GetComponentInParent<EditorElement>();
+                commandEditor = new EditorCommand();
 
                 element.Select(ColorForSelectElement);
-                element.Enter();
+                if (Input.GetMouseButtonDown(1)) commandEditor.Execute(element.RemoveElementOn);
 
-                if (Input.GetMouseButtonDown(0)) element.ChangeElement();
+                if (Input.GetMouseButtonDown(0)) commandEditor.Execute(element.ChangeElement);
+
+                if (Input.GetKeyDown(KeyCode.E)) commandEditor.Execute(element.RotateElement, true);
+                if (Input.GetKeyDown(KeyCode.Q)) commandEditor.Execute(element.RotateElement, false);
 
             }
         }
@@ -439,16 +444,40 @@ namespace Assets.Scripts.LevelGenerator
 
     }
 
-    public class EditorCommand : ICommandController
+    public interface IEditorCommandController
     {
-        
+        void Execute(Command command);
+        void Execute(CommandWithBool command, bool flag);
 
-        void ICommandController.Execute()
+        void Undo();
+    }
+
+    public delegate void Command();
+
+    public delegate void CommandWithBool(bool flag);
+
+    /// <summary>
+    /// Универсальная комманда редактора.
+    /// </summary>
+    public class EditorCommand : IEditorCommandController
+    {
+        void IEditorCommandController.Execute(Command command)
         {
-            throw new NotImplementedException();
+            if (command != null)
+            {
+                command.Invoke();
+            }
         }
 
-        void ICommandController.Undo()
+        void IEditorCommandController.Execute(CommandWithBool command, bool flag)
+        {
+            if (command != null)
+            {
+                command.Invoke(flag);
+            }
+        }
+
+        void IEditorCommandController.Undo()
         {
             throw new NotImplementedException();
         }

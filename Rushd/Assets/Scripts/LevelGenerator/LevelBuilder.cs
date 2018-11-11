@@ -61,7 +61,7 @@ namespace Assets.Scripts.LevelGenerator
                         EditorElement edElement = platformInstance.AddComponent<EditorElement>();
                         edElement.typeElement = 0;
                         edElement.nameElement = platform.NamePlatform;
-                        edElement.universalType = (int)platform.TypePlatform;
+                        edElement.indexElement = (int)platform.TypePlatform;
 
                         if (platform.TypePlatform == TypesPlatform.LandingPlatform) { edElement.thisLandingPlatform = true; }
                     }
